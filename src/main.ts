@@ -1,6 +1,8 @@
 // main.ts
 import { createApp } from "vue";
 import { createVuetify } from "vuetify";
+import router from "./router";
+import { createPinia } from "pinia";
 import App from "./App.vue";
 import "vuetify/styles";
 import { aliases, mdi } from "vuetify/iconsets/mdi";
@@ -32,4 +34,9 @@ const vuetify = createVuetify({
   },
 });
 
-createApp(App).use(vuetify).use(i18n).mount("#app");
+createApp(App)
+  .use(createPinia())
+  .use(vuetify)
+  .use(router)
+  .use(i18n)
+  .mount("#app");

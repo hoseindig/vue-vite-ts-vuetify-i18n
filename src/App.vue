@@ -8,6 +8,7 @@
         <!-- دکمه تغییر زبان -->
         <v-btn @click="switchLang('fa')">فارسی</v-btn>
         <v-btn @click="switchLang('en')">English</v-btn>
+        <router-view />
       </v-container>
     </v-main>
   </v-app>
