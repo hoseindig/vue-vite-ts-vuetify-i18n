@@ -1,1 +1,69 @@
- 
+ /* اضافه کردن به فایل src/style.css یا در main.ts */
+/* *{
+    background-color: red;
+} */
+/* تنظیمات کلی برای RTL/LTR */
+html[dir="rtl"] {
+  direction: rtl;
+}
+
+html[dir="ltr"] {
+  direction: ltr;
+}
+
+/* تنظیمات خاص Vuetify برای RTL */
+html[dir="rtl"] .v-application {
+  direction: rtl !important;
+}
+
+html[dir="ltr"] .v-application {
+  direction: ltr !important;
+}
+
+/* تنظیمات فیلدهای ورودی */
+html[dir="rtl"] .v-field__input {
+  text-align: right;
+}
+
+html[dir="ltr"] .v-field__input {
+  text-align: left;
+}
+
+/* تنظیمات آیکون‌ها */
+html[dir="rtl"] .v-field__prepend-inner {
+  order: 1;
+}
+
+html[dir="rtl"] .v-field__append-inner {
+  order: -1;
+}
+
+html[dir="ltr"] .v-field__prepend-inner {
+  order: -1;
+}
+
+html[dir="ltr"] .v-field__append-inner {
+  order: 1;
+}
+
+/* تنظیمات کلی متن */
+html[dir="rtl"] * {
+  text-align: right;
+}
+
+html[dir="ltr"] * {
+  text-align: left;
+}
+
+/* تنظیمات دکمه‌ها و فاصله‌ها */
+html[dir="rtl"] .v-btn + .v-btn {
+  margin-right: 8px;
+  margin-left: 0;
+}
+
+html[dir="ltr"] .v-btn + .v-btn {
+  margin-left: 8px;
+  margin-right: 0;
+}
+
+/* حتماً این استایل‌ها را به فایل اصلی CSS خود اضافه کنید */
