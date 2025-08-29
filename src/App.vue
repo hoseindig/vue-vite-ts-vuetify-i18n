@@ -1,4 +1,4 @@
-<!-- src/App.vue -->
+<!-- App.vue - راه حل قطعی -->
 <template>
   <v-app>
     <v-main>
@@ -7,21 +7,27 @@
         <p>{{ $t("welcome") }}</p>
         <div class="test-box">تست جهت‌بندی - Test Direction</div>
 
-        <!-- فرم نمونه -->
+        <!-- فرم نمونه با استایل‌های inline -->
         <v-form class="mt-6">
           <v-text-field
             v-model="formData.name"
             :label="$t('name')"
             variant="outlined"
             class="mb-4"
+            :style="textFieldStyle"
+            :dir="currentDirection"
           ></v-text-field>
+
           <v-select
             v-model="formData.option"
             :items="options"
             :label="$t('select')"
             variant="outlined"
             class="mb-4"
+            :style="textFieldStyle"
+            :dir="currentDirection"
           ></v-select>
+
           <v-btn type="submit" color="primary">{{
             $t("submit") || "ارسال"
           }}</v-btn>
@@ -51,6 +57,27 @@
         <v-alert class="mt-4" type="info">
           زبان فعلی: {{ currentLang }} | جهت: {{ currentDirection }}
         </v-alert>
+
+        <!-- تست بیشتر -->
+        <v-card class="mt-4" :dir="currentDirection">
+          <v-card-title>تست فیلدهای بیشتر</v-card-title>
+          <v-card-text>
+            <v-text-field
+              label="نام کاربری - Username"
+              variant="outlined"
+              :style="textFieldStyle"
+              :dir="currentDirection"
+              class="mb-4"
+            ></v-text-field>
+
+            <v-textarea
+              label="توضیحات - Description"
+              variant="outlined"
+              :style="textFieldStyle"
+              :dir="currentDirection"
+            ></v-textarea>
+          </v-card-text>
+        </v-card>
       </v-container>
     </v-main>
   </v-app>
@@ -58,7 +85,7 @@
 
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import { ref, watch, onMounted } from "vue";
+import { ref, watch, onMounted, computed } from "vue";
 
 const { locale } = useI18n();
 
@@ -73,17 +100,38 @@ const formData = ref({
 });
 const options = ["گزینه ۱", "گزینه ۲", "گزینه ۳"];
 
+// استایل محاسبه‌شده برای فیلدهای متنی
+const textFieldStyle = computed(() => ({
+  direction: currentDirection.value,
+  textAlign: currentDirection.value === "rtl" ? "right" : "left",
+}));
+
 function applyDirection(direction: string) {
   // تنظیم DOM
   document.documentElement.setAttribute("dir", direction);
   document.body.style.direction = direction;
-
-  // تنظیم کلاس‌های CSS
   document.body.className = document.body.className.replace(
     /\b(rtl|ltr)\b/g,
     ""
   );
   document.body.classList.add(direction);
+
+  // اعمال استایل‌های inline به تمام فیلدهای موجود
+  setTimeout(() => {
+    const textFields = document.querySelectorAll(
+      ".v-field__input input, .v-field__input textarea"
+    );
+    textFields.forEach((field: any) => {
+      field.style.direction = direction;
+      field.style.textAlign = direction === "rtl" ? "right" : "left";
+    });
+
+    const fieldInputs = document.querySelectorAll(".v-field__input");
+    fieldInputs.forEach((field: any) => {
+      field.style.direction = direction;
+      field.style.textAlign = direction === "rtl" ? "right" : "left";
+    });
+  }, 50);
 
   console.log("✅ جهت اعمال شد:", direction);
 }
@@ -109,7 +157,13 @@ onMounted(() => {
 });
 
 // مراقبت تغییرات
-watch(currentDirection, applyDirection, { immediate: true });
+watch(
+  currentDirection,
+  (newDir) => {
+    applyDirection(newDir);
+  },
+  { immediate: true }
+);
 </script>
 
 <style scoped>
@@ -130,42 +184,5 @@ watch(currentDirection, applyDirection, { immediate: true });
 
 .lang-btn {
   margin-inline-end: 8px;
-}
-</style>
-
-<style>
-/* استایل‌های سراسری برای جهت‌بندی */
-body.rtl {
-  direction: rtl;
-}
-
-body.ltr {
-  direction: ltr;
-}
-
-body.rtl .v-application {
-  direction: rtl !important;
-}
-
-body.ltr .v-application {
-  direction: ltr !important;
-}
-
-body.rtl .v-field__input {
-  text-align: right;
-}
-
-body.ltr .v-field__input {
-  text-align: left;
-}
-
-body.rtl .v-btn + .v-btn {
-  margin-right: 8px;
-  margin-left: 0;
-}
-
-body.ltr .v-btn + .v-btn {
-  margin-left: 8px;
-  margin-right: 0;
 }
 </style>

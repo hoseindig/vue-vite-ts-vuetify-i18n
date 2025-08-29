@@ -10,10 +10,11 @@ import fa from "../locales/fa.json";
 // استایل‌های Vuetify و آیکون‌های mdi
 import "vuetify/styles";
 import "@mdi/font/css/materialdesignicons.min.css";
+import "./styles/rtl.css"; // اضافه کردن فایل RTL
 import { aliases, mdi } from "vuetify/iconsets/mdi";
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
-import "./style.css";
+
 // خواندن تنظیمات اولیه از localStorage
 const savedLocale = localStorage.getItem("locale") || "fa";
 const savedDirection = localStorage.getItem("dir") || "rtl";
