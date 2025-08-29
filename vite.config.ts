@@ -15,4 +15,23 @@ export default defineConfig({
       },
     },
   },
+    define: {
+    "process.env": {},
+  },
+  build: {
+    lib: {
+      entry: "src/main.js",
+      name: "MyWidget",
+      fileName: "widget",
+      formats: ["iife"],
+    },
+    minify: false,
+    rollupOptions: {
+      output: {
+        globals: {
+          vue: "Vue",
+        },
+      },
+    },
+  },
 });
