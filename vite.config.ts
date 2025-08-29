@@ -8,4 +8,11 @@ export default defineConfig({
     vue(),
     vuetify({ autoImport: true }), // ✅ پشتیبانی Vuetify
   ],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@import "./src/styles/main.scss";`,
+      },
+    },
+  },
 });

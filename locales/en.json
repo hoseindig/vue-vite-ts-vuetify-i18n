@@ -1,4 +1,6 @@
 {
   "hello": "Hello World",
-  "welcome": "Welcome to my app"
+  "welcome": "Welcome to my app",
+  "name": "Name",
+  "select": "Select an option"
 }

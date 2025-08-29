@@ -1,0 +1,45 @@
+/* src/styles/main.scss */
+@import "vuetify/styles";
+
+[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+
+  /* تنظیمات خاص برای راست به چپ */
+  .v-btn,
+  .v-text-field,
+  .v-select {
+    margin-inline-end: 8px;
+    margin-inline-start: unset;
+    text-align: right;
+  }
+
+  /* اطمینان از راست‌چین شدن لیبل‌ها و ورودی‌ها */
+  .v-label,
+  input,
+  select,
+  textarea {
+    text-align: right !important;
+  }
+}
+
+[dir="ltr"] {
+  direction: ltr;
+  text-align: left;
+
+  /* تنظیمات خاص برای چپ به راست */
+  .v-btn,
+  .v-text-field,
+  .v-select {
+    margin-inline-start: 8px;
+    margin-inline-end: unset;
+    text-align: left;
+  }
+
+  .v-label,
+  input,
+  select,
+  textarea {
+    text-align: left !important;
+  }
+}
