@@ -33,7 +33,7 @@ const i18n = createI18n({
   messages: { en, fa },
 });
 
-// تنظیم Vuetify
+// تنظیم Vuetify با پشتیبانی از RTL
 const vuetify = createVuetify({
   components,
   directives,
@@ -45,9 +45,15 @@ const vuetify = createVuetify({
   theme: {
     defaultTheme: "light",
   },
+  locale: {
+    locale: savedLocale,
+    rtl: {
+      fa: true,
+      en: false,
+    },
+  },
 });
 
-//
 const pinia = createPinia();
 const app = createApp(App);
 

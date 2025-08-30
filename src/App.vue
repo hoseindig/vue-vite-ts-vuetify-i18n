@@ -1,4 +1,4 @@
-<!-- App.vue - راه حل قطعی -->
+<!-- App.vue -->
 <template>
   <v-app>
     <v-main>
@@ -15,7 +15,6 @@
             variant="outlined"
             class="mb-4"
             :style="textFieldStyle"
-            :dir="currentDirection"
           ></v-text-field>
 
           <v-select
@@ -25,7 +24,6 @@
             variant="outlined"
             class="mb-4"
             :style="textFieldStyle"
-            :dir="currentDirection"
           ></v-select>
 
           <v-btn type="submit" color="primary">{{
@@ -59,14 +57,13 @@
         </v-alert>
 
         <!-- تست بیشتر -->
-        <v-card class="mt-4" :dir="currentDirection">
+        <v-card class="mt-4">
           <v-card-title>تست فیلدهای بیشتر</v-card-title>
           <v-card-text>
             <v-text-field
               label="نام کاربری - Username"
               variant="outlined"
               :style="textFieldStyle"
-              :dir="currentDirection"
               class="mb-4"
             ></v-text-field>
 
@@ -74,7 +71,6 @@
               label="توضیحات - Description"
               variant="outlined"
               :style="textFieldStyle"
-              :dir="currentDirection"
             ></v-textarea>
           </v-card-text>
         </v-card>
@@ -86,27 +82,30 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import { ref, watch, onMounted, computed } from "vue";
+import type { StyleValue } from "vue"; // وارد کردن نوع StyleValue
 
 const { locale } = useI18n();
 
 // مدیریت ساده جهت و زبان
 const currentLang = ref(localStorage.getItem("locale") || "fa");
-const currentDirection = ref(localStorage.getItem("dir") || "rtl");
+const currentDirection = ref<"rtl" | "ltr">(
+  (localStorage.getItem("dir") as "rtl" | "ltr") || "rtl"
+);
 
 // داده‌های فرم
 const formData = ref({
   name: "",
-  option: null,
+  option: null as string | null,
 });
 const options = ["گزینه ۱", "گزینه ۲", "گزینه ۳"];
 
 // استایل محاسبه‌شده برای فیلدهای متنی
-const textFieldStyle = computed(() => ({
+const textFieldStyle = computed<StyleValue>(() => ({
   direction: currentDirection.value,
   textAlign: currentDirection.value === "rtl" ? "right" : "left",
 }));
 
-function applyDirection(direction: string) {
+function applyDirection(direction: "rtl" | "ltr") {
   // تنظیم DOM
   document.documentElement.setAttribute("dir", direction);
   document.body.style.direction = direction;
