@@ -47,7 +47,7 @@ const vuetify = createVuetify({
   },
 });
 
-// ایجاد اپلیکیشن
+//
 const pinia = createPinia();
 const app = createApp(App);
 
