@@ -1,21 +1,35 @@
 import { createRouter, createWebHistory } from "vue-router";
-import DashboardLayout from "../layouts/DashboardLayout.vue";
-import HomeView from "../views/HomeView.vue";
-import AboutView from "../views/AboutView.vue";
+import DefaultLayout from "../layouts/DefaultLayout.vue";
 
 const routes = [
   {
     path: "/",
-    component: DashboardLayout,
+    component: DefaultLayout,
     children: [
-      { path: "", name: "home", component: HomeView },
-      { path: "about", name: "about", component: AboutView },
+      {
+        path: "",
+        name: "home",
+        component: () => import("../views/HomeView.vue"),
+        meta: { icon: "mdi-view-dashboard" },
+      },
+      {
+        path: "about",
+        name: "about",
+        component: () => import("../views/AboutView.vue"),
+        meta: { icon: "mdi-information" },
+      },
       {
         path: "settings",
         name: "settings",
         component: () => import("../views/SettingsView.vue"),
+        meta: { icon: "mdi-cog", requiresAuth: true },
       },
     ],
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "not-found",
+    component: () => import("../views/NotFound.vue"),
   },
 ];
 

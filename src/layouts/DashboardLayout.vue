@@ -29,7 +29,7 @@
     </v-app-bar>
 
     <!-- Sidebar -->
-    <v-navigation-drawer app v-model="drawer" color="grey-lighten-4">
+    <!-- <v-navigation-drawer app v-model="drawer" color="grey-lighten-4">
       <v-list>
         <v-list-item
           v-for="item in menuItems"
@@ -40,7 +40,7 @@
           <v-list-item-title>{{ item.title }}</v-list-item-title>
         </v-list-item>
       </v-list>
-    </v-navigation-drawer>
+    </v-navigation-drawer> -->
 
     <!-- Main Content -->
     <v-main>
