@@ -12,7 +12,21 @@
         }
     ],
     "href": "/main",
-    "settings": [],
+    "settings": [
+        {
+            "key": "tooltip",
+            "value": [
+                {
+                    "key": "fa",
+                    "value": "راهنمای برچسب"
+                },
+                {
+                    "key": "en",
+                    "value": "Label Tooltip"
+                }
+            ]
+        }
+    ],
     "children": [
         {
             "type": "menu",
@@ -33,7 +47,7 @@
                     "value": [
                         {
                             "key": "fa",
-                            "value": "راهنمای زیرمنوی "
+                            "value": "راهنمای برچسب"
                         },
                         {
                             "key": "en",
@@ -101,7 +115,7 @@
                     "value": [
                         {
                             "key": "fa",
-                            "value": "راهنمای دستورات ثابت"
+                            "value": "راهنمای برچسب"
                         },
                         {
                             "key": "en",
@@ -128,6 +142,19 @@
                         {
                             "key": "icon",
                             "value": "/recnets.jpg"
+                        },
+                        {
+                            "key": "tooltip",
+                            "value": [
+                                {
+                                    "key": "fa",
+                                    "value": "راهنمای برچسب"
+                                },
+                                {
+                                    "key": "en",
+                                    "value": "Label Tooltip"
+                                }
+                            ]
                         }
                     ]
                 },
@@ -144,7 +171,21 @@
                         }
                     ],
                     "href": "/open",
-                    "settings": []
+                    "settings": [
+                        {
+                            "key": "tooltip",
+                            "value": [
+                                {
+                                    "key": "fa",
+                                    "value": "راهنمای برچسب"
+                                },
+                                {
+                                    "key": "en",
+                                    "value": "Label Tooltip"
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         }

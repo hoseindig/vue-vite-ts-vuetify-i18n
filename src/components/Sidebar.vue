@@ -47,7 +47,6 @@
                 <div class="d-flex align-center w-100" v-bind="props">
                   <!-- RTL -->
                   <template v-if="settings.direction === 'rtl'">
-                    <!-- <v-icon>{{ item.icon }}</v-icon> -->
                     <v-icon :icon="fallbackIcon"></v-icon>
                     <v-list-item-title v-if="!sidebar.isCollapsed" class="ms-2">
                       {{ item.label[settings.locale] }}
@@ -60,12 +59,45 @@
                     <v-list-item-title v-if="!sidebar.isCollapsed">
                       {{ item.label[settings.locale] }}
                     </v-list-item-title>
-                    <!-- <v-icon class="me-2">{{ item.icon }}</v-icon> -->
                   </template>
                 </div>
               </template>
             </v-tooltip>
           </v-list-item>
+
+          <!-- 👇 سطح دوم -->
+          <v-list
+            v-if="item.children && item.children.length"
+            density="compact"
+            nav
+            class="pa-0 ms-4"
+          >
+            <template v-for="child in item.children" :key="child.id">
+              <v-list-item
+                :to="child.route"
+                :disabled="child.disabled"
+                class="sidebar-item"
+              >
+                <v-tooltip
+                  :text="child.tooltip?.[settings.locale]"
+                  location="end"
+                >
+                  <template #activator="{ props }">
+                    <div class="d-flex align-center w-100" v-bind="props">
+                      <v-icon :icon="fallbackIcon"></v-icon>
+                      <v-list-item-title
+                        v-if="!sidebar.isCollapsed"
+                        class="ms-2"
+                      >
+                        {{ child.label[settings.locale] }}
+                      </v-list-item-title>
+                    </div>
+                  </template>
+                </v-tooltip>
+              </v-list-item>
+            </template>
+          </v-list>
+          <!-- 👆 سطح دوم -->
         </template>
       </v-list>
     </div>
