@@ -70,7 +70,7 @@
             v-if="item.children && item.children.length"
             density="compact"
             nav
-            class="pa-0 ms-4"
+            :class="[sidebar.isCollapsed ? 'ps-0' : 'ms-4']"
           >
             <template v-for="child in item.children" :key="child.id">
               <v-list-item
