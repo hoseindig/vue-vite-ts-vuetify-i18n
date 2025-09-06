@@ -96,6 +96,8 @@
                 </v-tooltip>
               </v-list-item>
             </template>
+
+            <v-divider class="my-2" />
           </v-list>
           <!-- 👆 سطح دوم -->
         </template>
