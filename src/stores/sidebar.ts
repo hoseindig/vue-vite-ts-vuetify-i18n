@@ -1,21 +1,18 @@
 // stores/sidebar.ts
-import { defineStore } from 'pinia'
-import { fetchSidebarItems, type SidebarItem } from '../services/sidebarService'
+import { defineStore } from "pinia"
+import { fetchSidebarSections, type SidebarSection } from "../services/sidebarService"
 
-export const useSidebarStore = defineStore('sidebar', {
+export const useSidebarStore = defineStore("sidebar", {
   state: () => ({
-    items: [] as SidebarItem[],
+    sections: [] as SidebarSection[],
     isCollapsed: false,
-    loading: false,
   }),
   actions: {
-    async loadItems() {
-      this.loading = true
-      this.items = await fetchSidebarItems()
-      this.loading = false
+    async loadSections() {
+      this.sections = await fetchSidebarSections()
     },
     toggleCollapse() {
       this.isCollapsed = !this.isCollapsed
-    }
-  }
+    },
+  },
 })
