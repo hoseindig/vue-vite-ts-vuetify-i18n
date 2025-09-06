@@ -93,6 +93,39 @@
                             ]
                         }
                     ]
+                },
+                {
+                    "type": "command",
+                    "label": [
+                        {
+                            "key": "fa",
+                            "value": "بچه زیر منوی 2"
+                        },
+                        {
+                            "key": "en",
+                            "value": "child sub menu 1"
+                        }
+                    ],
+                    "href": "/label-action",
+                    "settings": [
+                        {
+                            "key": "icon",
+                            "value": "label-command.jpg"
+                        },
+                        {
+                            "key": "tooltip",
+                            "value": [
+                                {
+                                    "key": "fa",
+                                    "value": "راهنمای برچسب"
+                                },
+                                {
+                                    "key": "en",
+                                    "value": "Label Tooltip"
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         },
