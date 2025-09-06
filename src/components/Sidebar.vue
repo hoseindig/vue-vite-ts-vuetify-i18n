@@ -28,8 +28,10 @@
       class="mb-4 mt-3"
     >
       <!-- Title -->
-      <div v-if="!sidebar.isCollapsed" class="mb-2">
-        <div class="text-caption font-weight-bold">{{ section.title }}</div>
+      <div v-if="!sidebar.isCollapsed" class="mb-2 mx-2">
+        <div class="text-caption font-weight-bold">
+          {{ section.title[settings.locale] }}
+        </div>
       </div>
 
       <!-- Items -->
@@ -40,7 +42,7 @@
             :disabled="item.disabled"
             class="sidebar-item"
           >
-            <v-tooltip :text="item.tooltip" location="end">
+            <v-tooltip :text="item.tooltip?.[settings.locale]" location="end">
               <template #activator="{ props }">
                 <div class="d-flex align-center w-100" v-bind="props">
                   <!-- RTL -->
@@ -48,17 +50,17 @@
                     <!-- <v-icon>{{ item.icon }}</v-icon> -->
                     <v-icon :icon="fallbackIcon"></v-icon>
                     <v-list-item-title v-if="!sidebar.isCollapsed" class="ms-2">
-                      {{ item.label }}
+                      {{ item.label[settings.locale] }}
                     </v-list-item-title>
                   </template>
 
                   <!-- LTR -->
                   <template v-else>
+                    <v-icon :icon="fallbackIcon"></v-icon>
                     <v-list-item-title v-if="!sidebar.isCollapsed">
-                      {{ item.label }}
+                      {{ item.label[settings.locale] }}
                     </v-list-item-title>
                     <!-- <v-icon class="me-2">{{ item.icon }}</v-icon> -->
-                    <v-icon :icon="fallbackIcon"></v-icon>
                   </template>
                 </div>
               </template>

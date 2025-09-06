@@ -13,9 +13,10 @@ function parseSettings(settings: any[]) {
     } else if (s.key === "disabled") {
       result.disabled = s.value === "true";
     } else if (s.key === "tooltip") {
-      const fa = s.value.find((x: any) => x.key === "fa")?.value;
-      const en = s.value.find((x: any) => x.key === "en")?.value;
-      result.tooltip = fa || en;
+      // const fa = s.value.find((x: any) => x.key === "fa")?.value;
+      // const en = s.value.find((x: any) => x.key === "en")?.value;
+      // result.tooltip = fa || en;
+      result.tooltip = Object.fromEntries(s.value.map((x: any) => [x.key, x.value]));
     }
   });
 
@@ -23,7 +24,7 @@ function parseSettings(settings: any[]) {
 }
 
 function parseLabel(labels: any[], lang: string = "fa") {
-  return labels.find((x) => x.key === lang)?.value || labels[0]?.value;
+  return Object.fromEntries(labels.map((x: any) => [x.key, x.value]));
 }
 
 function transformMenu(data: any, lang: string = "fa") {

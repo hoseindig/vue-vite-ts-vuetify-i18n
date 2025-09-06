@@ -48,11 +48,11 @@
                     "label": [
                         {
                             "key": "fa",
-                            "value": "دستور برچسب"
+                            "value": "بچه زیر منوی 1"
                         },
                         {
                             "key": "en",
-                            "value": "label command"
+                            "value": "child sub menu 1"
                         }
                     ],
                     "href": "/label-action",
