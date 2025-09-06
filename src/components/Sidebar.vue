@@ -10,36 +10,13 @@
     <!-- Top header with logo + version -->
     <div class="d-flex align-center justify-space-between mb-4 px-2">
       <!-- Language Switch -->
-      <div class="lang-buttons">
-        <v-btn
-          @click="settings.setLocale('fa')"
-          color="primary"
-          size="x-small"
-          :variant="settings.locale === 'fa' ? 'flat' : 'outlined'"
-        >
-          فارسی
-        </v-btn>
-        <v-btn
-          @click="settings.setLocale('en')"
-          color="secondary"
-          size="x-small"
-          :variant="settings.locale === 'en' ? 'flat' : 'outlined'"
-        >
-          English
-        </v-btn>
-      </div>
+      <LanguageSwitch v-if="!sidebar.isCollapsed" />
       <small class="text-disabled text-caption">{{ appVersion }}</small>
     </div>
 
     <!-- Collapse Toggle -->
     <v-btn variant="text" icon @click="sidebar.toggleCollapse" class="mb-2">
-      <v-icon>
-        {{
-          sidebar.isCollapsed
-            ? "mdi-chevron-double-right"
-            : "mdi-chevron-double-left"
-        }}
-      </v-icon>
+      <v-icon>{{ collapseIcon }}</v-icon>
     </v-btn>
 
     <v-divider />
@@ -64,12 +41,12 @@
               <v-list-item-title v-if="!sidebar.isCollapsed">{{
                 item.label
               }}</v-list-item-title>
-              <v-icon class="ms-2">{{ item.icon || fallbackIcon }}</v-icon>
+              <v-icon class="ms-2">{{ item.icon }}</v-icon>
             </template>
 
             <!-- LTR -->
             <template v-else>
-              <v-icon class="me-2">{{ item.icon || fallbackIcon }}</v-icon>
+              <v-icon class="me-2">{{ item.icon }}</v-icon>
               <v-list-item-title v-if="!sidebar.isCollapsed">{{
                 item.label
               }}</v-list-item-title>
@@ -82,9 +59,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useSidebarStore } from "../stores/sidebar";
 import { useSettingsStore } from "../stores/settings";
+import LanguageSwitch from "./LanguageSwitch.vue";
 
 const drawer = ref(true);
 const sidebar = useSidebarStore();
@@ -92,6 +70,17 @@ const settings = useSettingsStore();
 
 const fallbackIcon = "mdi-file-outline";
 const appVersion = import.meta.env.VITE_APP_VERSION || "v0.0.0";
+
+const collapseIcon = computed(() => {
+  const isRtl = settings.direction === "rtl";
+  if (sidebar.isCollapsed) {
+    // Collapsed → show expand arrow
+    return isRtl ? "mdi-chevron-double-left" : "mdi-chevron-double-right";
+  } else {
+    // Expanded → show collapse arrow
+    return isRtl ? "mdi-chevron-double-right" : "mdi-chevron-double-left";
+  }
+});
 
 onMounted(() => {
   sidebar.loadSections();
