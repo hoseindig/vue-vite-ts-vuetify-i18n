@@ -28,6 +28,7 @@ function parseLabel(labels: any[], lang: string = "fa") {
 
 function transformMenu(data: any, lang: string = "fa") {
   if (!data) return [];
+  console.log(data);
 
   return data.children?.map((item: any, idx: number) => {
     const base = {
