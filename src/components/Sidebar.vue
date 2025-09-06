@@ -5,26 +5,25 @@
     permanent
     app
     class="pa-2"
-    :location="isRTL ? 'right' : 'left'"
+    :location="settings.direction === 'rtl' ? 'right' : 'left'"
   >
     <!-- Top header with logo + version -->
     <div class="d-flex align-center justify-space-between mb-4 px-2">
-      <!-- <v-icon size="32">{{ appIcon }}</v-icon> -->
-      <!-- دکمه‌های تغییر زبان -->
-      <div class="lang-buttons mt-6">
+      <!-- Language Switch -->
+      <div class="lang-buttons">
         <v-btn
-          @click="switchLang('fa')"
+          @click="settings.setLocale('fa')"
           color="primary"
-          size="small"
-          :variant="currentLang === 'fa' ? 'flat' : 'outlined'"
+          size="x-small"
+          :variant="settings.locale === 'fa' ? 'flat' : 'outlined'"
         >
           فارسی
         </v-btn>
         <v-btn
-          @click="switchLang('en')"
+          @click="settings.setLocale('en')"
           color="secondary"
-          size="small"
-          :variant="currentLang === 'en' ? 'flat' : 'outlined'"
+          size="x-small"
+          :variant="settings.locale === 'en' ? 'flat' : 'outlined'"
         >
           English
         </v-btn>
@@ -55,56 +54,25 @@
       <!-- Items -->
       <v-list density="compact" nav>
         <template v-for="item in section.items" :key="item.id">
-          <!-- With tooltip -->
-          <v-tooltip v-if="item.tooltip" location="right">
-            <template #activator="{ props }">
-              <v-list-item
-                v-bind="props"
-                :to="item.route"
-                :disabled="item.disabled"
-                class="sidebar-item"
-              >
-                <!-- RTL -->
-                <template v-if="currentDirection === 'rtl'">
-                  <v-list-item-title v-if="!sidebar.isCollapsed">
-                    {{ item.label }}
-                  </v-list-item-title>
-                  <v-icon class="ms-2">{{ item.icon }}</v-icon>
-                </template>
-
-                <!-- LTR -->
-                <template v-else>
-                  <v-icon class="me-2">{{ item.icon }}</v-icon>
-                  <v-list-item-title v-if="!sidebar.isCollapsed">
-                    {{ item.label }}
-                  </v-list-item-title>
-                </template>
-              </v-list-item>
-            </template>
-            <span>{{ item.tooltip }}</span>
-          </v-tooltip>
-
-          <!-- Without tooltip -->
           <v-list-item
-            v-else
             :to="item.route"
             :disabled="item.disabled"
             class="sidebar-item"
           >
             <!-- RTL -->
-            <template v-if="currentDirection === 'rtl'">
-              <v-list-item-title v-if="!sidebar.isCollapsed">
-                {{ item.label }}
-              </v-list-item-title>
-              <v-icon class="ms-2">{{ item.icon }}</v-icon>
+            <template v-if="settings.direction === 'rtl'">
+              <v-list-item-title v-if="!sidebar.isCollapsed">{{
+                item.label
+              }}</v-list-item-title>
+              <v-icon class="ms-2">{{ item.icon || fallbackIcon }}</v-icon>
             </template>
 
             <!-- LTR -->
             <template v-else>
-              <v-icon class="me-2">{{ item.icon }}</v-icon>
-              <v-list-item-title v-if="!sidebar.isCollapsed">
-                {{ item.label }}
-              </v-list-item-title>
+              <v-icon class="me-2">{{ item.icon || fallbackIcon }}</v-icon>
+              <v-list-item-title v-if="!sidebar.isCollapsed">{{
+                item.label
+              }}</v-list-item-title>
             </template>
           </v-list-item>
         </template>
@@ -114,81 +82,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted } from "vue";
 import { useSidebarStore } from "../stores/sidebar";
-import { useI18n } from "vue-i18n";
+import { useSettingsStore } from "../stores/settings";
 
 const drawer = ref(true);
 const sidebar = useSidebarStore();
-const { locale } = useI18n();
+const settings = useSettingsStore();
 
-// Default fallback icon if item has no icon
 const fallbackIcon = "mdi-file-outline";
-
-// Small version text from .env
 const appVersion = import.meta.env.VITE_APP_VERSION || "v0.0.0";
-
-// Global app icon (could be configurable or static)
-const appIcon = "mdi-application";
-
-// Direction based on current language
-// const currentDirection = computed<"rtl" | "ltr">(() =>
-//   locale.value === "fa" ? "rtl" : "ltr"
-// );
-
-////////////////////////
-// مدیریت ساده جهت و زبان
-const currentLang = ref(localStorage.getItem("locale") || "fa");
-const currentDirection = ref<"rtl" | "ltr">(
-  (localStorage.getItem("dir") as "rtl" | "ltr") || "rtl"
-);
-
-function switchLang(lang: string) {
-  console.log("🔄 تغییر زبان به:", lang);
-
-  currentLang.value = lang;
-  locale.value = lang;
-  localStorage.setItem("locale", lang);
-
-  const newDirection = lang === "fa" ? "rtl" : "ltr";
-  currentDirection.value = newDirection;
-  localStorage.setItem("dir", newDirection);
-
-  applyDirection(newDirection);
-}
-
-function applyDirection(direction: "rtl" | "ltr") {
-  // تنظیم DOM
-  document.documentElement.setAttribute("dir", direction);
-  document.body.style.direction = direction;
-  document.body.className = document.body.className.replace(
-    /\b(rtl|ltr)\b/g,
-    ""
-  );
-  document.body.classList.add(direction);
-
-  // اعمال استایل‌های inline به تمام فیلدهای موجود
-  setTimeout(() => {
-    const textFields = document.querySelectorAll(
-      ".v-field__input input, .v-field__input textarea"
-    );
-    textFields.forEach((field: any) => {
-      field.style.direction = direction;
-      field.style.textAlign = direction === "rtl" ? "right" : "left";
-    });
-
-    const fieldInputs = document.querySelectorAll(".v-field__input");
-    fieldInputs.forEach((field: any) => {
-      field.style.direction = direction;
-      field.style.textAlign = direction === "rtl" ? "right" : "left";
-    });
-  }, 50);
-
-  console.log("✅ جهت اعمال شد:", direction);
-}
-
-// Check language direction
-const isRTL = computed(() => sidebar.language === "fa");
 
 onMounted(() => {
   sidebar.loadSections();
@@ -203,5 +106,9 @@ onMounted(() => {
 }
 .text-caption {
   font-size: 0.8rem;
+}
+.lang-buttons {
+  display: flex;
+  gap: 4px;
 }
 </style>
