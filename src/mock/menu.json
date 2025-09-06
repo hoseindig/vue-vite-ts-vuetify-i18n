@@ -1,0 +1,124 @@
+{
+    "type": "menu",
+    "object_id": "1234.1234.1423.1234",
+    "label": [
+        {
+            "key": "fa",
+            "value": "منوی کناری"
+        },
+        {
+            "key": "en",
+            "value": "Sidebar Menu"
+        }
+    ],
+    "href": "/main",
+    "settings": [],
+    "children": [
+        {
+            "type": "menu",
+            "label": [
+                {
+                    "key": "fa",
+                    "value": "زیرمنوی ۱"
+                },
+                {
+                    "key": "en",
+                    "value": "Sub-Menu 1"
+                }
+            ],
+            "href": "/submenu1",
+            "settings": [],
+            "children": [
+                {
+                    "type": "command",
+                    "label": [
+                        {
+                            "key": "fa",
+                            "value": "دستور برچسب"
+                        },
+                        {
+                            "key": "en",
+                            "value": "label command"
+                        }
+                    ],
+                    "href": "/label-action",
+                    "settings": [
+                        {
+                            "key": "icon",
+                            "value": "label-command.jpg"
+                        },
+                        {
+                            "key": "disabled",
+                            "value": "true"
+                        },
+                        {
+                            "key": "tooltip",
+                            "value": [
+                                {
+                                    "key": "fa",
+                                    "value": "راهنمای برچسب"
+                                },
+                                {
+                                    "key": "en",
+                                    "value": "Label Tooltip"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "menu",
+            "label": [
+                {
+                    "key": "fa",
+                    "value": "دستورات ثابت"
+                },
+                {
+                    "key": "en",
+                    "value": "static commands"
+                }
+            ],
+            "href": "/static-commands",
+            "settings": [],
+            "children": [
+                {
+                    "type": "command",
+                    "label": [
+                        {
+                            "key": "fa",
+                            "value": "اخیر"
+                        },
+                        {
+                            "key": "en",
+                            "value": "Recents"
+                        }
+                    ],
+                    "href": "/recents",
+                    "settings": [
+                        {
+                            "key": "icon",
+                            "value": "/recnets.jpg"
+                        }
+                    ]
+                },
+                {
+                    "type": "command",
+                    "label": [
+                        {
+                            "key": "fa",
+                            "value": "باز کردن"
+                        },
+                        {
+                            "key": "en",
+                            "value": "Open"
+                        }
+                    ],
+                    "href": "/open",
+                    "settings": []
+                }
+            ]
+        }
+    ]
+}
