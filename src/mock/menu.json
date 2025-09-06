@@ -27,7 +27,21 @@
                 }
             ],
             "href": "/submenu1",
-            "settings": [],
+            "settings": [
+                {
+                    "key": "tooltip",
+                    "value": [
+                        {
+                            "key": "fa",
+                            "value": "راهنمای زیرمنوی "
+                        },
+                        {
+                            "key": "en",
+                            "value": "Label Tooltip"
+                        }
+                    ]
+                }
+            ],
             "children": [
                 {
                     "type": "command",
@@ -81,7 +95,21 @@
                 }
             ],
             "href": "/static-commands",
-            "settings": [],
+            "settings": [
+                {
+                    "key": "tooltip",
+                    "value": [
+                        {
+                            "key": "fa",
+                            "value": "راهنمای دستورات ثابت"
+                        },
+                        {
+                            "key": "en",
+                            "value": "Label Tooltip"
+                        }
+                    ]
+                }
+            ],
             "children": [
                 {
                     "type": "command",
