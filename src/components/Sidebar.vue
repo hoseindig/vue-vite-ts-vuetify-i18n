@@ -38,6 +38,7 @@
       <v-list density="compact" nav class="pa-0 ma-0">
         <template v-for="item in section.items" :key="item.id">
           <v-list-item
+            v-if="item.route"
             :to="item.route"
             :disabled="item.disabled"
             class="sidebar-item"
@@ -75,6 +76,7 @@
             <template v-for="child in item.children" :key="child.id">
               <v-list-item
                 :to="child.route"
+                v-if="child.route"
                 :disabled="child.disabled"
                 class="sidebar-item"
               >
