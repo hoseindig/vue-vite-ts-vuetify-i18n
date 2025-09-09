@@ -11,15 +11,36 @@
     ],
     "tooltip": [
         {
-            "en": "Sidebar Menu"
+            "en": "Label Tooltip"
         },
         {
-            "fa": "منوی کناری"
+            "fa": "راهنمای برچسب"
         }
     ],
     "href": "/main",
     "settings": [],
     "children": [
+        {
+            "type": "menu ",
+            "label": [
+                {
+                    "en": "Use Change Management solution to create changes, manage changes with governance and implement your changes."
+                },
+                {
+                    "fa": "از راهکار مدیریت تغییر برای ایجاد تغییرات، مدیریت تغییرات با استفاده از مدیریت و اجرای تغییرات خود استفاده کنید."
+                }
+            ],
+            "tooltip": [
+                {
+                    "en": "Tooltip"
+                },
+                {
+                    "fa": "راهنمای "
+                }
+            ],
+            "href": "/submenu1",
+            "settings": []
+        },
         {
             "type": "menu",
             "label": [
@@ -27,15 +48,15 @@
                     "en": "Sub-Menu 1"
                 },
                 {
-                    "fa": "زیر منوی 1"
+                    "fa": "زیرمنوی ۱"
                 }
             ],
             "tooltip": [
                 {
-                    "en": "Sub-Menu 1"
+                    "en": "Label Tooltip"
                 },
                 {
-                    "fa": "زیر منوی 1"
+                    "fa": "راهنمای برچسب"
                 }
             ],
             "href": "/submenu1",
@@ -45,18 +66,18 @@
                     "type": "command",
                     "label": [
                         {
-                            "en": "label command"
+                            "en": "child sub menu 1"
                         },
                         {
-                            "fa": "دستور"
+                            "fa": "بچه زیر منوی ۱"
                         }
                     ],
                     "tooltip": [
                         {
-                            "en": "label command"
+                            "en": "Label Tooltip"
                         },
                         {
-                            "fa": "دستور"
+                            "fa": "راهنمای برچسب"
                         }
                     ],
                     "href": "/label-action",
@@ -68,6 +89,32 @@
                         {
                             "key": "disabled",
                             "value": "true"
+                        }
+                    ]
+                },
+                {
+                    "type": "command",
+                    "label": [
+                        {
+                            "en": "child sub menu 1"
+                        },
+                        {
+                            "fa": "بچه زیر منوی ۲"
+                        }
+                    ],
+                    "tooltip": [
+                        {
+                            "en": "Label Tooltip"
+                        },
+                        {
+                            "fa": "راهنمای برچسب"
+                        }
+                    ],
+                    "href": "/label-action",
+                    "settings": [
+                        {
+                            "key": "icon",
+                            "value": "label-command.jpg"
                         }
                     ]
                 }
@@ -85,19 +132,14 @@
             ],
             "tooltip": [
                 {
-                    "en": "static commands"
+                    "en": "Label Tooltip"
                 },
                 {
-                    "fa": "دستورات ثابت"
+                    "fa": "راهنمای برچسب"
                 }
             ],
             "href": "/static-commands",
-            "settings": [
-                {
-                    "key": "icon",
-                    "value": "label-command.jpg"
-                }
-            ],
+            "settings": [],
             "children": [
                 {
                     "type": "command",
@@ -111,10 +153,10 @@
                     ],
                     "tooltip": [
                         {
-                            "en": "Recents"
+                            "en": "Label Tooltip"
                         },
                         {
-                            "fa": "اخیر"
+                            "fa": "راهنمای برچسب"
                         }
                     ],
                     "href": "/recents",
@@ -137,19 +179,14 @@
                     ],
                     "tooltip": [
                         {
-                            "en": "Open"
+                            "en": "Label Tooltip"
                         },
                         {
-                            "fa": "باز کردن"
+                            "fa": "راهنمای برچسب"
                         }
                     ],
                     "href": "/open",
-                    "settings": [
-                        {
-                            "key": "icon",
-                            "value": "label-command.jpg"
-                        }
-                    ]
+                    "settings": []
                 }
             ]
         }

@@ -4,107 +4,139 @@
     :rail="sidebar.isCollapsed"
     permanent
     app
-    class=""
+    class="sidebar"
     :location="settings.direction === 'rtl' ? 'right' : 'left'"
+    :class="{ 'sidebar--rtl': settings.direction === 'rtl' }"
   >
-    <!-- Top header with logo + version -->
-    <div class="d-flex align-center justify-space-between mb-4 px-2">
-      <!-- Language Switch -->
-      <LanguageSwitch v-if="!sidebar.isCollapsed" />
-      <small class="text-disabled text-caption">{{ appVersion }}</small>
-    </div>
+    <!-- Loading State -->
+    <v-skeleton-loader
+      v-if="sidebar.loading"
+      type="list-item-avatar-two-line@10"
+      class="mx-2 my-4"
+      :style="{ opacity: 0.8 }"
+    />
 
-    <!-- Collapse Toggle -->
-    <v-btn variant="text" icon @click="sidebar.toggleCollapse" class="mb-2">
-      <v-icon>{{ collapseIcon }}</v-icon>
-    </v-btn>
-
-    <v-divider />
-
-    <!-- Sections -->
-    <div
-      v-for="section in sidebar.sections"
-      :key="section.id"
-      class="mb-4 mt-3"
-    >
-      <!-- Title -->
-      <div v-if="!sidebar.isCollapsed" class="mb-2 mx-2">
-        <div class="text-caption font-weight-bold">
-          {{ section.title[settings.locale] }}
-        </div>
+    <!-- Content when not loading -->
+    <template v-else>
+      <!-- Top header with logo + version -->
+      <div class="d-flex align-center justify-space-between mb-4 px-3">
+        <LanguageSwitch v-if="!sidebar.isCollapsed" />
+        <small class="text-disabled text-caption">{{ appVersion }}</small>
       </div>
 
-      <!-- Items -->
-      <v-list density="compact" nav class="pa-0 ma-0">
-        <template v-for="item in section.items" :key="item.id">
-          <v-list-item
-            v-if="item.route"
-            :to="item.route"
-            :disabled="item.disabled"
-            class="sidebar-item"
-          >
-            <v-tooltip :text="item.tooltip?.[settings.locale]" location="end">
-              <template #activator="{ props }">
-                <div class="d-flex align-center w-100" v-bind="props">
-                  <!-- RTL -->
-                  <template v-if="settings.direction === 'rtl'">
-                    <v-icon :icon="fallbackIcon"></v-icon>
-                    <v-list-item-title v-if="!sidebar.isCollapsed" class="ms-2">
-                      {{ item.label[settings.locale] }}
-                    </v-list-item-title>
-                  </template>
+      <!-- Collapse Toggle -->
+      <v-btn
+        variant="text"
+        icon
+        @click="sidebar.toggleCollapse"
+        class="mb-3 mx-auto"
+        :aria-label="
+          sidebar.isCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'
+        "
+      >
+        <v-icon :class="{ 'rotate-icon': settings.direction === 'rtl' }">
+          {{ collapseIcon }}
+        </v-icon>
+      </v-btn>
 
-                  <!-- LTR -->
-                  <template v-else>
-                    <v-icon :icon="fallbackIcon"></v-icon>
+      <v-divider class="my-2" />
+
+      <!-- Sections -->
+      <div
+        v-for="section in sidebar.sections"
+        :key="section.id"
+        class="section-wrapper"
+      >
+        <!-- Section Title -->
+        <div v-if="!sidebar.isCollapsed" class="section-title mx-3 mb-2">
+          <span class="text-caption font-weight-bold">
+            {{ section.title[settings.locale] }}
+          </span>
+        </div>
+
+        <!-- Menu Items -->
+        <v-list density="compact" nav class="pa-0 ma-0">
+          <template v-for="item in section.items" :key="item.id">
+            <!-- Parent Item -->
+            <v-list-item
+              v-if="item.route"
+              :to="item.route"
+              :disabled="item.disabled"
+              class="sidebar-item"
+              active-class="sidebar-item--active"
+            >
+              <v-tooltip :text="item.tooltip?.[settings.locale]" location="end">
+                <template #activator="{ props }">
+                  <div
+                    class="d-flex align-center w-100"
+                    :class="{
+                      'flex-row-reverse': settings.direction === 'rtl',
+                    }"
+                    v-bind="props"
+                  >
+                    <v-icon v-if="item.icon" class="me-2">
+                      {{ item.icon }}
+                    </v-icon>
                     <v-list-item-title v-if="!sidebar.isCollapsed">
                       {{ item.label[settings.locale] }}
                     </v-list-item-title>
-                  </template>
-                </div>
-              </template>
-            </v-tooltip>
-          </v-list-item>
+                  </div>
+                </template>
+              </v-tooltip>
+            </v-list-item>
 
-          <!-- 👇 سطح دوم -->
-          <v-list
-            v-if="item.children && item.children.length"
-            density="compact"
-            nav
-            :class="[sidebar.isCollapsed ? 'ps-0' : 'ms-4']"
-          >
-            <template v-for="child in item.children" :key="child.id">
+            <!-- Child Items -->
+            <v-list
+              v-if="item.children && item.children.length"
+              density="compact"
+              nav
+              class="pa-0 ma-0"
+            >
               <v-list-item
+                v-for="child in item.children"
+                :key="child.id"
                 :to="child.route"
-                v-if="child.route"
                 :disabled="child.disabled"
                 class="sidebar-item"
+                active-class="sidebar-item--active"
               >
                 <v-tooltip
                   :text="child.tooltip?.[settings.locale]"
                   location="end"
                 >
                   <template #activator="{ props }">
-                    <div class="d-flex align-center w-100" v-bind="props">
-                      <v-icon :icon="fallbackIcon"></v-icon>
-                      <v-list-item-title
-                        v-if="!sidebar.isCollapsed"
-                        class="ms-2"
-                      >
+                    <div
+                      class="d-flex align-center w-100"
+                      :class="{
+                        'flex-row-reverse': settings.direction === 'rtl',
+                      }"
+                      v-bind="props"
+                    >
+                      <v-icon v-if="child.icon" class="me-2">
+                        {{ child.icon }}
+                      </v-icon>
+                      <v-list-item-title v-if="!sidebar.isCollapsed">
                         {{ child.label[settings.locale] }}
                       </v-list-item-title>
                     </div>
                   </template>
                 </v-tooltip>
               </v-list-item>
-            </template>
+            </v-list>
+            <v-divider v-if="item.children?.length" class="my-2" />
+          </template>
+        </v-list>
+      </div>
+    </template>
 
-            <v-divider class="my-2" />
-          </v-list>
-          <!-- 👆 سطح دوم -->
-        </template>
-      </v-list>
-    </div>
+    <!-- Error State -->
+    <v-alert
+      v-if="sidebar.error"
+      type="error"
+      :text="sidebar.error"
+      class="mx-3 my-2"
+      density="compact"
+    />
   </v-navigation-drawer>
 </template>
 
@@ -113,44 +145,77 @@ import { ref, onMounted, computed } from "vue";
 import { useSidebarStore } from "../stores/sidebar";
 import { useSettingsStore } from "../stores/settings";
 import LanguageSwitch from "./LanguageSwitch.vue";
-// import {
-//   mdiAccount,
-//   mdiDelete,
-//   mdiPencil,
-//   mdiShareVariant,
-// } from "mdi-file-outline";
-const fallbackIcon = "mdi-file-outline";
+
+// Reactive state for drawer visibility
 const drawer = ref(true);
+
+// Store instances
 const sidebar = useSidebarStore();
 const settings = useSettingsStore();
 
+// Application version from environment
 const appVersion = import.meta.env.VITE_APP_VERSION || "v0.0.0";
 
+// Computed property for collapse icon based on sidebar state and direction
 const collapseIcon = computed(() => {
   const isRtl = settings.direction === "rtl";
-  if (sidebar.isCollapsed) {
-    // Collapsed → show expand arrow
-    return isRtl ? "mdi-chevron-double-left" : "mdi-chevron-double-right";
-  } else {
-    // Expanded → show collapse arrow
-    return isRtl ? "mdi-chevron-double-right" : "mdi-chevron-double-left";
-  }
+  return sidebar.isCollapsed
+    ? isRtl
+      ? "mdi-chevron-double-left"
+      : "mdi-chevron-double-right"
+    : isRtl
+    ? "mdi-chevron-double-right"
+    : "mdi-chevron-double-left";
 });
 
+// Load sidebar sections on component mount
 onMounted(() => {
   sidebar.loadSections();
 });
 </script>
 
 <style scoped>
-.sidebar-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+/* Sidebar container */
+.sidebar {
+  transition: width 0.3s ease;
 }
 
+/* RTL-specific adjustments */
+.sidebar--rtl {
+  direction: rtl;
+}
+
+/* Section title styling */
+.section-title {
+  padding: 8px 0;
+  color: var(--v-theme-text-primary);
+}
+
+/* Sidebar item styling */
+.sidebar-item {
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+/* Active sidebar item */
+.sidebar-item--active {
+  background-color: var(--v-theme-primary-lighten-1);
+  color: var(--v-theme-primary);
+}
+
+/* Icon rotation for RTL */
+.rotate-icon {
+  transform: rotate(180deg);
+}
+
+/* Language buttons container */
 .lang-buttons {
   display: flex;
   gap: 4px;
+}
+
+/* Hover effect for items */
+.sidebar-item:hover {
+  background-color: var(--v-theme-surface-variant);
 }
 </style>

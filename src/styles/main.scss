@@ -1,5 +1,8 @@
 /* اضافه کردن به فایل src/style.css یا در main.ts */
 
+body {
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
 /* تنظیمات کلی برای RTL/LTR */
 html[dir="rtl"] {
   direction: rtl;
@@ -63,5 +66,3 @@ html[dir="ltr"] .v-btn + .v-btn {
   margin-left: 8px;
   margin-right: 0;
 }
-
-/* حتماً این استایل‌ها را به فایل اصلی CSS خود اضافه کنید */
