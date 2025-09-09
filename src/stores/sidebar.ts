@@ -100,7 +100,7 @@ export const useSidebarStore = defineStore("sidebar", () => {
 
     try {
       let rawData: any = null;
-      if (!useMock) {
+      if (false) {//!useMock
         rawData = await fetchSidebarMenu();
       }
 

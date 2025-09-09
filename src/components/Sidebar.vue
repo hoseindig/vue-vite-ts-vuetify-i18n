@@ -77,7 +77,7 @@
               active-class="sidebar-item--active"
             >
               <template #prepend>
-                <v-icon>
+                <v-icon size="18">
                   {{ item.icon }}
                 </v-icon>
               </template>
@@ -97,7 +97,7 @@
               active-class="sidebar-item--active"
             >
               <template #prepend>
-                <v-icon>
+                <v-icon size="18">
                   {{ child.icon }}
                 </v-icon>
               </template>
@@ -140,21 +140,23 @@ const settings = useSettingsStore();
 // Application version from environment
 const appVersion = import.meta.env.VITE_APP_VERSION || "v0.0.0";
 
-// Computed property for collapse icon based on sidebar state and direction
 const collapseIcon = computed(() => {
   const isRtl = settings.direction === "rtl";
-  return sidebar.isCollapsed
-    ? isRtl
+
+  if (isRtl) {
+    return sidebar.isCollapsed
       ? "mdi-chevron-double-left"
-      : "mdi-chevron-double-right"
-    : isRtl
-    ? "mdi-chevron-double-right"
-    : "mdi-chevron-double-left";
+      : "mdi-chevron-double-right";
+  } else {
+    return sidebar.isCollapsed
+      ? "mdi-chevron-double-right"
+      : "mdi-chevron-double-left";
+  }
 });
 
 // Load sidebar sections on component mount
 onMounted(() => {
-  sidebar.loadSections();
+  sidebar.loadSections(false);
 });
 </script>
 
