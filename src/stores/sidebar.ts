@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 import axios from "axios";
 
-// نمونه داده mock (برای fallback / dev)
+// Mock
 import menuData from "../mock/menu.json";
 
 // Types
@@ -26,23 +26,27 @@ interface Section {
 
 // ---- Parsers ----
 function parseSettings(settings: any[]) {
-  const result: { icon?: string; disabled?: boolean; tooltip?: Record<string, string> } = {};
+  const result: { icon?: string; disabled?: boolean } = {};
 
   settings.forEach((s) => {
     if (s.key === "icon") {
       result.icon = s.value;
     } else if (s.key === "disabled") {
       result.disabled = s.value === "true";
-    } else if (s.key === "tooltip") {
-      result.tooltip = Object.fromEntries(s.value.map((x: any) => [x.key, x.value]));
     }
   });
 
   return result;
 }
 
-function parseLabel(labels: any[], lang: string = "fa") {
-  return Object.fromEntries(labels.map((x: any) => [x.key, x.value]));
+// تبدیل label/tooltip به object: { fa: "...", en: "..." }
+function parseMultiLang(arr: any[]): Record<string, string> {
+  const result: Record<string, string> = {};
+  arr.forEach((obj: any) => {
+    const [key, value] = Object.entries(obj)[0];
+    result[key] = value as string;
+  });
+  return result;
 }
 
 function transformMenu(data: any, lang: string = "fa"): MenuItem[] {
@@ -51,7 +55,8 @@ function transformMenu(data: any, lang: string = "fa"): MenuItem[] {
   return data.children?.map((item: any, idx: number) => {
     const base: MenuItem = {
       id: item.object_id || `item-${idx}`,
-      label: parseLabel(item.label, lang),
+      label: parseMultiLang(item.label || []),
+      tooltip: item.tooltip ? parseMultiLang(item.tooltip) : undefined,
       route: item.href || null,
       type: item.type,
       children: [],
@@ -95,16 +100,16 @@ export const useSidebarStore = defineStore("sidebar", () => {
 
     try {
       let rawData: any = null;
-
       if (!useMock) {
         rawData = await fetchSidebarMenu();
       }
 
-      const source = rawData || menuData; // fallback
+      const source = rawData || menuData;
+
       sections.value = [
         {
           id: source.object_id,
-          title: parseLabel(source.label, lang),
+          title: parseMultiLang(source.label || []),
           description: "",
           items: transformMenu(source, lang)
         }

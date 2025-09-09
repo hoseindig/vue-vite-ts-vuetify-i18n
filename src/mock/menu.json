@@ -3,70 +3,60 @@
     "object_id": "1234.1234.1423.1234",
     "label": [
         {
-            "key": "fa",
-            "value": "منوی کناری"
+            "en": "Sidebar Menu"
         },
         {
-            "key": "en",
-            "value": "Sidebar Menu"
+            "fa": "منوی کناری"
+        }
+    ],
+    "tooltip": [
+        {
+            "en": "Label Tooltip"
+        },
+        {
+            "fa": "راهنمای برچسب"
         }
     ],
     "href": "/main",
-    "settings": [
-        {
-            "key": "tooltip",
-            "value": [
-                {
-                    "key": "fa",
-                    "value": "راهنمای برچسب"
-                },
-                {
-                    "key": "en",
-                    "value": "Label Tooltip"
-                }
-            ]
-        }
-    ],
+    "settings": [],
     "children": [
         {
             "type": "menu",
             "label": [
                 {
-                    "key": "fa",
-                    "value": "زیرمنوی ۱"
+                    "en": "Sub-Menu 1"
                 },
                 {
-                    "key": "en",
-                    "value": "Sub-Menu 1"
+                    "fa": "زیرمنوی ۱"
+                }
+            ],
+            "tooltip": [
+                {
+                    "en": "Label Tooltip"
+                },
+                {
+                    "fa": "راهنمای برچسب"
                 }
             ],
             "href": "/submenu1",
-            "settings": [
-                {
-                    "key": "tooltip",
-                    "value": [
-                        {
-                            "key": "fa",
-                            "value": "راهنمای برچسب"
-                        },
-                        {
-                            "key": "en",
-                            "value": "Label Tooltip"
-                        }
-                    ]
-                }
-            ],
+            "settings": [],
             "children": [
                 {
                     "type": "command",
                     "label": [
                         {
-                            "key": "fa",
-                            "value": "بچه زیر منوی 1"
+                            "en": "child sub menu 1"
                         },
                         {
-                            "key": "en",
-                            "value": "child sub menu 1"
+                            "fa": "بچه زیر منوی ۱"
+                        }
+                    ],
+                    "tooltip": [
+                        {
+                            "en": "Label Tooltip"
+                        },
+                        {
+                            "fa": "راهنمای برچسب"
                         }
                     ],
                     "href": "/label-action",
@@ -78,19 +68,6 @@
                         {
                             "key": "disabled",
                             "value": "true"
-                        },
-                        {
-                            "key": "tooltip",
-                            "value": [
-                                {
-                                    "key": "fa",
-                                    "value": "راهنمای برچسب"
-                                },
-                                {
-                                    "key": "en",
-                                    "value": "Label Tooltip"
-                                }
-                            ]
                         }
                     ]
                 },
@@ -98,12 +75,18 @@
                     "type": "command",
                     "label": [
                         {
-                            "key": "fa",
-                            "value": "بچه زیر منوی 2"
+                            "en": "child sub menu 1"
                         },
                         {
-                            "key": "en",
-                            "value": "child sub menu 1"
+                            "fa": "بچه زیر منوی ۲"
+                        }
+                    ],
+                    "tooltip": [
+                        {
+                            "en": "Label Tooltip"
+                        },
+                        {
+                            "fa": "راهنمای برچسب"
                         }
                     ],
                     "href": "/label-action",
@@ -111,19 +94,6 @@
                         {
                             "key": "icon",
                             "value": "label-command.jpg"
-                        },
-                        {
-                            "key": "tooltip",
-                            "value": [
-                                {
-                                    "key": "fa",
-                                    "value": "راهنمای برچسب"
-                                },
-                                {
-                                    "key": "en",
-                                    "value": "Label Tooltip"
-                                }
-                            ]
                         }
                     ]
                 }
@@ -133,41 +103,39 @@
             "type": "menu",
             "label": [
                 {
-                    "key": "fa",
-                    "value": "دستورات ثابت"
+                    "en": "static commands"
                 },
                 {
-                    "key": "en",
-                    "value": "static commands"
+                    "fa": "دستورات ثابت"
+                }
+            ],
+            "tooltip": [
+                {
+                    "en": "Label Tooltip"
+                },
+                {
+                    "fa": "راهنمای برچسب"
                 }
             ],
             "href": "/static-commands",
-            "settings": [
-                {
-                    "key": "tooltip",
-                    "value": [
-                        {
-                            "key": "fa",
-                            "value": "راهنمای برچسب"
-                        },
-                        {
-                            "key": "en",
-                            "value": "Label Tooltip"
-                        }
-                    ]
-                }
-            ],
+            "settings": [],
             "children": [
                 {
                     "type": "command",
                     "label": [
                         {
-                            "key": "fa",
-                            "value": "اخیر"
+                            "en": "Recents"
                         },
                         {
-                            "key": "en",
-                            "value": "Recents"
+                            "fa": "اخیر"
+                        }
+                    ],
+                    "tooltip": [
+                        {
+                            "en": "Label Tooltip"
+                        },
+                        {
+                            "fa": "راهنمای برچسب"
                         }
                     ],
                     "href": "/recents",
@@ -175,19 +143,6 @@
                         {
                             "key": "icon",
                             "value": "/recnets.jpg"
-                        },
-                        {
-                            "key": "tooltip",
-                            "value": [
-                                {
-                                    "key": "fa",
-                                    "value": "راهنمای برچسب"
-                                },
-                                {
-                                    "key": "en",
-                                    "value": "Label Tooltip"
-                                }
-                            ]
                         }
                     ]
                 },
@@ -195,30 +150,22 @@
                     "type": "command",
                     "label": [
                         {
-                            "key": "fa",
-                            "value": "باز کردن"
+                            "en": "Open"
                         },
                         {
-                            "key": "en",
-                            "value": "Open"
+                            "fa": "باز کردن"
+                        }
+                    ],
+                    "tooltip": [
+                        {
+                            "en": "Label Tooltip"
+                        },
+                        {
+                            "fa": "راهنمای برچسب"
                         }
                     ],
                     "href": "/open",
-                    "settings": [
-                        {
-                            "key": "tooltip",
-                            "value": [
-                                {
-                                    "key": "fa",
-                                    "value": "راهنمای برچسب"
-                                },
-                                {
-                                    "key": "en",
-                                    "value": "Label Tooltip"
-                                }
-                            ]
-                        }
-                    ]
+                    "settings": []
                 }
             ]
         }
