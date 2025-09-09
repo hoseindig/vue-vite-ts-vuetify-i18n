@@ -9,12 +9,23 @@
     :class="{ 'sidebar--rtl': settings.direction === 'rtl' }"
   >
     <!-- Loading State -->
-    <v-skeleton-loader
+    <!-- <v-skeleton-loader
       v-if="sidebar.loading"
       type="list-item-avatar-two-line@10"
       class="mx-2 my-4"
       :style="{ opacity: 0.8 }"
-    />
+    /> -->
+    <div
+      class="d-flex align-center justify-center"
+      style="height: 100%"
+      v-if="sidebar.loading"
+    >
+      <v-progress-circular
+        indeterminate
+        color="primary"
+        size="48"
+      ></v-progress-circular>
+    </div>
 
     <!-- Content when not loading -->
     <template v-else>
@@ -29,7 +40,7 @@
         variant="text"
         icon
         @click="sidebar.toggleCollapse"
-        class="mb-3 mx-auto"
+        class="mb-1 mx-auto"
         :aria-label="
           sidebar.isCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'
         "
@@ -39,7 +50,7 @@
         </v-icon>
       </v-btn>
 
-      <v-divider class="my-2" />
+      <!-- <v-divider class="my-2" /> -->
 
       <!-- Sections -->
       <div
@@ -65,64 +76,37 @@
               class="sidebar-item"
               active-class="sidebar-item--active"
             >
-              <v-tooltip :text="item.tooltip?.[settings.locale]" location="end">
-                <template #activator="{ props }">
-                  <div
-                    class="d-flex align-center w-100"
-                    :class="{
-                      'flex-row-reverse': settings.direction === 'rtl',
-                    }"
-                    v-bind="props"
-                  >
-                    <v-icon v-if="item.icon" class="me-2">
-                      {{ item.icon }}
-                    </v-icon>
-                    <v-list-item-title v-if="!sidebar.isCollapsed">
-                      {{ item.label[settings.locale] }}
-                    </v-list-item-title>
-                  </div>
-                </template>
-              </v-tooltip>
+              <template #prepend>
+                <v-icon>
+                  {{ item.icon }}
+                </v-icon>
+              </template>
+
+              <v-list-item-title v-if="!sidebar.isCollapsed">
+                <h4>{{ item.label[settings.locale] }}</h4>
+              </v-list-item-title>
             </v-list-item>
 
             <!-- Child Items -->
-            <v-list
-              v-if="item.children && item.children.length"
-              density="compact"
-              nav
-              class="pa-0 ma-0"
+            <v-list-item
+              v-for="child in item.children"
+              :key="child.id"
+              :to="child.route"
+              :disabled="child.disabled"
+              class="sidebar-item"
+              active-class="sidebar-item--active"
             >
-              <v-list-item
-                v-for="child in item.children"
-                :key="child.id"
-                :to="child.route"
-                :disabled="child.disabled"
-                class="sidebar-item"
-                active-class="sidebar-item--active"
-              >
-                <v-tooltip
-                  :text="child.tooltip?.[settings.locale]"
-                  location="end"
-                >
-                  <template #activator="{ props }">
-                    <div
-                      class="d-flex align-center w-100"
-                      :class="{
-                        'flex-row-reverse': settings.direction === 'rtl',
-                      }"
-                      v-bind="props"
-                    >
-                      <v-icon v-if="child.icon" class="me-2">
-                        {{ child.icon }}
-                      </v-icon>
-                      <v-list-item-title v-if="!sidebar.isCollapsed">
-                        {{ child.label[settings.locale] }}
-                      </v-list-item-title>
-                    </div>
-                  </template>
-                </v-tooltip>
-              </v-list-item>
-            </v-list>
+              <template #prepend>
+                <v-icon>
+                  {{ child.icon }}
+                </v-icon>
+              </template>
+
+              <v-list-item-title v-if="!sidebar.isCollapsed">
+                {{ child.label[settings.locale] }}
+              </v-list-item-title>
+            </v-list-item>
+
             <v-divider v-if="item.children?.length" class="my-2" />
           </template>
         </v-list>
