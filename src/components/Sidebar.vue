@@ -91,7 +91,7 @@
             <v-list-item
               v-for="child in item.children"
               :key="child.id"
-              :to="child.route"
+              v-bind="child.route ? { to: child.route } : {}"
               :disabled="child.disabled"
               class="sidebar-item"
               active-class="sidebar-item--active"

@@ -23116,7 +23116,7 @@ Use slot props instead:
 </router-view>`);
     }
   }
-  function formatRouteLocation(routeLocation, tooltip) {
+  function formatRouteLocation(routeLocation, tooltip2) {
     const copy2 = assign({}, routeLocation, {
       // remove variables that can contain vue instances
       matched: routeLocation.matched.map((matched) => omit(matched, ["instances", "children", "aliasOf"]))
@@ -23126,7 +23126,7 @@ Use slot props instead:
         type: null,
         readOnly: true,
         display: routeLocation.fullPath,
-        tooltip,
+        tooltip: tooltip2,
         value: copy2
       }
     };
@@ -23181,7 +23181,7 @@ Use slot props instead:
           componentInstance.__vrl_devtools.forEach((devtoolsData) => {
             let label2 = devtoolsData.route.path;
             let backgroundColor = ORANGE_400;
-            let tooltip = "";
+            let tooltip2 = "";
             let textColor = 0;
             if (devtoolsData.error) {
               label2 = devtoolsData.error;
@@ -23189,15 +23189,15 @@ Use slot props instead:
               textColor = RED_700;
             } else if (devtoolsData.isExactActive) {
               backgroundColor = LIME_500;
-              tooltip = "This is exactly active";
+              tooltip2 = "This is exactly active";
             } else if (devtoolsData.isActive) {
               backgroundColor = BLUE_600;
-              tooltip = "This link is active";
+              tooltip2 = "This link is active";
             }
             node.tags.push({
               label: label2,
               textColor,
-              tooltip,
+              tooltip: tooltip2,
               backgroundColor
             });
           });
@@ -26478,14 +26478,16 @@ ${JSON.stringify(newTargetLocation, null, 2)}
   } = axios;
   const type = "menu";
   const object_id = "1234.1234.1423.1234";
-  const label = [{ "key": "fa", "value": "منوی کناری" }, { "key": "en", "value": "Sidebar Menu" }];
+  const label = [{ "en": "Sidebar Menu" }, { "fa": "منوی کناری" }];
+  const tooltip = [{ "en": "Sidebar Menu" }, { "fa": "منوی کناری" }];
   const href = "/main";
-  const settings = [{ "key": "tooltip", "value": [{ "key": "fa", "value": "راهنمای برچسب" }, { "key": "en", "value": "Label Tooltip" }] }];
-  const children = [{ "type": "menu", "label": [{ "key": "fa", "value": "زیرمنوی ۱" }, { "key": "en", "value": "Sub-Menu 1" }], "href": "/submenu1", "settings": [{ "key": "tooltip", "value": [{ "key": "fa", "value": "راهنمای برچسب" }, { "key": "en", "value": "Label Tooltip" }] }], "children": [{ "type": "command", "label": [{ "key": "fa", "value": "بچه زیر منوی 1" }, { "key": "en", "value": "child sub menu 1" }], "href": "/label-action", "settings": [{ "key": "icon", "value": "label-command.jpg" }, { "key": "disabled", "value": "true" }, { "key": "tooltip", "value": [{ "key": "fa", "value": "راهنمای برچسب" }, { "key": "en", "value": "Label Tooltip" }] }] }, { "type": "command", "label": [{ "key": "fa", "value": "بچه زیر منوی 2" }, { "key": "en", "value": "child sub menu 1" }], "href": "/label-action", "settings": [{ "key": "icon", "value": "label-command.jpg" }, { "key": "tooltip", "value": [{ "key": "fa", "value": "راهنمای برچسب" }, { "key": "en", "value": "Label Tooltip" }] }] }] }, { "type": "menu", "label": [{ "key": "fa", "value": "دستورات ثابت" }, { "key": "en", "value": "static commands" }], "href": "/static-commands", "settings": [{ "key": "tooltip", "value": [{ "key": "fa", "value": "راهنمای برچسب" }, { "key": "en", "value": "Label Tooltip" }] }], "children": [{ "type": "command", "label": [{ "key": "fa", "value": "اخیر" }, { "key": "en", "value": "Recents" }], "href": "/recents", "settings": [{ "key": "icon", "value": "/recnets.jpg" }, { "key": "tooltip", "value": [{ "key": "fa", "value": "راهنمای برچسب" }, { "key": "en", "value": "Label Tooltip" }] }] }, { "type": "command", "label": [{ "key": "fa", "value": "باز کردن" }, { "key": "en", "value": "Open" }], "href": "/open", "settings": [{ "key": "tooltip", "value": [{ "key": "fa", "value": "راهنمای برچسب" }, { "key": "en", "value": "Label Tooltip" }] }] }] }];
+  const settings = [];
+  const children = [{ "type": "menu", "label": [{ "en": "Sub-Menu 1" }, { "fa": "زیر منوی 1" }], "tooltip": [{ "en": "Sub-Menu 1" }, { "fa": "زیر منوی 1" }], "href": "/submenu1", "settings": [], "children": [{ "type": "command", "label": [{ "en": "label command" }, { "fa": "دستور" }], "tooltip": [{ "en": "label command" }, { "fa": "دستور" }], "href": "/label-action", "settings": [{ "key": "icon", "value": "label-command.jpg" }, { "key": "disabled", "value": "true" }] }] }, { "type": "menu", "label": [{ "en": "static commands" }, { "fa": "دستورات ثابت" }], "tooltip": [{ "en": "static commands" }, { "fa": "دستورات ثابت" }], "href": "/static-commands", "settings": [{ "key": "icon", "value": "label-command.jpg" }], "children": [{ "type": "command", "label": [{ "en": "Recents" }, { "fa": "اخیر" }], "tooltip": [{ "en": "Recents" }, { "fa": "اخیر" }], "href": "/recents", "settings": [{ "key": "icon", "value": "/recnets.jpg" }] }, { "type": "command", "label": [{ "en": "Open" }, { "fa": "باز کردن" }], "tooltip": [{ "en": "Open" }, { "fa": "باز کردن" }], "href": "/open", "settings": [{ "key": "icon", "value": "label-command.jpg" }] }] }];
   const menuData = {
     type,
     object_id,
     label,
+    tooltip,
     href,
     settings,
     children
@@ -26497,21 +26499,25 @@ ${JSON.stringify(newTargetLocation, null, 2)}
         result.icon = s.value;
       } else if (s.key === "disabled") {
         result.disabled = s.value === "true";
-      } else if (s.key === "tooltip") {
-        result.tooltip = Object.fromEntries(s.value.map((x) => [x.key, x.value]));
       }
     });
     return result;
   }
-  function parseLabel(labels, lang = "fa") {
-    return Object.fromEntries(labels.map((x) => [x.key, x.value]));
+  function parseMultiLang(arr) {
+    const result = {};
+    arr.forEach((obj) => {
+      const [key, value] = Object.entries(obj)[0];
+      result[key] = value;
+    });
+    return result;
   }
   function transformMenu(data, lang = "fa") {
     if (!data) return [];
     return data.children?.map((item, idx) => {
       const base = {
         id: item.object_id || `item-${idx}`,
-        label: parseLabel(item.label, lang),
+        label: parseMultiLang(item.label || []),
+        tooltip: item.tooltip ? parseMultiLang(item.tooltip) : void 0,
         route: item.href || null,
         type: item.type,
         children: [],
@@ -26546,14 +26552,12 @@ ${JSON.stringify(newTargetLocation, null, 2)}
       const lang = "fa";
       try {
         let rawData = null;
-        if (!useMock) {
-          rawData = await fetchSidebarMenu();
-        }
+        if (false) ;
         const source = rawData || menuData;
         sections.value = [
           {
             id: source.object_id,
-            title: parseLabel(source.label, lang),
+            title: parseMultiLang(source.label || []),
             description: "",
             items: transformMenu(source, lang)
           }
@@ -28320,6 +28324,206 @@ ${JSON.stringify(newTargetLocation, null, 2)}
     return target2;
   };
   const LanguageSwitch = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["__scopeId", "data-v-0b1fcd1f"]]);
+  const VAlertTitle = createSimpleFunctional("v-alert-title");
+  const makeIconSizeProps = propsFactory({
+    iconSize: [Number, String],
+    iconSizes: {
+      type: Array,
+      default: () => [["x-small", 10], ["small", 16], ["default", 24], ["large", 28], ["x-large", 32]]
+    }
+  }, "iconSize");
+  function useIconSizes(props, fallback) {
+    const iconSize = computed(() => {
+      const iconSizeMap = new Map(props.iconSizes);
+      const _iconSize = props.iconSize ?? fallback() ?? "default";
+      return iconSizeMap.has(_iconSize) ? iconSizeMap.get(_iconSize) : _iconSize;
+    });
+    return {
+      iconSize
+    };
+  }
+  const allowedTypes = ["success", "info", "warning", "error"];
+  const makeVAlertProps = propsFactory({
+    border: {
+      type: [Boolean, String],
+      validator: (val) => {
+        return typeof val === "boolean" || ["top", "end", "bottom", "start"].includes(val);
+      }
+    },
+    borderColor: String,
+    closable: Boolean,
+    closeIcon: {
+      type: IconValue,
+      default: "$close"
+    },
+    closeLabel: {
+      type: String,
+      default: "$vuetify.close"
+    },
+    icon: {
+      type: [Boolean, String, Function, Object],
+      default: null
+    },
+    modelValue: {
+      type: Boolean,
+      default: true
+    },
+    prominent: Boolean,
+    title: String,
+    text: String,
+    type: {
+      type: String,
+      validator: (val) => allowedTypes.includes(val)
+    },
+    ...makeComponentProps(),
+    ...makeDensityProps(),
+    ...makeDimensionProps(),
+    ...makeElevationProps(),
+    ...makeIconSizeProps(),
+    ...makeLocationProps(),
+    ...makePositionProps(),
+    ...makeRoundedProps(),
+    ...makeTagProps(),
+    ...makeThemeProps(),
+    ...makeVariantProps({
+      variant: "flat"
+    })
+  }, "VAlert");
+  const VAlert = genericComponent()({
+    name: "VAlert",
+    props: makeVAlertProps(),
+    emits: {
+      "click:close": (e) => true,
+      "update:modelValue": (value) => true
+    },
+    setup(props, _ref) {
+      let {
+        emit: emit2,
+        slots
+      } = _ref;
+      const isActive = useProxiedModel(props, "modelValue");
+      const icon = toRef(() => {
+        if (props.icon === false) return void 0;
+        if (!props.type) return props.icon;
+        return props.icon ?? `$${props.type}`;
+      });
+      const {
+        iconSize
+      } = useIconSizes(props, () => props.prominent ? 44 : void 0);
+      const {
+        themeClasses
+      } = provideTheme(props);
+      const {
+        colorClasses,
+        colorStyles,
+        variantClasses
+      } = useVariant(() => ({
+        color: props.color ?? props.type,
+        variant: props.variant
+      }));
+      const {
+        densityClasses
+      } = useDensity(props);
+      const {
+        dimensionStyles
+      } = useDimension(props);
+      const {
+        elevationClasses
+      } = useElevation(props);
+      const {
+        locationStyles
+      } = useLocation(props);
+      const {
+        positionClasses
+      } = usePosition(props);
+      const {
+        roundedClasses
+      } = useRounded(props);
+      const {
+        textColorClasses,
+        textColorStyles
+      } = useTextColor(() => props.borderColor);
+      const {
+        t
+      } = useLocale();
+      const closeProps = toRef(() => ({
+        "aria-label": t(props.closeLabel),
+        onClick(e) {
+          isActive.value = false;
+          emit2("click:close", e);
+        }
+      }));
+      return () => {
+        const hasPrepend = !!(slots.prepend || icon.value);
+        const hasTitle = !!(slots.title || props.title);
+        const hasClose = !!(slots.close || props.closable);
+        const iconProps = {
+          density: props.density,
+          icon: icon.value,
+          size: props.iconSize || props.prominent ? iconSize.value : void 0
+        };
+        return isActive.value && createVNode(props.tag, {
+          "class": normalizeClass(["v-alert", props.border && {
+            "v-alert--border": !!props.border,
+            [`v-alert--border-${props.border === true ? "start" : props.border}`]: true
+          }, {
+            "v-alert--prominent": props.prominent
+          }, themeClasses.value, colorClasses.value, densityClasses.value, elevationClasses.value, positionClasses.value, roundedClasses.value, variantClasses.value, props.class]),
+          "style": normalizeStyle([colorStyles.value, dimensionStyles.value, locationStyles.value, props.style]),
+          "role": "alert"
+        }, {
+          default: () => [genOverlays(false, "v-alert"), props.border && createBaseVNode("div", {
+            "key": "border",
+            "class": normalizeClass(["v-alert__border", textColorClasses.value]),
+            "style": normalizeStyle(textColorStyles.value)
+          }, null), hasPrepend && createBaseVNode("div", {
+            "key": "prepend",
+            "class": "v-alert__prepend"
+          }, [!slots.prepend ? createVNode(VIcon, mergeProps({
+            "key": "prepend-icon"
+          }, iconProps), null) : createVNode(VDefaultsProvider, {
+            "key": "prepend-defaults",
+            "disabled": !icon.value,
+            "defaults": {
+              VIcon: {
+                ...iconProps
+              }
+            }
+          }, slots.prepend)]), createBaseVNode("div", {
+            "class": "v-alert__content"
+          }, [hasTitle && createVNode(VAlertTitle, {
+            "key": "title"
+          }, {
+            default: () => [slots.title?.() ?? props.title]
+          }), slots.text?.() ?? props.text, slots.default?.()]), slots.append && createBaseVNode("div", {
+            "key": "append",
+            "class": "v-alert__append"
+          }, [slots.append()]), hasClose && createBaseVNode("div", {
+            "key": "close",
+            "class": "v-alert__close"
+          }, [!slots.close ? createVNode(VBtn, mergeProps({
+            "key": "close-btn",
+            "icon": props.closeIcon,
+            "size": "x-small",
+            "variant": "text"
+          }, closeProps.value), null) : createVNode(VDefaultsProvider, {
+            "key": "close-defaults",
+            "defaults": {
+              VBtn: {
+                icon: props.closeIcon,
+                size: "x-small",
+                variant: "text"
+              }
+            }
+          }, {
+            default: () => [slots.close?.({
+              props: closeProps.value
+            })]
+          })])]
+        });
+      };
+    }
+  });
   const makeVDividerProps = propsFactory({
     color: String,
     inset: Boolean,
@@ -31401,6 +31605,2778 @@ ${JSON.stringify(newTargetLocation, null, 2)}
       };
     }
   });
+  const _hoisted_1 = {
+    key: 0,
+    class: "d-flex align-center justify-center",
+    style: { "height": "100%" }
+  };
+  const _hoisted_2 = { class: "d-flex align-center justify-space-between mb-4 px-3" };
+  const _hoisted_3 = { class: "text-disabled text-caption" };
+  const _hoisted_4 = {
+    key: 0,
+    class: "section-title mx-3 mb-2"
+  };
+  const _hoisted_5 = { class: "text-caption font-weight-bold" };
+  const _sfc_main$5 = /* @__PURE__ */ defineComponent$1({
+    __name: "Sidebar",
+    setup(__props) {
+      const drawer = ref(true);
+      const sidebar = useSidebarStore();
+      const settings2 = useSettingsStore();
+      const appVersion = "0.0.1.1";
+      const collapseIcon = computed(() => {
+        const isRtl = settings2.direction === "rtl";
+        if (isRtl) {
+          return sidebar.isCollapsed ? "mdi-chevron-double-left" : "mdi-chevron-double-right";
+        } else {
+          return sidebar.isCollapsed ? "mdi-chevron-double-right" : "mdi-chevron-double-left";
+        }
+      });
+      onMounted(() => {
+        sidebar.loadSections(false);
+      });
+      return (_ctx, _cache) => {
+        return openBlock(), createBlock(VNavigationDrawer, {
+          modelValue: drawer.value,
+          "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => drawer.value = $event),
+          rail: unref(sidebar).isCollapsed,
+          permanent: "",
+          app: "",
+          class: normalizeClass(["sidebar", { "sidebar--rtl": unref(settings2).direction === "rtl" }]),
+          location: unref(settings2).direction === "rtl" ? "right" : "left"
+        }, {
+          default: withCtx(() => [
+            unref(sidebar).loading ? (openBlock(), createElementBlock("div", _hoisted_1, [
+              createVNode(VProgressCircular, {
+                indeterminate: "",
+                color: "primary",
+                size: "48"
+              })
+            ])) : (openBlock(), createElementBlock(Fragment, { key: 1 }, [
+              createBaseVNode("div", _hoisted_2, [
+                !unref(sidebar).isCollapsed ? (openBlock(), createBlock(LanguageSwitch, { key: 0 })) : createCommentVNode("", true),
+                createBaseVNode("small", _hoisted_3, toDisplayString$1(unref(appVersion)), 1)
+              ]),
+              createVNode(VBtn, {
+                variant: "text",
+                icon: "",
+                onClick: unref(sidebar).toggleCollapse,
+                class: "mb-1 mx-auto",
+                "aria-label": unref(sidebar).isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"
+              }, {
+                default: withCtx(() => [
+                  createVNode(VIcon, {
+                    class: normalizeClass({ "rotate-icon": unref(settings2).direction === "rtl" })
+                  }, {
+                    default: withCtx(() => [
+                      createTextVNode(toDisplayString$1(collapseIcon.value), 1)
+                    ]),
+                    _: 1
+                  }, 8, ["class"])
+                ]),
+                _: 1
+              }, 8, ["onClick", "aria-label"]),
+              (openBlock(true), createElementBlock(Fragment, null, renderList(unref(sidebar).sections, (section) => {
+                return openBlock(), createElementBlock("div", {
+                  key: section.id,
+                  class: "section-wrapper"
+                }, [
+                  !unref(sidebar).isCollapsed ? (openBlock(), createElementBlock("div", _hoisted_4, [
+                    createBaseVNode("span", _hoisted_5, toDisplayString$1(section.title[unref(settings2).locale]), 1)
+                  ])) : createCommentVNode("", true),
+                  createVNode(VList, {
+                    density: "compact",
+                    nav: "",
+                    class: "pa-0 ma-0"
+                  }, {
+                    default: withCtx(() => [
+                      (openBlock(true), createElementBlock(Fragment, null, renderList(section.items, (item) => {
+                        return openBlock(), createElementBlock(Fragment, {
+                          key: item.id
+                        }, [
+                          item.route ? (openBlock(), createBlock(VListItem, {
+                            key: 0,
+                            to: item.route,
+                            disabled: item.disabled,
+                            class: "sidebar-item",
+                            "active-class": "sidebar-item--active"
+                          }, {
+                            prepend: withCtx(() => [
+                              createVNode(VIcon, { size: "18" }, {
+                                default: withCtx(() => [
+                                  createTextVNode(toDisplayString$1(item.icon), 1)
+                                ]),
+                                _: 2
+                              }, 1024)
+                            ]),
+                            default: withCtx(() => [
+                              !unref(sidebar).isCollapsed ? (openBlock(), createBlock(VListItemTitle, { key: 0 }, {
+                                default: withCtx(() => [
+                                  createBaseVNode("h4", null, toDisplayString$1(item.label[unref(settings2).locale]), 1)
+                                ]),
+                                _: 2
+                              }, 1024)) : createCommentVNode("", true)
+                            ]),
+                            _: 2
+                          }, 1032, ["to", "disabled"])) : createCommentVNode("", true),
+                          (openBlock(true), createElementBlock(Fragment, null, renderList(item.children, (child) => {
+                            return openBlock(), createBlock(VListItem, mergeProps({
+                              key: child.id
+                            }, { ref_for: true }, child.route ? { to: child.route } : {}, {
+                              disabled: child.disabled,
+                              class: "sidebar-item",
+                              "active-class": "sidebar-item--active"
+                            }), {
+                              prepend: withCtx(() => [
+                                createVNode(VIcon, { size: "18" }, {
+                                  default: withCtx(() => [
+                                    createTextVNode(toDisplayString$1(child.icon), 1)
+                                  ]),
+                                  _: 2
+                                }, 1024)
+                              ]),
+                              default: withCtx(() => [
+                                !unref(sidebar).isCollapsed ? (openBlock(), createBlock(VListItemTitle, { key: 0 }, {
+                                  default: withCtx(() => [
+                                    createTextVNode(toDisplayString$1(child.label[unref(settings2).locale]), 1)
+                                  ]),
+                                  _: 2
+                                }, 1024)) : createCommentVNode("", true)
+                              ]),
+                              _: 2
+                            }, 1040, ["disabled"]);
+                          }), 128)),
+                          item.children?.length ? (openBlock(), createBlock(VDivider, {
+                            key: 1,
+                            class: "my-2"
+                          })) : createCommentVNode("", true)
+                        ], 64);
+                      }), 128))
+                    ]),
+                    _: 2
+                  }, 1024)
+                ]);
+              }), 128))
+            ], 64)),
+            unref(sidebar).error ? (openBlock(), createBlock(VAlert, {
+              key: 2,
+              type: "error",
+              text: unref(sidebar).error,
+              class: "mx-3 my-2",
+              density: "compact"
+            }, null, 8, ["text"])) : createCommentVNode("", true)
+          ]),
+          _: 1
+        }, 8, ["modelValue", "rail", "location", "class"]);
+      };
+    }
+  });
+  const Sidebar = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-d1f46358"]]);
+  const makeVAppProps = propsFactory({
+    ...makeComponentProps(),
+    ...omit$1(makeLayoutProps(), ["fullHeight"]),
+    ...makeThemeProps()
+  }, "VApp");
+  const VApp = genericComponent()({
+    name: "VApp",
+    props: makeVAppProps(),
+    setup(props, _ref) {
+      let {
+        slots
+      } = _ref;
+      const theme = provideTheme(props);
+      const {
+        layoutClasses,
+        getLayoutItem,
+        items,
+        layoutRef
+      } = createLayout({
+        ...props,
+        fullHeight: true
+      });
+      const {
+        rtlClasses
+      } = useRtl();
+      useRender(() => createBaseVNode("div", {
+        "ref": layoutRef,
+        "class": normalizeClass(["v-application", theme.themeClasses.value, layoutClasses.value, rtlClasses.value, props.class]),
+        "style": normalizeStyle([props.style])
+      }, [createBaseVNode("div", {
+        "class": "v-application__wrap"
+      }, [slots.default?.()])]));
+      return {
+        getLayoutItem,
+        items,
+        theme
+      };
+    }
+  });
+  const makeVContainerProps = propsFactory({
+    fluid: {
+      type: Boolean,
+      default: false
+    },
+    ...makeComponentProps(),
+    ...makeDimensionProps(),
+    ...makeTagProps()
+  }, "VContainer");
+  const VContainer = genericComponent()({
+    name: "VContainer",
+    props: makeVContainerProps(),
+    setup(props, _ref) {
+      let {
+        slots
+      } = _ref;
+      const {
+        rtlClasses
+      } = useRtl();
+      const {
+        dimensionStyles
+      } = useDimension(props);
+      useRender(() => createVNode(props.tag, {
+        "class": normalizeClass(["v-container", {
+          "v-container--fluid": props.fluid
+        }, rtlClasses.value, props.class]),
+        "style": normalizeStyle([dimensionStyles.value, props.style])
+      }, slots));
+      return {};
+    }
+  });
+  const breakpointProps = (() => {
+    return breakpoints.reduce((props, val) => {
+      props[val] = {
+        type: [Boolean, String, Number],
+        default: false
+      };
+      return props;
+    }, {});
+  })();
+  const offsetProps = (() => {
+    return breakpoints.reduce((props, val) => {
+      const offsetKey = "offset" + capitalize$1(val);
+      props[offsetKey] = {
+        type: [String, Number],
+        default: null
+      };
+      return props;
+    }, {});
+  })();
+  const orderProps = (() => {
+    return breakpoints.reduce((props, val) => {
+      const orderKey = "order" + capitalize$1(val);
+      props[orderKey] = {
+        type: [String, Number],
+        default: null
+      };
+      return props;
+    }, {});
+  })();
+  const propMap$1 = {
+    col: Object.keys(breakpointProps),
+    offset: Object.keys(offsetProps),
+    order: Object.keys(orderProps)
+  };
+  function breakpointClass$1(type2, prop, val) {
+    let className = type2;
+    if (val == null || val === false) {
+      return void 0;
+    }
+    if (prop) {
+      const breakpoint = prop.replace(type2, "");
+      className += `-${breakpoint}`;
+    }
+    if (type2 === "col") {
+      className = "v-" + className;
+    }
+    if (type2 === "col" && (val === "" || val === true)) {
+      return className.toLowerCase();
+    }
+    className += `-${val}`;
+    return className.toLowerCase();
+  }
+  const ALIGN_SELF_VALUES = ["auto", "start", "end", "center", "baseline", "stretch"];
+  const makeVColProps = propsFactory({
+    cols: {
+      type: [Boolean, String, Number],
+      default: false
+    },
+    ...breakpointProps,
+    offset: {
+      type: [String, Number],
+      default: null
+    },
+    ...offsetProps,
+    order: {
+      type: [String, Number],
+      default: null
+    },
+    ...orderProps,
+    alignSelf: {
+      type: String,
+      default: null,
+      validator: (str) => ALIGN_SELF_VALUES.includes(str)
+    },
+    ...makeComponentProps(),
+    ...makeTagProps()
+  }, "VCol");
+  const VCol = genericComponent()({
+    name: "VCol",
+    props: makeVColProps(),
+    setup(props, _ref) {
+      let {
+        slots
+      } = _ref;
+      const classes = computed(() => {
+        const classList = [];
+        let type2;
+        for (type2 in propMap$1) {
+          propMap$1[type2].forEach((prop) => {
+            const value = props[prop];
+            const className = breakpointClass$1(type2, prop, value);
+            if (className) classList.push(className);
+          });
+        }
+        const hasColClasses = classList.some((className) => className.startsWith("v-col-"));
+        classList.push({
+          // Default to .v-col if no other col-{bp}-* classes generated nor `cols` specified.
+          "v-col": !hasColClasses || !props.cols,
+          [`v-col-${props.cols}`]: props.cols,
+          [`offset-${props.offset}`]: props.offset,
+          [`order-${props.order}`]: props.order,
+          [`align-self-${props.alignSelf}`]: props.alignSelf
+        });
+        return classList;
+      });
+      return () => h(props.tag, {
+        class: [classes.value, props.class],
+        style: props.style
+      }, slots.default?.());
+    }
+  });
+  const ALIGNMENT = ["start", "end", "center"];
+  const SPACE = ["space-between", "space-around", "space-evenly"];
+  function makeRowProps(prefix, def2) {
+    return breakpoints.reduce((props, val) => {
+      const prefixKey = prefix + capitalize$1(val);
+      props[prefixKey] = def2();
+      return props;
+    }, {});
+  }
+  const ALIGN_VALUES = [...ALIGNMENT, "baseline", "stretch"];
+  const alignValidator = (str) => ALIGN_VALUES.includes(str);
+  const alignProps = makeRowProps("align", () => ({
+    type: String,
+    default: null,
+    validator: alignValidator
+  }));
+  const JUSTIFY_VALUES = [...ALIGNMENT, ...SPACE];
+  const justifyValidator = (str) => JUSTIFY_VALUES.includes(str);
+  const justifyProps = makeRowProps("justify", () => ({
+    type: String,
+    default: null,
+    validator: justifyValidator
+  }));
+  const ALIGN_CONTENT_VALUES = [...ALIGNMENT, ...SPACE, "stretch"];
+  const alignContentValidator = (str) => ALIGN_CONTENT_VALUES.includes(str);
+  const alignContentProps = makeRowProps("alignContent", () => ({
+    type: String,
+    default: null,
+    validator: alignContentValidator
+  }));
+  const propMap = {
+    align: Object.keys(alignProps),
+    justify: Object.keys(justifyProps),
+    alignContent: Object.keys(alignContentProps)
+  };
+  const classMap = {
+    align: "align",
+    justify: "justify",
+    alignContent: "align-content"
+  };
+  function breakpointClass(type2, prop, val) {
+    let className = classMap[type2];
+    if (val == null) {
+      return void 0;
+    }
+    if (prop) {
+      const breakpoint = prop.replace(type2, "");
+      className += `-${breakpoint}`;
+    }
+    className += `-${val}`;
+    return className.toLowerCase();
+  }
+  const makeVRowProps = propsFactory({
+    dense: Boolean,
+    noGutters: Boolean,
+    align: {
+      type: String,
+      default: null,
+      validator: alignValidator
+    },
+    ...alignProps,
+    justify: {
+      type: String,
+      default: null,
+      validator: justifyValidator
+    },
+    ...justifyProps,
+    alignContent: {
+      type: String,
+      default: null,
+      validator: alignContentValidator
+    },
+    ...alignContentProps,
+    ...makeComponentProps(),
+    ...makeTagProps()
+  }, "VRow");
+  const VRow = genericComponent()({
+    name: "VRow",
+    props: makeVRowProps(),
+    setup(props, _ref) {
+      let {
+        slots
+      } = _ref;
+      const classes = computed(() => {
+        const classList = [];
+        let type2;
+        for (type2 in propMap) {
+          propMap[type2].forEach((prop) => {
+            const value = props[prop];
+            const className = breakpointClass(type2, prop, value);
+            if (className) classList.push(className);
+          });
+        }
+        classList.push({
+          "v-row--no-gutters": props.noGutters,
+          "v-row--dense": props.dense,
+          [`align-${props.align}`]: props.align,
+          [`justify-${props.justify}`]: props.justify,
+          [`align-content-${props.alignContent}`]: props.alignContent
+        });
+        return classList;
+      });
+      return () => h(props.tag, {
+        class: ["v-row", classes.value, props.class],
+        style: props.style
+      }, slots.default?.());
+    }
+  });
+  const VSpacer = createSimpleFunctional("v-spacer", "div", "VSpacer");
+  const makeVMainProps = propsFactory({
+    scrollable: Boolean,
+    ...makeComponentProps(),
+    ...makeDimensionProps(),
+    ...makeTagProps({
+      tag: "main"
+    })
+  }, "VMain");
+  const VMain = genericComponent()({
+    name: "VMain",
+    props: makeVMainProps(),
+    setup(props, _ref) {
+      let {
+        slots
+      } = _ref;
+      const {
+        dimensionStyles
+      } = useDimension(props);
+      const {
+        mainStyles
+      } = useLayout();
+      const {
+        ssrBootStyles
+      } = useSsrBoot();
+      useRender(() => createVNode(props.tag, {
+        "class": normalizeClass(["v-main", {
+          "v-main--scrollable": props.scrollable
+        }, props.class]),
+        "style": normalizeStyle([mainStyles.value, ssrBootStyles.value, dimensionStyles.value, props.style])
+      }, {
+        default: () => [props.scrollable ? createBaseVNode("div", {
+          "class": "v-main__scroller"
+        }, [slots.default?.()]) : slots.default?.()]
+      }));
+      return {};
+    }
+  });
+  const _sfc_main$4 = /* @__PURE__ */ defineComponent$1({
+    __name: "DefaultLayout",
+    setup(__props) {
+      return (_ctx, _cache) => {
+        const _component_router_view = resolveComponent("router-view");
+        return openBlock(), createBlock(VApp, null, {
+          default: withCtx(() => [
+            createVNode(Sidebar),
+            createVNode(VMain, null, {
+              default: withCtx(() => [
+                createVNode(VContainer, { fluid: "" }, {
+                  default: withCtx(() => [
+                    createVNode(_component_router_view)
+                  ]),
+                  _: 1
+                })
+              ]),
+              _: 1
+            })
+          ]),
+          _: 1
+        });
+      };
+    }
+  });
+  const routes = [
+    {
+      path: "/",
+      component: _sfc_main$4,
+      children: [
+        {
+          path: "",
+          name: "home",
+          component: () => Promise.resolve().then(() => HomeView$1),
+          meta: { icon: "mdi-view-dashboard" }
+        },
+        {
+          path: "about",
+          name: "about",
+          component: () => Promise.resolve().then(() => AboutView$1),
+          meta: { icon: "mdi-information" }
+        },
+        {
+          path: "settings",
+          name: "settings",
+          component: () => Promise.resolve().then(() => SettingsView$1),
+          meta: { icon: "mdi-cog", requiresAuth: true }
+        }
+      ]
+    },
+    {
+      path: "/:pathMatch(.*)*",
+      name: "not-found",
+      component: () => Promise.resolve().then(() => NotFound$1)
+    }
+  ];
+  const router = createRouter({
+    history: createWebHistory("/"),
+    routes
+  });
+  const hello$1 = "Hello World";
+  const welcome$1 = "Welcome to my app";
+  const name$1 = "Name";
+  const select$1 = "Select an option";
+  const en = {
+    hello: hello$1,
+    welcome: welcome$1,
+    name: name$1,
+    select: select$1
+  };
+  const hello = "سلام دنیا";
+  const welcome = "خوش اومدی به اپ من";
+  const name = "نام";
+  const select = "یک گزینه انتخاب کنید";
+  const fa = {
+    hello,
+    welcome,
+    name,
+    select
+  };
+  const makeVToolbarTitleProps = propsFactory({
+    text: String,
+    ...makeComponentProps(),
+    ...makeTagProps()
+  }, "VToolbarTitle");
+  const VToolbarTitle = genericComponent()({
+    name: "VToolbarTitle",
+    props: makeVToolbarTitleProps(),
+    setup(props, _ref) {
+      let {
+        slots
+      } = _ref;
+      useRender(() => {
+        const hasText = !!(slots.default || slots.text || props.text);
+        return createVNode(props.tag, {
+          "class": normalizeClass(["v-toolbar-title", props.class]),
+          "style": normalizeStyle(props.style)
+        }, {
+          default: () => [hasText && createBaseVNode("div", {
+            "class": "v-toolbar-title__placeholder"
+          }, [slots.text ? slots.text() : props.text, slots.default?.()])]
+        });
+      });
+      return {};
+    }
+  });
+  const allowedDensities = [null, "prominent", "default", "comfortable", "compact"];
+  const makeVToolbarProps = propsFactory({
+    absolute: Boolean,
+    collapse: Boolean,
+    color: String,
+    density: {
+      type: String,
+      default: "default",
+      validator: (v) => allowedDensities.includes(v)
+    },
+    extended: {
+      type: Boolean,
+      default: null
+    },
+    extensionHeight: {
+      type: [Number, String],
+      default: 48
+    },
+    flat: Boolean,
+    floating: Boolean,
+    height: {
+      type: [Number, String],
+      default: 64
+    },
+    image: String,
+    title: String,
+    ...makeBorderProps(),
+    ...makeComponentProps(),
+    ...makeElevationProps(),
+    ...makeRoundedProps(),
+    ...makeTagProps({
+      tag: "header"
+    }),
+    ...makeThemeProps()
+  }, "VToolbar");
+  const VToolbar = genericComponent()({
+    name: "VToolbar",
+    props: makeVToolbarProps(),
+    setup(props, _ref) {
+      let {
+        slots
+      } = _ref;
+      const {
+        backgroundColorClasses,
+        backgroundColorStyles
+      } = useBackgroundColor(() => props.color);
+      const {
+        borderClasses
+      } = useBorder(props);
+      const {
+        elevationClasses
+      } = useElevation(props);
+      const {
+        roundedClasses
+      } = useRounded(props);
+      const {
+        themeClasses
+      } = provideTheme(props);
+      const {
+        rtlClasses
+      } = useRtl();
+      const isExtended = shallowRef(props.extended === null ? !!slots.extension?.() : props.extended);
+      const contentHeight = computed(() => parseInt(Number(props.height) + (props.density === "prominent" ? Number(props.height) : 0) - (props.density === "comfortable" ? 8 : 0) - (props.density === "compact" ? 16 : 0), 10));
+      const extensionHeight = computed(() => isExtended.value ? parseInt(Number(props.extensionHeight) + (props.density === "prominent" ? Number(props.extensionHeight) : 0) - (props.density === "comfortable" ? 4 : 0) - (props.density === "compact" ? 8 : 0), 10) : 0);
+      provideDefaults({
+        VBtn: {
+          variant: "text"
+        }
+      });
+      useRender(() => {
+        const hasTitle = !!(props.title || slots.title);
+        const hasImage = !!(slots.image || props.image);
+        const extension = slots.extension?.();
+        isExtended.value = props.extended === null ? !!extension : props.extended;
+        return createVNode(props.tag, {
+          "class": normalizeClass(["v-toolbar", {
+            "v-toolbar--absolute": props.absolute,
+            "v-toolbar--collapse": props.collapse,
+            "v-toolbar--flat": props.flat,
+            "v-toolbar--floating": props.floating,
+            [`v-toolbar--density-${props.density}`]: true
+          }, backgroundColorClasses.value, borderClasses.value, elevationClasses.value, roundedClasses.value, themeClasses.value, rtlClasses.value, props.class]),
+          "style": normalizeStyle([backgroundColorStyles.value, props.style])
+        }, {
+          default: () => [hasImage && createBaseVNode("div", {
+            "key": "image",
+            "class": "v-toolbar__image"
+          }, [!slots.image ? createVNode(VImg, {
+            "key": "image-img",
+            "cover": true,
+            "src": props.image
+          }, null) : createVNode(VDefaultsProvider, {
+            "key": "image-defaults",
+            "disabled": !props.image,
+            "defaults": {
+              VImg: {
+                cover: true,
+                src: props.image
+              }
+            }
+          }, slots.image)]), createVNode(VDefaultsProvider, {
+            "defaults": {
+              VTabs: {
+                height: convertToUnit(contentHeight.value)
+              }
+            }
+          }, {
+            default: () => [createBaseVNode("div", {
+              "class": "v-toolbar__content",
+              "style": {
+                height: convertToUnit(contentHeight.value)
+              }
+            }, [slots.prepend && createBaseVNode("div", {
+              "class": "v-toolbar__prepend"
+            }, [slots.prepend?.()]), hasTitle && createVNode(VToolbarTitle, {
+              "key": "title",
+              "text": props.title
+            }, {
+              text: slots.title
+            }), slots.default?.(), slots.append && createBaseVNode("div", {
+              "class": "v-toolbar__append"
+            }, [slots.append?.()])])]
+          }), createVNode(VDefaultsProvider, {
+            "defaults": {
+              VTabs: {
+                height: convertToUnit(extensionHeight.value)
+              }
+            }
+          }, {
+            default: () => [createVNode(VExpandTransition, null, {
+              default: () => [isExtended.value && createBaseVNode("div", {
+                "class": "v-toolbar__extension",
+                "style": {
+                  height: convertToUnit(extensionHeight.value)
+                }
+              }, [extension])]
+            })]
+          })]
+        });
+      });
+      return {
+        contentHeight,
+        extensionHeight
+      };
+    }
+  });
+  const makeScrollProps = propsFactory({
+    scrollTarget: {
+      type: String
+    },
+    scrollThreshold: {
+      type: [String, Number],
+      default: 300
+    }
+  }, "scroll");
+  function useScroll(props) {
+    let args = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
+    const {
+      canScroll
+    } = args;
+    let previousScroll = 0;
+    let previousScrollHeight = 0;
+    const target2 = ref(null);
+    const currentScroll = shallowRef(0);
+    const savedScroll = shallowRef(0);
+    const currentThreshold = shallowRef(0);
+    const isScrollActive = shallowRef(false);
+    const isScrollingUp = shallowRef(false);
+    const scrollThreshold = computed(() => {
+      return Number(props.scrollThreshold);
+    });
+    const scrollRatio = computed(() => {
+      return clamp((scrollThreshold.value - currentScroll.value) / scrollThreshold.value || 0);
+    });
+    const onScroll = () => {
+      const targetEl = target2.value;
+      if (!targetEl || canScroll && !canScroll.value) return;
+      previousScroll = currentScroll.value;
+      currentScroll.value = "window" in targetEl ? targetEl.pageYOffset : targetEl.scrollTop;
+      const currentScrollHeight = targetEl instanceof Window ? document.documentElement.scrollHeight : targetEl.scrollHeight;
+      if (previousScrollHeight !== currentScrollHeight) {
+        previousScrollHeight = currentScrollHeight;
+        return;
+      }
+      isScrollingUp.value = currentScroll.value < previousScroll;
+      currentThreshold.value = Math.abs(currentScroll.value - scrollThreshold.value);
+    };
+    watch(isScrollingUp, () => {
+      savedScroll.value = savedScroll.value || currentScroll.value;
+    });
+    watch(isScrollActive, () => {
+      savedScroll.value = 0;
+    });
+    onMounted(() => {
+      watch(() => props.scrollTarget, (scrollTarget) => {
+        const newTarget = scrollTarget ? document.querySelector(scrollTarget) : window;
+        if (!newTarget) {
+          consoleWarn(`Unable to locate element with identifier ${scrollTarget}`);
+          return;
+        }
+        if (newTarget === target2.value) return;
+        target2.value?.removeEventListener("scroll", onScroll);
+        target2.value = newTarget;
+        target2.value.addEventListener("scroll", onScroll, {
+          passive: true
+        });
+      }, {
+        immediate: true
+      });
+    });
+    onBeforeUnmount(() => {
+      target2.value?.removeEventListener("scroll", onScroll);
+    });
+    canScroll && watch(canScroll, onScroll, {
+      immediate: true
+    });
+    return {
+      scrollThreshold,
+      currentScroll,
+      currentThreshold,
+      isScrollActive,
+      scrollRatio,
+      // required only for testing
+      // probably can be removed
+      // later (2 chars chlng)
+      isScrollingUp,
+      savedScroll
+    };
+  }
+  const makeVAppBarProps = propsFactory({
+    scrollBehavior: String,
+    modelValue: {
+      type: Boolean,
+      default: true
+    },
+    location: {
+      type: String,
+      default: "top",
+      validator: (value) => ["top", "bottom"].includes(value)
+    },
+    ...makeVToolbarProps(),
+    ...makeLayoutItemProps(),
+    ...makeScrollProps(),
+    height: {
+      type: [Number, String],
+      default: 64
+    }
+  }, "VAppBar");
+  const VAppBar = genericComponent()({
+    name: "VAppBar",
+    props: makeVAppBarProps(),
+    emits: {
+      "update:modelValue": (value) => true
+    },
+    setup(props, _ref) {
+      let {
+        slots
+      } = _ref;
+      const vToolbarRef = ref();
+      const isActive = useProxiedModel(props, "modelValue");
+      const scrollBehavior = computed(() => {
+        const behavior = new Set(props.scrollBehavior?.split(" ") ?? []);
+        return {
+          hide: behavior.has("hide"),
+          fullyHide: behavior.has("fully-hide"),
+          inverted: behavior.has("inverted"),
+          collapse: behavior.has("collapse"),
+          elevate: behavior.has("elevate"),
+          fadeImage: behavior.has("fade-image")
+          // shrink: behavior.has('shrink'),
+        };
+      });
+      const canScroll = computed(() => {
+        const behavior = scrollBehavior.value;
+        return behavior.hide || behavior.fullyHide || behavior.inverted || behavior.collapse || behavior.elevate || behavior.fadeImage || // behavior.shrink ||
+        !isActive.value;
+      });
+      const {
+        currentScroll,
+        scrollThreshold,
+        isScrollingUp,
+        scrollRatio
+      } = useScroll(props, {
+        canScroll
+      });
+      const canHide = toRef(() => scrollBehavior.value.hide || scrollBehavior.value.fullyHide);
+      const isCollapsed = computed(() => props.collapse || scrollBehavior.value.collapse && (scrollBehavior.value.inverted ? scrollRatio.value > 0 : scrollRatio.value === 0));
+      const isFlat = computed(() => props.flat || scrollBehavior.value.fullyHide && !isActive.value || scrollBehavior.value.elevate && (scrollBehavior.value.inverted ? currentScroll.value > 0 : currentScroll.value === 0));
+      const opacity = computed(() => scrollBehavior.value.fadeImage ? scrollBehavior.value.inverted ? 1 - scrollRatio.value : scrollRatio.value : void 0);
+      const height = computed(() => {
+        if (scrollBehavior.value.hide && scrollBehavior.value.inverted) return 0;
+        const height2 = vToolbarRef.value?.contentHeight ?? 0;
+        const extensionHeight = vToolbarRef.value?.extensionHeight ?? 0;
+        if (!canHide.value) return height2 + extensionHeight;
+        return currentScroll.value < scrollThreshold.value || scrollBehavior.value.fullyHide ? height2 + extensionHeight : height2;
+      });
+      useToggleScope(() => !!props.scrollBehavior, () => {
+        watchEffect(() => {
+          if (canHide.value) {
+            if (scrollBehavior.value.inverted) {
+              isActive.value = currentScroll.value > scrollThreshold.value;
+            } else {
+              isActive.value = isScrollingUp.value || currentScroll.value < scrollThreshold.value;
+            }
+          } else {
+            isActive.value = true;
+          }
+        });
+      });
+      const {
+        ssrBootStyles
+      } = useSsrBoot();
+      const {
+        layoutItemStyles
+      } = useLayoutItem({
+        id: props.name,
+        order: computed(() => parseInt(props.order, 10)),
+        position: toRef(() => props.location),
+        layoutSize: height,
+        elementSize: shallowRef(void 0),
+        active: isActive,
+        absolute: toRef(() => props.absolute)
+      });
+      useRender(() => {
+        const toolbarProps = VToolbar.filterProps(props);
+        return createVNode(VToolbar, mergeProps({
+          "ref": vToolbarRef,
+          "class": ["v-app-bar", {
+            "v-app-bar--bottom": props.location === "bottom"
+          }, props.class],
+          "style": [{
+            ...layoutItemStyles.value,
+            "--v-toolbar-image-opacity": opacity.value,
+            height: void 0,
+            ...ssrBootStyles.value
+          }, props.style]
+        }, toolbarProps, {
+          "collapse": isCollapsed.value,
+          "flat": isFlat.value
+        }), slots);
+      });
+      return {};
+    }
+  });
+  const makeVAppBarNavIconProps = propsFactory({
+    ...makeVBtnProps({
+      icon: "$menu",
+      variant: "text"
+    })
+  }, "VAppBarNavIcon");
+  const VAppBarNavIcon = genericComponent()({
+    name: "VAppBarNavIcon",
+    props: makeVAppBarNavIconProps(),
+    setup(props, _ref) {
+      let {
+        slots
+      } = _ref;
+      useRender(() => createVNode(VBtn, mergeProps(props, {
+        "class": ["v-app-bar-nav-icon"]
+      }), slots));
+      return {};
+    }
+  });
+  const VAppBarTitle = genericComponent()({
+    name: "VAppBarTitle",
+    props: makeVToolbarTitleProps(),
+    setup(props, _ref) {
+      let {
+        slots
+      } = _ref;
+      useRender(() => createVNode(VToolbarTitle, mergeProps(props, {
+        "class": "v-app-bar-title"
+      }), slots));
+      return {};
+    }
+  });
+  const makeVLabelProps = propsFactory({
+    text: String,
+    onClick: EventProp(),
+    ...makeComponentProps(),
+    ...makeThemeProps()
+  }, "VLabel");
+  const VLabel = genericComponent()({
+    name: "VLabel",
+    props: makeVLabelProps(),
+    setup(props, _ref) {
+      let {
+        slots
+      } = _ref;
+      useRender(() => createBaseVNode("label", {
+        "class": normalizeClass(["v-label", {
+          "v-label--clickable": !!props.onClick
+        }, props.class]),
+        "style": normalizeStyle(props.style),
+        "onClick": props.onClick
+      }, [props.text, slots.default?.()]));
+      return {};
+    }
+  });
+  const VSelectionControlGroupSymbol = Symbol.for("vuetify:selection-control-group");
+  const makeSelectionControlGroupProps = propsFactory({
+    color: String,
+    disabled: {
+      type: Boolean,
+      default: null
+    },
+    defaultsTarget: String,
+    error: Boolean,
+    id: String,
+    inline: Boolean,
+    falseIcon: IconValue,
+    trueIcon: IconValue,
+    ripple: {
+      type: [Boolean, Object],
+      default: true
+    },
+    multiple: {
+      type: Boolean,
+      default: null
+    },
+    name: String,
+    readonly: {
+      type: Boolean,
+      default: null
+    },
+    modelValue: null,
+    type: String,
+    valueComparator: {
+      type: Function,
+      default: deepEqual
+    },
+    ...makeComponentProps(),
+    ...makeDensityProps(),
+    ...makeThemeProps()
+  }, "SelectionControlGroup");
+  const makeVSelectionControlGroupProps = propsFactory({
+    ...makeSelectionControlGroupProps({
+      defaultsTarget: "VSelectionControl"
+    })
+  }, "VSelectionControlGroup");
+  const VSelectionControlGroup = genericComponent()({
+    name: "VSelectionControlGroup",
+    props: makeVSelectionControlGroupProps(),
+    emits: {
+      "update:modelValue": (value) => true
+    },
+    setup(props, _ref) {
+      let {
+        slots
+      } = _ref;
+      const modelValue = useProxiedModel(props, "modelValue");
+      const uid2 = useId();
+      const id = toRef(() => props.id || `v-selection-control-group-${uid2}`);
+      const name2 = toRef(() => props.name || id.value);
+      const updateHandlers = /* @__PURE__ */ new Set();
+      provide(VSelectionControlGroupSymbol, {
+        modelValue,
+        forceUpdate: () => {
+          updateHandlers.forEach((fn) => fn());
+        },
+        onForceUpdate: (cb) => {
+          updateHandlers.add(cb);
+          onScopeDispose(() => {
+            updateHandlers.delete(cb);
+          });
+        }
+      });
+      provideDefaults({
+        [props.defaultsTarget]: {
+          color: toRef(() => props.color),
+          disabled: toRef(() => props.disabled),
+          density: toRef(() => props.density),
+          error: toRef(() => props.error),
+          inline: toRef(() => props.inline),
+          modelValue,
+          multiple: toRef(() => !!props.multiple || props.multiple == null && Array.isArray(modelValue.value)),
+          name: name2,
+          falseIcon: toRef(() => props.falseIcon),
+          trueIcon: toRef(() => props.trueIcon),
+          readonly: toRef(() => props.readonly),
+          ripple: toRef(() => props.ripple),
+          type: toRef(() => props.type),
+          valueComparator: toRef(() => props.valueComparator)
+        }
+      });
+      useRender(() => createBaseVNode("div", {
+        "class": normalizeClass(["v-selection-control-group", {
+          "v-selection-control-group--inline": props.inline
+        }, props.class]),
+        "style": normalizeStyle(props.style),
+        "role": props.type === "radio" ? "radiogroup" : void 0
+      }, [slots.default?.()]));
+      return {};
+    }
+  });
+  const makeVSelectionControlProps = propsFactory({
+    label: String,
+    baseColor: String,
+    trueValue: null,
+    falseValue: null,
+    value: null,
+    ...makeComponentProps(),
+    ...makeSelectionControlGroupProps()
+  }, "VSelectionControl");
+  function useSelectionControl(props) {
+    const group = inject$1(VSelectionControlGroupSymbol, void 0);
+    const {
+      densityClasses
+    } = useDensity(props);
+    const modelValue = useProxiedModel(props, "modelValue");
+    const trueValue = computed(() => props.trueValue !== void 0 ? props.trueValue : props.value !== void 0 ? props.value : true);
+    const falseValue = computed(() => props.falseValue !== void 0 ? props.falseValue : false);
+    const isMultiple = computed(() => !!props.multiple || props.multiple == null && Array.isArray(modelValue.value));
+    const model = computed({
+      get() {
+        const val = group ? group.modelValue.value : modelValue.value;
+        return isMultiple.value ? wrapInArray(val).some((v) => props.valueComparator(v, trueValue.value)) : props.valueComparator(val, trueValue.value);
+      },
+      set(val) {
+        if (props.readonly) return;
+        const currentValue = val ? trueValue.value : falseValue.value;
+        let newVal = currentValue;
+        if (isMultiple.value) {
+          newVal = val ? [...wrapInArray(modelValue.value), currentValue] : wrapInArray(modelValue.value).filter((item) => !props.valueComparator(item, trueValue.value));
+        }
+        if (group) {
+          group.modelValue.value = newVal;
+        } else {
+          modelValue.value = newVal;
+        }
+      }
+    });
+    const {
+      textColorClasses,
+      textColorStyles
+    } = useTextColor(() => {
+      if (props.error || props.disabled) return void 0;
+      return model.value ? props.color : props.baseColor;
+    });
+    const {
+      backgroundColorClasses,
+      backgroundColorStyles
+    } = useBackgroundColor(() => {
+      return model.value && !props.error && !props.disabled ? props.color : props.baseColor;
+    });
+    const icon = computed(() => model.value ? props.trueIcon : props.falseIcon);
+    return {
+      group,
+      densityClasses,
+      trueValue,
+      falseValue,
+      model,
+      textColorClasses,
+      textColorStyles,
+      backgroundColorClasses,
+      backgroundColorStyles,
+      icon
+    };
+  }
+  const VSelectionControl = genericComponent()({
+    name: "VSelectionControl",
+    directives: {
+      vRipple: Ripple
+    },
+    inheritAttrs: false,
+    props: makeVSelectionControlProps(),
+    emits: {
+      "update:modelValue": (value) => true
+    },
+    setup(props, _ref) {
+      let {
+        attrs,
+        slots
+      } = _ref;
+      const {
+        group,
+        densityClasses,
+        icon,
+        model,
+        textColorClasses,
+        textColorStyles,
+        backgroundColorClasses,
+        backgroundColorStyles,
+        trueValue
+      } = useSelectionControl(props);
+      const uid2 = useId();
+      const isFocused = shallowRef(false);
+      const isFocusVisible = shallowRef(false);
+      const input = ref();
+      const id = toRef(() => props.id || `input-${uid2}`);
+      const isInteractive = toRef(() => !props.disabled && !props.readonly);
+      group?.onForceUpdate(() => {
+        if (input.value) {
+          input.value.checked = model.value;
+        }
+      });
+      function onFocus(e) {
+        if (!isInteractive.value) return;
+        isFocused.value = true;
+        if (matchesSelector(e.target, ":focus-visible") !== false) {
+          isFocusVisible.value = true;
+        }
+      }
+      function onBlur() {
+        isFocused.value = false;
+        isFocusVisible.value = false;
+      }
+      function onClickLabel(e) {
+        e.stopPropagation();
+      }
+      function onInput(e) {
+        if (!isInteractive.value) {
+          if (input.value) {
+            input.value.checked = model.value;
+          }
+          return;
+        }
+        if (props.readonly && group) {
+          nextTick(() => group.forceUpdate());
+        }
+        model.value = e.target.checked;
+      }
+      useRender(() => {
+        const label2 = slots.label ? slots.label({
+          label: props.label,
+          props: {
+            for: id.value
+          }
+        }) : props.label;
+        const [rootAttrs, inputAttrs] = filterInputAttrs(attrs);
+        const inputNode = createBaseVNode("input", mergeProps({
+          "ref": input,
+          "checked": model.value,
+          "disabled": !!props.disabled,
+          "id": id.value,
+          "onBlur": onBlur,
+          "onFocus": onFocus,
+          "onInput": onInput,
+          "aria-disabled": !!props.disabled,
+          "aria-label": props.label,
+          "type": props.type,
+          "value": trueValue.value,
+          "name": props.name,
+          "aria-checked": props.type === "checkbox" ? model.value : void 0
+        }, inputAttrs), null);
+        return createBaseVNode("div", mergeProps({
+          "class": ["v-selection-control", {
+            "v-selection-control--dirty": model.value,
+            "v-selection-control--disabled": props.disabled,
+            "v-selection-control--error": props.error,
+            "v-selection-control--focused": isFocused.value,
+            "v-selection-control--focus-visible": isFocusVisible.value,
+            "v-selection-control--inline": props.inline
+          }, densityClasses.value, props.class]
+        }, rootAttrs, {
+          "style": props.style
+        }), [createBaseVNode("div", {
+          "class": normalizeClass(["v-selection-control__wrapper", textColorClasses.value]),
+          "style": normalizeStyle(textColorStyles.value)
+        }, [slots.default?.({
+          backgroundColorClasses,
+          backgroundColorStyles
+        }), withDirectives(createBaseVNode("div", {
+          "class": normalizeClass(["v-selection-control__input"])
+        }, [slots.input?.({
+          model,
+          textColorClasses,
+          textColorStyles,
+          backgroundColorClasses,
+          backgroundColorStyles,
+          inputNode,
+          icon: icon.value,
+          props: {
+            onFocus,
+            onBlur,
+            id: id.value
+          }
+        }) ?? createBaseVNode(Fragment, null, [icon.value && createVNode(VIcon, {
+          "key": "icon",
+          "icon": icon.value
+        }, null), inputNode])]), [[Ripple, !props.disabled && !props.readonly && props.ripple, null, {
+          center: true,
+          circle: true
+        }]])]), label2 && createVNode(VLabel, {
+          "for": id.value,
+          "onClick": onClickLabel
+        }, {
+          default: () => [label2]
+        })]);
+      });
+      return {
+        isFocused,
+        input
+      };
+    }
+  });
+  const makeVCheckboxBtnProps = propsFactory({
+    indeterminate: Boolean,
+    indeterminateIcon: {
+      type: IconValue,
+      default: "$checkboxIndeterminate"
+    },
+    ...makeVSelectionControlProps({
+      falseIcon: "$checkboxOff",
+      trueIcon: "$checkboxOn"
+    })
+  }, "VCheckboxBtn");
+  const VCheckboxBtn = genericComponent()({
+    name: "VCheckboxBtn",
+    props: makeVCheckboxBtnProps(),
+    emits: {
+      "update:modelValue": (value) => true,
+      "update:indeterminate": (value) => true
+    },
+    setup(props, _ref) {
+      let {
+        slots
+      } = _ref;
+      const indeterminate = useProxiedModel(props, "indeterminate");
+      const model = useProxiedModel(props, "modelValue");
+      function onChange(v) {
+        if (indeterminate.value) {
+          indeterminate.value = false;
+        }
+      }
+      const falseIcon = toRef(() => {
+        return indeterminate.value ? props.indeterminateIcon : props.falseIcon;
+      });
+      const trueIcon = toRef(() => {
+        return indeterminate.value ? props.indeterminateIcon : props.trueIcon;
+      });
+      useRender(() => {
+        const controlProps = omit$1(VSelectionControl.filterProps(props), ["modelValue"]);
+        return createVNode(VSelectionControl, mergeProps(controlProps, {
+          "modelValue": model.value,
+          "onUpdate:modelValue": [($event) => model.value = $event, onChange],
+          "class": ["v-checkbox-btn", props.class],
+          "style": props.style,
+          "type": "checkbox",
+          "falseIcon": falseIcon.value,
+          "trueIcon": trueIcon.value,
+          "aria-checked": indeterminate.value ? "mixed" : void 0
+        }), slots);
+      });
+      return {};
+    }
+  });
+  function useInputIcon(props) {
+    const {
+      t
+    } = useLocale();
+    function InputIcon(_ref) {
+      let {
+        name: name2,
+        color,
+        ...attrs
+      } = _ref;
+      const localeKey = {
+        prepend: "prependAction",
+        prependInner: "prependAction",
+        append: "appendAction",
+        appendInner: "appendAction",
+        clear: "clear"
+      }[name2];
+      const listener = props[`onClick:${name2}`];
+      function onKeydown(e) {
+        if (e.key !== "Enter" && e.key !== " ") return;
+        e.preventDefault();
+        e.stopPropagation();
+        callEvent(listener, new PointerEvent("click", e));
+      }
+      const label2 = listener && localeKey ? t(`$vuetify.input.${localeKey}`, props.label ?? "") : void 0;
+      return createVNode(VIcon, mergeProps({
+        "icon": props[`${name2}Icon`],
+        "aria-label": label2,
+        "onClick": listener,
+        "onKeydown": onKeydown,
+        "color": color
+      }, attrs), null);
+    }
+    return {
+      InputIcon
+    };
+  }
+  const makeVMessagesProps = propsFactory({
+    active: Boolean,
+    color: String,
+    messages: {
+      type: [Array, String],
+      default: () => []
+    },
+    ...makeComponentProps(),
+    ...makeTransitionProps({
+      transition: {
+        component: VSlideYTransition,
+        leaveAbsolute: true,
+        group: true
+      }
+    })
+  }, "VMessages");
+  const VMessages = genericComponent()({
+    name: "VMessages",
+    props: makeVMessagesProps(),
+    setup(props, _ref) {
+      let {
+        slots
+      } = _ref;
+      const messages = computed(() => wrapInArray(props.messages));
+      const {
+        textColorClasses,
+        textColorStyles
+      } = useTextColor(() => props.color);
+      useRender(() => createVNode(MaybeTransition, {
+        "transition": props.transition,
+        "tag": "div",
+        "class": normalizeClass(["v-messages", textColorClasses.value, props.class]),
+        "style": normalizeStyle([textColorStyles.value, props.style])
+      }, {
+        default: () => [props.active && messages.value.map((message, i) => createBaseVNode("div", {
+          "class": "v-messages__message",
+          "key": `${i}-${messages.value}`
+        }, [slots.message ? slots.message({
+          message
+        }) : message]))]
+      }));
+      return {};
+    }
+  });
+  const makeFocusProps = propsFactory({
+    focused: Boolean,
+    "onUpdate:focused": EventProp()
+  }, "focus");
+  function useFocus(props) {
+    let name2 = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : getCurrentInstanceName();
+    const isFocused = useProxiedModel(props, "focused");
+    const focusClasses = toRef(() => {
+      return {
+        [`${name2}--focused`]: isFocused.value
+      };
+    });
+    function focus() {
+      isFocused.value = true;
+    }
+    function blur() {
+      isFocused.value = false;
+    }
+    return {
+      focusClasses,
+      isFocused,
+      focus,
+      blur
+    };
+  }
+  const FormKey = Symbol.for("vuetify:form");
+  const makeFormProps = propsFactory({
+    disabled: Boolean,
+    fastFail: Boolean,
+    readonly: Boolean,
+    modelValue: {
+      type: Boolean,
+      default: null
+    },
+    validateOn: {
+      type: String,
+      default: "input"
+    }
+  }, "form");
+  function createForm(props) {
+    const model = useProxiedModel(props, "modelValue");
+    const isDisabled = toRef(() => props.disabled);
+    const isReadonly2 = toRef(() => props.readonly);
+    const isValidating = shallowRef(false);
+    const items = ref([]);
+    const errors = ref([]);
+    async function validate() {
+      const results = [];
+      let valid = true;
+      errors.value = [];
+      isValidating.value = true;
+      for (const item of items.value) {
+        const itemErrorMessages = await item.validate();
+        if (itemErrorMessages.length > 0) {
+          valid = false;
+          results.push({
+            id: item.id,
+            errorMessages: itemErrorMessages
+          });
+        }
+        if (!valid && props.fastFail) break;
+      }
+      errors.value = results;
+      isValidating.value = false;
+      return {
+        valid,
+        errors: errors.value
+      };
+    }
+    function reset() {
+      items.value.forEach((item) => item.reset());
+    }
+    function resetValidation() {
+      items.value.forEach((item) => item.resetValidation());
+    }
+    watch(items, () => {
+      let valid = 0;
+      let invalid = 0;
+      const results = [];
+      for (const item of items.value) {
+        if (item.isValid === false) {
+          invalid++;
+          results.push({
+            id: item.id,
+            errorMessages: item.errorMessages
+          });
+        } else if (item.isValid === true) valid++;
+      }
+      errors.value = results;
+      model.value = invalid > 0 ? false : valid === items.value.length ? true : null;
+    }, {
+      deep: true,
+      flush: "post"
+    });
+    provide(FormKey, {
+      register: (_ref) => {
+        let {
+          id,
+          vm,
+          validate: validate2,
+          reset: reset2,
+          resetValidation: resetValidation2
+        } = _ref;
+        if (items.value.some((item) => item.id === id)) {
+          consoleWarn(`Duplicate input name "${id}"`);
+        }
+        items.value.push({
+          id,
+          validate: validate2,
+          reset: reset2,
+          resetValidation: resetValidation2,
+          vm: markRaw(vm),
+          isValid: null,
+          errorMessages: []
+        });
+      },
+      unregister: (id) => {
+        items.value = items.value.filter((item) => {
+          return item.id !== id;
+        });
+      },
+      update: (id, isValid2, errorMessages2) => {
+        const found = items.value.find((item) => item.id === id);
+        if (!found) return;
+        found.isValid = isValid2;
+        found.errorMessages = errorMessages2;
+      },
+      isDisabled,
+      isReadonly: isReadonly2,
+      isValidating,
+      isValid: model,
+      items,
+      validateOn: toRef(() => props.validateOn)
+    });
+    return {
+      errors,
+      isDisabled,
+      isReadonly: isReadonly2,
+      isValidating,
+      isValid: model,
+      items,
+      validate,
+      reset,
+      resetValidation
+    };
+  }
+  function useForm(props) {
+    const form = inject$1(FormKey, null);
+    return {
+      ...form,
+      isReadonly: computed(() => !!(props?.readonly ?? form?.isReadonly.value)),
+      isDisabled: computed(() => !!(props?.disabled ?? form?.isDisabled.value))
+    };
+  }
+  const RulesSymbol = Symbol.for("vuetify:rules");
+  function useRules(fn) {
+    const rules = inject$1(RulesSymbol, null);
+    if (!fn) {
+      if (!rules) {
+        throw new Error("Could not find Vuetify rules injection");
+      }
+      return rules.aliases;
+    }
+    return rules?.resolve(fn) ?? toRef(fn);
+  }
+  const makeValidationProps = propsFactory({
+    disabled: {
+      type: Boolean,
+      default: null
+    },
+    error: Boolean,
+    errorMessages: {
+      type: [Array, String],
+      default: () => []
+    },
+    maxErrors: {
+      type: [Number, String],
+      default: 1
+    },
+    name: String,
+    label: String,
+    readonly: {
+      type: Boolean,
+      default: null
+    },
+    rules: {
+      type: Array,
+      default: () => []
+    },
+    modelValue: null,
+    validateOn: String,
+    validationValue: null,
+    ...makeFocusProps()
+  }, "validation");
+  function useValidation(props) {
+    let name2 = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : getCurrentInstanceName();
+    let id = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : useId();
+    const model = useProxiedModel(props, "modelValue");
+    const validationModel = computed(() => props.validationValue === void 0 ? model.value : props.validationValue);
+    const form = useForm(props);
+    const rules = useRules(() => props.rules);
+    const internalErrorMessages = ref([]);
+    const isPristine = shallowRef(true);
+    const isDirty2 = computed(() => !!(wrapInArray(model.value === "" ? null : model.value).length || wrapInArray(validationModel.value === "" ? null : validationModel.value).length));
+    const errorMessages2 = computed(() => {
+      return props.errorMessages?.length ? wrapInArray(props.errorMessages).concat(internalErrorMessages.value).slice(0, Math.max(0, Number(props.maxErrors))) : internalErrorMessages.value;
+    });
+    const validateOn = computed(() => {
+      let value = (props.validateOn ?? form.validateOn?.value) || "input";
+      if (value === "lazy") value = "input lazy";
+      if (value === "eager") value = "input eager";
+      const set = new Set(value?.split(" ") ?? []);
+      return {
+        input: set.has("input"),
+        blur: set.has("blur") || set.has("input") || set.has("invalid-input"),
+        invalidInput: set.has("invalid-input"),
+        lazy: set.has("lazy"),
+        eager: set.has("eager")
+      };
+    });
+    const isValid2 = computed(() => {
+      if (props.error || props.errorMessages?.length) return false;
+      if (!props.rules.length) return true;
+      if (isPristine.value) {
+        return internalErrorMessages.value.length || validateOn.value.lazy ? null : true;
+      } else {
+        return !internalErrorMessages.value.length;
+      }
+    });
+    const isValidating = shallowRef(false);
+    const validationClasses = computed(() => {
+      return {
+        [`${name2}--error`]: isValid2.value === false,
+        [`${name2}--dirty`]: isDirty2.value,
+        [`${name2}--disabled`]: form.isDisabled.value,
+        [`${name2}--readonly`]: form.isReadonly.value
+      };
+    });
+    const vm = getCurrentInstance("validation");
+    const uid2 = computed(() => props.name ?? unref(id));
+    onBeforeMount(() => {
+      form.register?.({
+        id: uid2.value,
+        vm,
+        validate,
+        reset,
+        resetValidation
+      });
+    });
+    onBeforeUnmount(() => {
+      form.unregister?.(uid2.value);
+    });
+    onMounted(async () => {
+      if (!validateOn.value.lazy) {
+        await validate(!validateOn.value.eager);
+      }
+      form.update?.(uid2.value, isValid2.value, errorMessages2.value);
+    });
+    useToggleScope(() => validateOn.value.input || validateOn.value.invalidInput && isValid2.value === false, () => {
+      watch(validationModel, () => {
+        if (validationModel.value != null) {
+          validate();
+        } else if (props.focused) {
+          const unwatch = watch(() => props.focused, (val) => {
+            if (!val) validate();
+            unwatch();
+          });
+        }
+      });
+    });
+    useToggleScope(() => validateOn.value.blur, () => {
+      watch(() => props.focused, (val) => {
+        if (!val) validate();
+      });
+    });
+    watch([isValid2, errorMessages2], () => {
+      form.update?.(uid2.value, isValid2.value, errorMessages2.value);
+    });
+    async function reset() {
+      model.value = null;
+      await nextTick();
+      await resetValidation();
+    }
+    async function resetValidation() {
+      isPristine.value = true;
+      if (!validateOn.value.lazy) {
+        await validate(!validateOn.value.eager);
+      } else {
+        internalErrorMessages.value = [];
+      }
+    }
+    async function validate() {
+      let silent = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : false;
+      const results = [];
+      isValidating.value = true;
+      for (const rule of rules.value) {
+        if (results.length >= Number(props.maxErrors ?? 1)) {
+          break;
+        }
+        const handler = typeof rule === "function" ? rule : () => rule;
+        const result = await handler(validationModel.value);
+        if (result === true) continue;
+        if (result !== false && typeof result !== "string") {
+          console.warn(`${result} is not a valid value. Rule functions must return boolean true or a string.`);
+          continue;
+        }
+        results.push(result || "");
+      }
+      internalErrorMessages.value = results;
+      isValidating.value = false;
+      isPristine.value = silent;
+      return internalErrorMessages.value;
+    }
+    return {
+      errorMessages: errorMessages2,
+      isDirty: isDirty2,
+      isDisabled: form.isDisabled,
+      isReadonly: form.isReadonly,
+      isPristine,
+      isValid: isValid2,
+      isValidating,
+      reset,
+      resetValidation,
+      validate,
+      validationClasses
+    };
+  }
+  const makeVInputProps = propsFactory({
+    id: String,
+    appendIcon: IconValue,
+    baseColor: String,
+    centerAffix: {
+      type: Boolean,
+      default: true
+    },
+    color: String,
+    glow: Boolean,
+    iconColor: [Boolean, String],
+    prependIcon: IconValue,
+    hideDetails: [Boolean, String],
+    hideSpinButtons: Boolean,
+    hint: String,
+    persistentHint: Boolean,
+    messages: {
+      type: [Array, String],
+      default: () => []
+    },
+    direction: {
+      type: String,
+      default: "horizontal",
+      validator: (v) => ["horizontal", "vertical"].includes(v)
+    },
+    "onClick:prepend": EventProp(),
+    "onClick:append": EventProp(),
+    ...makeComponentProps(),
+    ...makeDensityProps(),
+    ...pick(makeDimensionProps(), ["maxWidth", "minWidth", "width"]),
+    ...makeThemeProps(),
+    ...makeValidationProps()
+  }, "VInput");
+  const VInput = genericComponent()({
+    name: "VInput",
+    props: {
+      ...makeVInputProps()
+    },
+    emits: {
+      "update:modelValue": (value) => true
+    },
+    setup(props, _ref) {
+      let {
+        attrs,
+        slots,
+        emit: emit2
+      } = _ref;
+      const {
+        densityClasses
+      } = useDensity(props);
+      const {
+        dimensionStyles
+      } = useDimension(props);
+      const {
+        themeClasses
+      } = provideTheme(props);
+      const {
+        rtlClasses
+      } = useRtl();
+      const {
+        InputIcon
+      } = useInputIcon(props);
+      const uid2 = useId();
+      const id = computed(() => props.id || `input-${uid2}`);
+      const {
+        errorMessages: errorMessages2,
+        isDirty: isDirty2,
+        isDisabled,
+        isReadonly: isReadonly2,
+        isPristine,
+        isValid: isValid2,
+        isValidating,
+        reset,
+        resetValidation,
+        validate,
+        validationClasses
+      } = useValidation(props, "v-input", id);
+      const messages = computed(() => {
+        if (props.errorMessages?.length || !isPristine.value && errorMessages2.value.length) {
+          return errorMessages2.value;
+        } else if (props.hint && (props.persistentHint || props.focused)) {
+          return props.hint;
+        } else {
+          return props.messages;
+        }
+      });
+      const hasMessages = toRef(() => messages.value.length > 0);
+      const hasDetails = toRef(() => !props.hideDetails || props.hideDetails === "auto" && (hasMessages.value || !!slots.details));
+      const messagesId = computed(() => hasDetails.value ? `${id.value}-messages` : void 0);
+      const slotProps = computed(() => ({
+        id,
+        messagesId,
+        isDirty: isDirty2,
+        isDisabled,
+        isReadonly: isReadonly2,
+        isPristine,
+        isValid: isValid2,
+        isValidating,
+        hasDetails,
+        reset,
+        resetValidation,
+        validate
+      }));
+      const color = toRef(() => {
+        return props.error || props.disabled ? void 0 : props.focused ? props.color : props.baseColor;
+      });
+      const iconColor = toRef(() => {
+        if (!props.iconColor) return void 0;
+        return props.iconColor === true ? color.value : props.iconColor;
+      });
+      useRender(() => {
+        const hasPrepend = !!(slots.prepend || props.prependIcon);
+        const hasAppend = !!(slots.append || props.appendIcon);
+        return createBaseVNode("div", {
+          "class": normalizeClass(["v-input", `v-input--${props.direction}`, {
+            "v-input--center-affix": props.centerAffix,
+            "v-input--focused": props.focused,
+            "v-input--glow": props.glow,
+            "v-input--hide-spin-buttons": props.hideSpinButtons
+          }, densityClasses.value, themeClasses.value, rtlClasses.value, validationClasses.value, props.class]),
+          "style": normalizeStyle([dimensionStyles.value, props.style])
+        }, [hasPrepend && createBaseVNode("div", {
+          "key": "prepend",
+          "class": "v-input__prepend"
+        }, [slots.prepend?.(slotProps.value), props.prependIcon && createVNode(InputIcon, {
+          "key": "prepend-icon",
+          "name": "prepend",
+          "color": iconColor.value
+        }, null)]), slots.default && createBaseVNode("div", {
+          "class": "v-input__control"
+        }, [slots.default?.(slotProps.value)]), hasAppend && createBaseVNode("div", {
+          "key": "append",
+          "class": "v-input__append"
+        }, [props.appendIcon && createVNode(InputIcon, {
+          "key": "append-icon",
+          "name": "append",
+          "color": iconColor.value
+        }, null), slots.append?.(slotProps.value)]), hasDetails.value && createBaseVNode("div", {
+          "id": messagesId.value,
+          "class": "v-input__details",
+          "role": "alert",
+          "aria-live": "polite"
+        }, [createVNode(VMessages, {
+          "active": hasMessages.value,
+          "messages": messages.value
+        }, {
+          message: slots.message
+        }), slots.details?.(slotProps.value)])]);
+      });
+      return {
+        reset,
+        resetValidation,
+        validate,
+        isValid: isValid2,
+        errorMessages: errorMessages2
+      };
+    }
+  });
+  const Refs = Symbol("Forwarded refs");
+  function getDescriptor(obj, key) {
+    let currentObj = obj;
+    while (currentObj) {
+      const descriptor = Reflect.getOwnPropertyDescriptor(currentObj, key);
+      if (descriptor) return descriptor;
+      currentObj = Object.getPrototypeOf(currentObj);
+    }
+    return void 0;
+  }
+  function forwardRefs(target2) {
+    for (var _len = arguments.length, refs = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      refs[_key - 1] = arguments[_key];
+    }
+    target2[Refs] = refs;
+    return new Proxy(target2, {
+      get(target3, key) {
+        if (Reflect.has(target3, key)) {
+          return Reflect.get(target3, key);
+        }
+        if (typeof key === "symbol" || key.startsWith("$") || key.startsWith("__")) return;
+        for (const ref2 of refs) {
+          if (ref2.value && Reflect.has(ref2.value, key)) {
+            const val = Reflect.get(ref2.value, key);
+            return typeof val === "function" ? val.bind(ref2.value) : val;
+          }
+        }
+      },
+      has(target3, key) {
+        if (Reflect.has(target3, key)) {
+          return true;
+        }
+        if (typeof key === "symbol" || key.startsWith("$") || key.startsWith("__")) return false;
+        for (const ref2 of refs) {
+          if (ref2.value && Reflect.has(ref2.value, key)) {
+            return true;
+          }
+        }
+        return false;
+      },
+      set(target3, key, value) {
+        if (Reflect.has(target3, key)) {
+          return Reflect.set(target3, key, value);
+        }
+        if (typeof key === "symbol" || key.startsWith("$") || key.startsWith("__")) return false;
+        for (const ref2 of refs) {
+          if (ref2.value && Reflect.has(ref2.value, key)) {
+            return Reflect.set(ref2.value, key, value);
+          }
+        }
+        return false;
+      },
+      getOwnPropertyDescriptor(target3, key) {
+        const descriptor = Reflect.getOwnPropertyDescriptor(target3, key);
+        if (descriptor) return descriptor;
+        if (typeof key === "symbol" || key.startsWith("$") || key.startsWith("__")) return;
+        for (const ref2 of refs) {
+          if (!ref2.value) continue;
+          const descriptor2 = getDescriptor(ref2.value, key) ?? ("_" in ref2.value ? getDescriptor(ref2.value._?.setupState, key) : void 0);
+          if (descriptor2) return descriptor2;
+        }
+        for (const ref2 of refs) {
+          const childRefs = ref2.value && ref2.value[Refs];
+          if (!childRefs) continue;
+          const queue2 = childRefs.slice();
+          while (queue2.length) {
+            const ref3 = queue2.shift();
+            const descriptor2 = getDescriptor(ref3.value, key);
+            if (descriptor2) return descriptor2;
+            const childRefs2 = ref3.value && ref3.value[Refs];
+            if (childRefs2) queue2.push(...childRefs2);
+          }
+        }
+        return void 0;
+      }
+    });
+  }
+  const makeVCheckboxProps = propsFactory({
+    ...makeVInputProps(),
+    ...omit$1(makeVCheckboxBtnProps(), ["inline"])
+  }, "VCheckbox");
+  const VCheckbox = genericComponent()({
+    name: "VCheckbox",
+    inheritAttrs: false,
+    props: makeVCheckboxProps(),
+    emits: {
+      "update:modelValue": (value) => true,
+      "update:focused": (focused) => true
+    },
+    setup(props, _ref) {
+      let {
+        attrs,
+        slots
+      } = _ref;
+      const model = useProxiedModel(props, "modelValue");
+      const {
+        isFocused,
+        focus,
+        blur
+      } = useFocus(props);
+      const inputRef = ref();
+      const uid2 = useId();
+      useRender(() => {
+        const [rootAttrs, controlAttrs] = filterInputAttrs(attrs);
+        const inputProps = VInput.filterProps(props);
+        const checkboxProps = VCheckboxBtn.filterProps(props);
+        return createVNode(VInput, mergeProps({
+          "ref": inputRef,
+          "class": ["v-checkbox", props.class]
+        }, rootAttrs, inputProps, {
+          "modelValue": model.value,
+          "onUpdate:modelValue": ($event) => model.value = $event,
+          "id": props.id || `checkbox-${uid2}`,
+          "focused": isFocused.value,
+          "style": props.style
+        }), {
+          ...slots,
+          default: (_ref2) => {
+            let {
+              id,
+              messagesId,
+              isDisabled,
+              isReadonly: isReadonly2,
+              isValid: isValid2
+            } = _ref2;
+            return createVNode(VCheckboxBtn, mergeProps(checkboxProps, {
+              "id": id.value,
+              "aria-describedby": messagesId.value,
+              "disabled": isDisabled.value,
+              "readonly": isReadonly2.value
+            }, controlAttrs, {
+              "error": isValid2.value === false,
+              "modelValue": model.value,
+              "onUpdate:modelValue": ($event) => model.value = $event,
+              "onFocus": focus,
+              "onBlur": blur
+            }), slots);
+          }
+        });
+      });
+      return forwardRefs({}, inputRef);
+    }
+  });
+  function calculateUpdatedTarget(_ref) {
+    let {
+      selectedElement,
+      containerElement,
+      isRtl,
+      isHorizontal
+    } = _ref;
+    const containerSize = getOffsetSize(isHorizontal, containerElement);
+    const scrollPosition = getScrollPosition(isHorizontal, isRtl, containerElement);
+    const childrenSize = getOffsetSize(isHorizontal, selectedElement);
+    const childrenStartPosition = getOffsetPosition(isHorizontal, selectedElement);
+    const additionalOffset = childrenSize * 0.4;
+    if (scrollPosition > childrenStartPosition) {
+      return childrenStartPosition - additionalOffset;
+    } else if (scrollPosition + containerSize < childrenStartPosition + childrenSize) {
+      return childrenStartPosition - containerSize + childrenSize + additionalOffset;
+    }
+    return scrollPosition;
+  }
+  function calculateCenteredTarget(_ref2) {
+    let {
+      selectedElement,
+      containerElement,
+      isHorizontal
+    } = _ref2;
+    const containerOffsetSize = getOffsetSize(isHorizontal, containerElement);
+    const childrenOffsetPosition = getOffsetPosition(isHorizontal, selectedElement);
+    const childrenOffsetSize = getOffsetSize(isHorizontal, selectedElement);
+    return childrenOffsetPosition - containerOffsetSize / 2 + childrenOffsetSize / 2;
+  }
+  function getScrollSize(isHorizontal, element) {
+    const key = isHorizontal ? "scrollWidth" : "scrollHeight";
+    return element?.[key] || 0;
+  }
+  function getClientSize(isHorizontal, element) {
+    const key = isHorizontal ? "clientWidth" : "clientHeight";
+    return element?.[key] || 0;
+  }
+  function getScrollPosition(isHorizontal, rtl, element) {
+    if (!element) {
+      return 0;
+    }
+    const {
+      scrollLeft,
+      offsetWidth,
+      scrollWidth
+    } = element;
+    if (isHorizontal) {
+      return rtl ? scrollWidth - offsetWidth + scrollLeft : scrollLeft;
+    }
+    return element.scrollTop;
+  }
+  function getOffsetSize(isHorizontal, element) {
+    const key = isHorizontal ? "offsetWidth" : "offsetHeight";
+    return element?.[key] || 0;
+  }
+  function getOffsetPosition(isHorizontal, element) {
+    const key = isHorizontal ? "offsetLeft" : "offsetTop";
+    return element?.[key] || 0;
+  }
+  const VSlideGroupSymbol = Symbol.for("vuetify:v-slide-group");
+  const makeVSlideGroupProps = propsFactory({
+    centerActive: Boolean,
+    contentClass: null,
+    direction: {
+      type: String,
+      default: "horizontal"
+    },
+    symbol: {
+      type: null,
+      default: VSlideGroupSymbol
+    },
+    nextIcon: {
+      type: IconValue,
+      default: "$next"
+    },
+    prevIcon: {
+      type: IconValue,
+      default: "$prev"
+    },
+    showArrows: {
+      type: [Boolean, String],
+      validator: (v) => typeof v === "boolean" || ["always", "desktop", "mobile"].includes(v)
+    },
+    ...makeComponentProps(),
+    ...makeDisplayProps({
+      mobile: null
+    }),
+    ...makeTagProps(),
+    ...makeGroupProps({
+      selectedClass: "v-slide-group-item--active"
+    })
+  }, "VSlideGroup");
+  const VSlideGroup = genericComponent()({
+    name: "VSlideGroup",
+    props: makeVSlideGroupProps(),
+    emits: {
+      "update:modelValue": (value) => true
+    },
+    setup(props, _ref) {
+      let {
+        slots
+      } = _ref;
+      const {
+        isRtl
+      } = useRtl();
+      const {
+        displayClasses,
+        mobile
+      } = useDisplay(props);
+      const group = useGroup(props, props.symbol);
+      const isOverflowing = shallowRef(false);
+      const scrollOffset = shallowRef(0);
+      const containerSize = shallowRef(0);
+      const contentSize = shallowRef(0);
+      const isHorizontal = computed(() => props.direction === "horizontal");
+      const {
+        resizeRef: containerRef,
+        contentRect: containerRect
+      } = useResizeObserver();
+      const {
+        resizeRef: contentRef,
+        contentRect
+      } = useResizeObserver();
+      const goTo = useGoTo();
+      const goToOptions = computed(() => {
+        return {
+          container: containerRef.el,
+          duration: 200,
+          easing: "easeOutQuart"
+        };
+      });
+      const firstSelectedIndex = computed(() => {
+        if (!group.selected.value.length) return -1;
+        return group.items.value.findIndex((item) => item.id === group.selected.value[0]);
+      });
+      const lastSelectedIndex = computed(() => {
+        if (!group.selected.value.length) return -1;
+        return group.items.value.findIndex((item) => item.id === group.selected.value[group.selected.value.length - 1]);
+      });
+      if (IN_BROWSER) {
+        let frame = -1;
+        watch(() => [group.selected.value, containerRect.value, contentRect.value, isHorizontal.value], () => {
+          cancelAnimationFrame(frame);
+          frame = requestAnimationFrame(() => {
+            if (containerRect.value && contentRect.value) {
+              const sizeProperty = isHorizontal.value ? "width" : "height";
+              containerSize.value = containerRect.value[sizeProperty];
+              contentSize.value = contentRect.value[sizeProperty];
+              isOverflowing.value = containerSize.value + 1 < contentSize.value;
+            }
+            if (firstSelectedIndex.value >= 0 && contentRef.el) {
+              const selectedElement = contentRef.el.children[lastSelectedIndex.value];
+              scrollToChildren(selectedElement, props.centerActive);
+            }
+          });
+        });
+      }
+      const isFocused = shallowRef(false);
+      function scrollToChildren(children2, center) {
+        let target2 = 0;
+        if (center) {
+          target2 = calculateCenteredTarget({
+            containerElement: containerRef.el,
+            isHorizontal: isHorizontal.value,
+            selectedElement: children2
+          });
+        } else {
+          target2 = calculateUpdatedTarget({
+            containerElement: containerRef.el,
+            isHorizontal: isHorizontal.value,
+            isRtl: isRtl.value,
+            selectedElement: children2
+          });
+        }
+        scrollToPosition2(target2);
+      }
+      function scrollToPosition2(newPosition) {
+        if (!IN_BROWSER || !containerRef.el) return;
+        const offsetSize = getOffsetSize(isHorizontal.value, containerRef.el);
+        const scrollPosition = getScrollPosition(isHorizontal.value, isRtl.value, containerRef.el);
+        const scrollSize = getScrollSize(isHorizontal.value, containerRef.el);
+        if (scrollSize <= offsetSize || // Prevent scrolling by only a couple of pixels, which doesn't look smooth
+        Math.abs(newPosition - scrollPosition) < 16) return;
+        if (isHorizontal.value && isRtl.value && containerRef.el) {
+          const {
+            scrollWidth,
+            offsetWidth: containerWidth
+          } = containerRef.el;
+          newPosition = scrollWidth - containerWidth - newPosition;
+        }
+        if (isHorizontal.value) {
+          goTo.horizontal(newPosition, goToOptions.value);
+        } else {
+          goTo(newPosition, goToOptions.value);
+        }
+      }
+      function onScroll(e) {
+        const {
+          scrollTop,
+          scrollLeft
+        } = e.target;
+        scrollOffset.value = isHorizontal.value ? scrollLeft : scrollTop;
+      }
+      function onFocusin(e) {
+        isFocused.value = true;
+        if (!isOverflowing.value || !contentRef.el) return;
+        for (const el of e.composedPath()) {
+          for (const item of contentRef.el.children) {
+            if (item === el) {
+              scrollToChildren(item);
+              return;
+            }
+          }
+        }
+      }
+      function onFocusout(e) {
+        isFocused.value = false;
+      }
+      let ignoreFocusEvent = false;
+      function onFocus(e) {
+        if (!ignoreFocusEvent && !isFocused.value && !(e.relatedTarget && contentRef.el?.contains(e.relatedTarget))) focus();
+        ignoreFocusEvent = false;
+      }
+      function onFocusAffixes() {
+        ignoreFocusEvent = true;
+      }
+      function onKeydown(e) {
+        if (!contentRef.el) return;
+        function toFocus(location2) {
+          e.preventDefault();
+          focus(location2);
+        }
+        if (isHorizontal.value) {
+          if (e.key === "ArrowRight") {
+            toFocus(isRtl.value ? "prev" : "next");
+          } else if (e.key === "ArrowLeft") {
+            toFocus(isRtl.value ? "next" : "prev");
+          }
+        } else {
+          if (e.key === "ArrowDown") {
+            toFocus("next");
+          } else if (e.key === "ArrowUp") {
+            toFocus("prev");
+          }
+        }
+        if (e.key === "Home") {
+          toFocus("first");
+        } else if (e.key === "End") {
+          toFocus("last");
+        }
+      }
+      function getSiblingElement(el, location2) {
+        if (!el) return void 0;
+        let sibling = el;
+        do {
+          sibling = sibling?.[location2 === "next" ? "nextElementSibling" : "previousElementSibling"];
+        } while (sibling?.hasAttribute("disabled"));
+        return sibling;
+      }
+      function focus(location2) {
+        if (!contentRef.el) return;
+        let el;
+        if (!location2) {
+          const focusable = focusableChildren(contentRef.el);
+          el = focusable[0];
+        } else if (location2 === "next") {
+          el = getSiblingElement(contentRef.el.querySelector(":focus"), location2);
+          if (!el) return focus("first");
+        } else if (location2 === "prev") {
+          el = getSiblingElement(contentRef.el.querySelector(":focus"), location2);
+          if (!el) return focus("last");
+        } else if (location2 === "first") {
+          el = contentRef.el.firstElementChild;
+          if (el?.hasAttribute("disabled")) el = getSiblingElement(el, "next");
+        } else if (location2 === "last") {
+          el = contentRef.el.lastElementChild;
+          if (el?.hasAttribute("disabled")) el = getSiblingElement(el, "prev");
+        }
+        if (el) {
+          el.focus({
+            preventScroll: true
+          });
+        }
+      }
+      function scrollTo2(location2) {
+        const direction = isHorizontal.value && isRtl.value ? -1 : 1;
+        const offsetStep = (location2 === "prev" ? -direction : direction) * containerSize.value;
+        let newPosition = scrollOffset.value + offsetStep;
+        if (isHorizontal.value && isRtl.value && containerRef.el) {
+          const {
+            scrollWidth,
+            offsetWidth: containerWidth
+          } = containerRef.el;
+          newPosition += scrollWidth - containerWidth;
+        }
+        scrollToPosition2(newPosition);
+      }
+      const slotProps = computed(() => ({
+        next: group.next,
+        prev: group.prev,
+        select: group.select,
+        isSelected: group.isSelected
+      }));
+      const hasAffixes = computed(() => {
+        switch (props.showArrows) {
+          // Always show arrows on desktop & mobile
+          case "always":
+            return true;
+          // Always show arrows on desktop
+          case "desktop":
+            return !mobile.value;
+          // Show arrows on mobile when overflowing.
+          // This matches the default 2.2 behavior
+          case true:
+            return isOverflowing.value || Math.abs(scrollOffset.value) > 0;
+          // Always show on mobile
+          case "mobile":
+            return mobile.value || isOverflowing.value || Math.abs(scrollOffset.value) > 0;
+          // https://material.io/components/tabs#scrollable-tabs
+          // Always show arrows when
+          // overflowed on desktop
+          default:
+            return !mobile.value && (isOverflowing.value || Math.abs(scrollOffset.value) > 0);
+        }
+      });
+      const hasPrev = computed(() => {
+        return Math.abs(scrollOffset.value) > 1;
+      });
+      const hasNext = computed(() => {
+        if (!containerRef.value) return false;
+        const scrollSize = getScrollSize(isHorizontal.value, containerRef.el);
+        const clientSize = getClientSize(isHorizontal.value, containerRef.el);
+        const scrollSizeMax = scrollSize - clientSize;
+        return scrollSizeMax - Math.abs(scrollOffset.value) > 1;
+      });
+      useRender(() => createVNode(props.tag, {
+        "class": normalizeClass(["v-slide-group", {
+          "v-slide-group--vertical": !isHorizontal.value,
+          "v-slide-group--has-affixes": hasAffixes.value,
+          "v-slide-group--is-overflowing": isOverflowing.value
+        }, displayClasses.value, props.class]),
+        "style": normalizeStyle(props.style),
+        "tabindex": isFocused.value || group.selected.value.length ? -1 : 0,
+        "onFocus": onFocus
+      }, {
+        default: () => [hasAffixes.value && createBaseVNode("div", {
+          "key": "prev",
+          "class": normalizeClass(["v-slide-group__prev", {
+            "v-slide-group__prev--disabled": !hasPrev.value
+          }]),
+          "onMousedown": onFocusAffixes,
+          "onClick": () => hasPrev.value && scrollTo2("prev")
+        }, [slots.prev?.(slotProps.value) ?? createVNode(VFadeTransition, null, {
+          default: () => [createVNode(VIcon, {
+            "icon": isRtl.value ? props.nextIcon : props.prevIcon
+          }, null)]
+        })]), createBaseVNode("div", {
+          "key": "container",
+          "ref": containerRef,
+          "class": normalizeClass(["v-slide-group__container", props.contentClass]),
+          "onScroll": onScroll
+        }, [createBaseVNode("div", {
+          "ref": contentRef,
+          "class": "v-slide-group__content",
+          "onFocusin": onFocusin,
+          "onFocusout": onFocusout,
+          "onKeydown": onKeydown
+        }, [slots.default?.(slotProps.value)])]), hasAffixes.value && createBaseVNode("div", {
+          "key": "next",
+          "class": normalizeClass(["v-slide-group__next", {
+            "v-slide-group__next--disabled": !hasNext.value
+          }]),
+          "onMousedown": onFocusAffixes,
+          "onClick": () => hasNext.value && scrollTo2("next")
+        }, [slots.next?.(slotProps.value) ?? createVNode(VFadeTransition, null, {
+          default: () => [createVNode(VIcon, {
+            "icon": isRtl.value ? props.prevIcon : props.nextIcon
+          }, null)]
+        })])]
+      }));
+      return {
+        selected: group.selected,
+        scrollTo: scrollTo2,
+        scrollOffset,
+        focus,
+        hasPrev,
+        hasNext
+      };
+    }
+  });
+  const VChipGroupSymbol = Symbol.for("vuetify:v-chip-group");
+  const makeVChipGroupProps = propsFactory({
+    baseColor: String,
+    column: Boolean,
+    filter: Boolean,
+    valueComparator: {
+      type: Function,
+      default: deepEqual
+    },
+    ...makeVSlideGroupProps(),
+    ...makeComponentProps(),
+    ...makeGroupProps({
+      selectedClass: "v-chip--selected"
+    }),
+    ...makeTagProps(),
+    ...makeThemeProps(),
+    ...makeVariantProps({
+      variant: "tonal"
+    })
+  }, "VChipGroup");
+  const VChipGroup = genericComponent()({
+    name: "VChipGroup",
+    props: makeVChipGroupProps(),
+    emits: {
+      "update:modelValue": (value) => true
+    },
+    setup(props, _ref) {
+      let {
+        slots
+      } = _ref;
+      const {
+        themeClasses
+      } = provideTheme(props);
+      const {
+        isSelected,
+        select: select2,
+        next,
+        prev,
+        selected
+      } = useGroup(props, VChipGroupSymbol);
+      provideDefaults({
+        VChip: {
+          baseColor: toRef(() => props.baseColor),
+          color: toRef(() => props.color),
+          disabled: toRef(() => props.disabled),
+          filter: toRef(() => props.filter),
+          variant: toRef(() => props.variant)
+        }
+      });
+      useRender(() => {
+        const slideGroupProps = VSlideGroup.filterProps(props);
+        return createVNode(VSlideGroup, mergeProps(slideGroupProps, {
+          "class": ["v-chip-group", {
+            "v-chip-group--column": props.column
+          }, themeClasses.value, props.class],
+          "style": props.style
+        }), {
+          default: () => [slots.default?.({
+            isSelected,
+            select: select2,
+            next,
+            prev,
+            selected: selected.value
+          })]
+        });
+      });
+      return {};
+    }
+  });
+  const makeVChipProps = propsFactory({
+    activeClass: String,
+    appendAvatar: String,
+    appendIcon: IconValue,
+    baseColor: String,
+    closable: Boolean,
+    closeIcon: {
+      type: IconValue,
+      default: "$delete"
+    },
+    closeLabel: {
+      type: String,
+      default: "$vuetify.close"
+    },
+    draggable: Boolean,
+    filter: Boolean,
+    filterIcon: {
+      type: IconValue,
+      default: "$complete"
+    },
+    label: Boolean,
+    link: {
+      type: Boolean,
+      default: void 0
+    },
+    pill: Boolean,
+    prependAvatar: String,
+    prependIcon: IconValue,
+    ripple: {
+      type: [Boolean, Object],
+      default: true
+    },
+    text: {
+      type: [String, Number, Boolean],
+      default: void 0
+    },
+    modelValue: {
+      type: Boolean,
+      default: true
+    },
+    onClick: EventProp(),
+    onClickOnce: EventProp(),
+    ...makeBorderProps(),
+    ...makeComponentProps(),
+    ...makeDensityProps(),
+    ...makeElevationProps(),
+    ...makeGroupItemProps(),
+    ...makeRoundedProps(),
+    ...makeRouterProps(),
+    ...makeSizeProps(),
+    ...makeTagProps({
+      tag: "span"
+    }),
+    ...makeThemeProps(),
+    ...makeVariantProps({
+      variant: "tonal"
+    })
+  }, "VChip");
+  const VChip = genericComponent()({
+    name: "VChip",
+    directives: {
+      vRipple: Ripple
+    },
+    props: makeVChipProps(),
+    emits: {
+      "click:close": (e) => true,
+      "update:modelValue": (value) => true,
+      "group:selected": (val) => true,
+      click: (e) => true
+    },
+    setup(props, _ref) {
+      let {
+        attrs,
+        emit: emit2,
+        slots
+      } = _ref;
+      const {
+        t
+      } = useLocale();
+      const {
+        borderClasses
+      } = useBorder(props);
+      const {
+        densityClasses
+      } = useDensity(props);
+      const {
+        elevationClasses
+      } = useElevation(props);
+      const {
+        roundedClasses
+      } = useRounded(props);
+      const {
+        sizeClasses
+      } = useSize(props);
+      const {
+        themeClasses
+      } = provideTheme(props);
+      const isActive = useProxiedModel(props, "modelValue");
+      const group = useGroupItem(props, VChipGroupSymbol, false);
+      const link = useLink(props, attrs);
+      const isLink = toRef(() => props.link !== false && link.isLink.value);
+      const isClickable = computed(() => !props.disabled && props.link !== false && (!!group || props.link || link.isClickable.value));
+      const closeProps = toRef(() => ({
+        "aria-label": t(props.closeLabel),
+        disabled: props.disabled,
+        onClick(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          isActive.value = false;
+          emit2("click:close", e);
+        }
+      }));
+      const {
+        colorClasses,
+        colorStyles,
+        variantClasses
+      } = useVariant(() => {
+        const showColor = !group || group.isSelected.value;
+        return {
+          color: showColor ? props.color ?? props.baseColor : props.baseColor,
+          variant: props.variant
+        };
+      });
+      function onClick(e) {
+        emit2("click", e);
+        if (!isClickable.value) return;
+        link.navigate?.(e);
+        group?.toggle();
+      }
+      function onKeyDown(e) {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onClick(e);
+        }
+      }
+      return () => {
+        const Tag = link.isLink.value ? "a" : props.tag;
+        const hasAppendMedia = !!(props.appendIcon || props.appendAvatar);
+        const hasAppend = !!(hasAppendMedia || slots.append);
+        const hasClose = !!(slots.close || props.closable);
+        const hasFilter = !!(slots.filter || props.filter) && group;
+        const hasPrependMedia = !!(props.prependIcon || props.prependAvatar);
+        const hasPrepend = !!(hasPrependMedia || slots.prepend);
+        return isActive.value && withDirectives(createVNode(Tag, mergeProps({
+          "class": ["v-chip", {
+            "v-chip--disabled": props.disabled,
+            "v-chip--label": props.label,
+            "v-chip--link": isClickable.value,
+            "v-chip--filter": hasFilter,
+            "v-chip--pill": props.pill,
+            [`${props.activeClass}`]: props.activeClass && link.isActive?.value
+          }, themeClasses.value, borderClasses.value, colorClasses.value, densityClasses.value, elevationClasses.value, roundedClasses.value, sizeClasses.value, variantClasses.value, group?.selectedClass.value, props.class],
+          "style": [colorStyles.value, props.style],
+          "disabled": props.disabled || void 0,
+          "draggable": props.draggable,
+          "tabindex": isClickable.value ? 0 : void 0,
+          "onClick": onClick,
+          "onKeydown": isClickable.value && !isLink.value && onKeyDown
+        }, link.linkProps), {
+          default: () => [genOverlays(isClickable.value, "v-chip"), hasFilter && createVNode(VExpandXTransition, {
+            "key": "filter"
+          }, {
+            default: () => [withDirectives(createBaseVNode("div", {
+              "class": "v-chip__filter"
+            }, [!slots.filter ? createVNode(VIcon, {
+              "key": "filter-icon",
+              "icon": props.filterIcon
+            }, null) : createVNode(VDefaultsProvider, {
+              "key": "filter-defaults",
+              "disabled": !props.filterIcon,
+              "defaults": {
+                VIcon: {
+                  icon: props.filterIcon
+                }
+              }
+            }, slots.filter)]), [[vShow, group.isSelected.value]])]
+          }), hasPrepend && createBaseVNode("div", {
+            "key": "prepend",
+            "class": "v-chip__prepend"
+          }, [!slots.prepend ? createBaseVNode(Fragment, null, [props.prependIcon && createVNode(VIcon, {
+            "key": "prepend-icon",
+            "icon": props.prependIcon,
+            "start": true
+          }, null), props.prependAvatar && createVNode(VAvatar, {
+            "key": "prepend-avatar",
+            "image": props.prependAvatar,
+            "start": true
+          }, null)]) : createVNode(VDefaultsProvider, {
+            "key": "prepend-defaults",
+            "disabled": !hasPrependMedia,
+            "defaults": {
+              VAvatar: {
+                image: props.prependAvatar,
+                start: true
+              },
+              VIcon: {
+                icon: props.prependIcon,
+                start: true
+              }
+            }
+          }, slots.prepend)]), createBaseVNode("div", {
+            "class": "v-chip__content",
+            "data-no-activator": ""
+          }, [slots.default?.({
+            isSelected: group?.isSelected.value,
+            selectedClass: group?.selectedClass.value,
+            select: group?.select,
+            toggle: group?.toggle,
+            value: group?.value.value,
+            disabled: props.disabled
+          }) ?? toDisplayString$1(props.text)]), hasAppend && createBaseVNode("div", {
+            "key": "append",
+            "class": "v-chip__append"
+          }, [!slots.append ? createBaseVNode(Fragment, null, [props.appendIcon && createVNode(VIcon, {
+            "key": "append-icon",
+            "end": true,
+            "icon": props.appendIcon
+          }, null), props.appendAvatar && createVNode(VAvatar, {
+            "key": "append-avatar",
+            "end": true,
+            "image": props.appendAvatar
+          }, null)]) : createVNode(VDefaultsProvider, {
+            "key": "append-defaults",
+            "disabled": !hasAppendMedia,
+            "defaults": {
+              VAvatar: {
+                end: true,
+                image: props.appendAvatar
+              },
+              VIcon: {
+                end: true,
+                icon: props.appendIcon
+              }
+            }
+          }, slots.append)]), hasClose && createBaseVNode("button", mergeProps({
+            "key": "close",
+            "class": "v-chip__close",
+            "type": "button",
+            "data-testid": "close-chip"
+          }, closeProps.value), [!slots.close ? createVNode(VIcon, {
+            "key": "close-icon",
+            "icon": props.closeIcon,
+            "size": "x-small"
+          }, null) : createVNode(VDefaultsProvider, {
+            "key": "close-defaults",
+            "defaults": {
+              VIcon: {
+                icon: props.closeIcon,
+                size: "x-small"
+              }
+            }
+          }, slots.close)])]
+        }), [[Ripple, isClickable.value && props.ripple, null]]);
+      };
+    }
+  });
   function elementToViewport(point, offset) {
     return {
       x: point.x + offset.x,
@@ -32672,3070 +35648,6 @@ ${JSON.stringify(newTargetLocation, null, 2)}
         globalTop,
         localTop,
         updateLocation
-      };
-    }
-  });
-  const Refs = Symbol("Forwarded refs");
-  function getDescriptor(obj, key) {
-    let currentObj = obj;
-    while (currentObj) {
-      const descriptor = Reflect.getOwnPropertyDescriptor(currentObj, key);
-      if (descriptor) return descriptor;
-      currentObj = Object.getPrototypeOf(currentObj);
-    }
-    return void 0;
-  }
-  function forwardRefs(target2) {
-    for (var _len = arguments.length, refs = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      refs[_key - 1] = arguments[_key];
-    }
-    target2[Refs] = refs;
-    return new Proxy(target2, {
-      get(target3, key) {
-        if (Reflect.has(target3, key)) {
-          return Reflect.get(target3, key);
-        }
-        if (typeof key === "symbol" || key.startsWith("$") || key.startsWith("__")) return;
-        for (const ref2 of refs) {
-          if (ref2.value && Reflect.has(ref2.value, key)) {
-            const val = Reflect.get(ref2.value, key);
-            return typeof val === "function" ? val.bind(ref2.value) : val;
-          }
-        }
-      },
-      has(target3, key) {
-        if (Reflect.has(target3, key)) {
-          return true;
-        }
-        if (typeof key === "symbol" || key.startsWith("$") || key.startsWith("__")) return false;
-        for (const ref2 of refs) {
-          if (ref2.value && Reflect.has(ref2.value, key)) {
-            return true;
-          }
-        }
-        return false;
-      },
-      set(target3, key, value) {
-        if (Reflect.has(target3, key)) {
-          return Reflect.set(target3, key, value);
-        }
-        if (typeof key === "symbol" || key.startsWith("$") || key.startsWith("__")) return false;
-        for (const ref2 of refs) {
-          if (ref2.value && Reflect.has(ref2.value, key)) {
-            return Reflect.set(ref2.value, key, value);
-          }
-        }
-        return false;
-      },
-      getOwnPropertyDescriptor(target3, key) {
-        const descriptor = Reflect.getOwnPropertyDescriptor(target3, key);
-        if (descriptor) return descriptor;
-        if (typeof key === "symbol" || key.startsWith("$") || key.startsWith("__")) return;
-        for (const ref2 of refs) {
-          if (!ref2.value) continue;
-          const descriptor2 = getDescriptor(ref2.value, key) ?? ("_" in ref2.value ? getDescriptor(ref2.value._?.setupState, key) : void 0);
-          if (descriptor2) return descriptor2;
-        }
-        for (const ref2 of refs) {
-          const childRefs = ref2.value && ref2.value[Refs];
-          if (!childRefs) continue;
-          const queue2 = childRefs.slice();
-          while (queue2.length) {
-            const ref3 = queue2.shift();
-            const descriptor2 = getDescriptor(ref3.value, key);
-            if (descriptor2) return descriptor2;
-            const childRefs2 = ref3.value && ref3.value[Refs];
-            if (childRefs2) queue2.push(...childRefs2);
-          }
-        }
-        return void 0;
-      }
-    });
-  }
-  const makeVTooltipProps = propsFactory({
-    id: String,
-    interactive: Boolean,
-    text: String,
-    ...omit$1(makeVOverlayProps({
-      closeOnBack: false,
-      location: "end",
-      locationStrategy: "connected",
-      eager: true,
-      minWidth: 0,
-      offset: 10,
-      openOnClick: false,
-      openOnHover: true,
-      origin: "auto",
-      scrim: false,
-      scrollStrategy: "reposition",
-      transition: null
-    }), ["absolute", "persistent"])
-  }, "VTooltip");
-  const VTooltip = genericComponent()({
-    name: "VTooltip",
-    props: makeVTooltipProps(),
-    emits: {
-      "update:modelValue": (value) => true
-    },
-    setup(props, _ref) {
-      let {
-        slots
-      } = _ref;
-      const isActive = useProxiedModel(props, "modelValue");
-      const {
-        scopeId
-      } = useScopeId();
-      const uid2 = useId();
-      const id = toRef(() => props.id || `v-tooltip-${uid2}`);
-      const overlay = ref();
-      const location2 = computed(() => {
-        return props.location.split(" ").length > 1 ? props.location : props.location + " center";
-      });
-      const origin2 = computed(() => {
-        return props.origin === "auto" || props.origin === "overlap" || props.origin.split(" ").length > 1 || props.location.split(" ").length > 1 ? props.origin : props.origin + " center";
-      });
-      const transition = toRef(() => {
-        if (props.transition != null) return props.transition;
-        return isActive.value ? "scale-transition" : "fade-transition";
-      });
-      const activatorProps = computed(() => mergeProps({
-        "aria-describedby": id.value
-      }, props.activatorProps));
-      useRender(() => {
-        const overlayProps = VOverlay.filterProps(props);
-        return createVNode(VOverlay, mergeProps({
-          "ref": overlay,
-          "class": ["v-tooltip", {
-            "v-tooltip--interactive": props.interactive
-          }, props.class],
-          "style": props.style,
-          "id": id.value
-        }, overlayProps, {
-          "modelValue": isActive.value,
-          "onUpdate:modelValue": ($event) => isActive.value = $event,
-          "transition": transition.value,
-          "absolute": true,
-          "location": location2.value,
-          "origin": origin2.value,
-          "persistent": true,
-          "role": "tooltip",
-          "activatorProps": activatorProps.value,
-          "_disableGlobalStack": true
-        }, scopeId), {
-          activator: slots.activator,
-          default: function() {
-            for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-              args[_key] = arguments[_key];
-            }
-            return slots.default?.(...args) ?? props.text;
-          }
-        });
-      });
-      return forwardRefs({}, overlay);
-    }
-  });
-  const _hoisted_1 = { class: "d-flex align-center justify-space-between mb-4 px-2" };
-  const _hoisted_2 = { class: "text-disabled text-caption" };
-  const _hoisted_3 = {
-    key: 0,
-    class: "mb-2 mx-2"
-  };
-  const _hoisted_4 = { class: "text-caption font-weight-bold" };
-  const fallbackIcon = "mdi-file-outline";
-  const _sfc_main$5 = /* @__PURE__ */ defineComponent$1({
-    __name: "Sidebar",
-    setup(__props) {
-      const drawer = ref(true);
-      const sidebar = useSidebarStore();
-      const settings2 = useSettingsStore();
-      const appVersion = "0.0.1";
-      const collapseIcon = computed(() => {
-        const isRtl = settings2.direction === "rtl";
-        if (sidebar.isCollapsed) {
-          return isRtl ? "mdi-chevron-double-left" : "mdi-chevron-double-right";
-        } else {
-          return isRtl ? "mdi-chevron-double-right" : "mdi-chevron-double-left";
-        }
-      });
-      onMounted(() => {
-        sidebar.loadSections();
-      });
-      return (_ctx, _cache) => {
-        return openBlock(), createBlock(VNavigationDrawer, {
-          modelValue: drawer.value,
-          "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => drawer.value = $event),
-          rail: unref(sidebar).isCollapsed,
-          permanent: "",
-          app: "",
-          class: "",
-          location: unref(settings2).direction === "rtl" ? "right" : "left"
-        }, {
-          default: withCtx(() => [
-            createBaseVNode("div", _hoisted_1, [
-              !unref(sidebar).isCollapsed ? (openBlock(), createBlock(LanguageSwitch, { key: 0 })) : createCommentVNode("", true),
-              createBaseVNode("small", _hoisted_2, toDisplayString$1(unref(appVersion)), 1)
-            ]),
-            createVNode(VBtn, {
-              variant: "text",
-              icon: "",
-              onClick: unref(sidebar).toggleCollapse,
-              class: "mb-2"
-            }, {
-              default: withCtx(() => [
-                createVNode(VIcon, null, {
-                  default: withCtx(() => [
-                    createTextVNode(toDisplayString$1(collapseIcon.value), 1)
-                  ]),
-                  _: 1
-                })
-              ]),
-              _: 1
-            }, 8, ["onClick"]),
-            createVNode(VDivider),
-            (openBlock(true), createElementBlock(Fragment, null, renderList(unref(sidebar).sections, (section) => {
-              return openBlock(), createElementBlock("div", {
-                key: section.id,
-                class: "mb-4 mt-3"
-              }, [
-                !unref(sidebar).isCollapsed ? (openBlock(), createElementBlock("div", _hoisted_3, [
-                  createBaseVNode("div", _hoisted_4, toDisplayString$1(section.title[unref(settings2).locale]), 1)
-                ])) : createCommentVNode("", true),
-                createVNode(VList, {
-                  density: "compact",
-                  nav: "",
-                  class: "pa-0 ma-0"
-                }, {
-                  default: withCtx(() => [
-                    (openBlock(true), createElementBlock(Fragment, null, renderList(section.items, (item) => {
-                      return openBlock(), createElementBlock(Fragment, {
-                        key: item.id
-                      }, [
-                        item.route ? (openBlock(), createBlock(VListItem, {
-                          key: 0,
-                          to: item.route,
-                          disabled: item.disabled,
-                          class: "sidebar-item"
-                        }, {
-                          default: withCtx(() => [
-                            createVNode(VTooltip, {
-                              text: item.tooltip?.[unref(settings2).locale],
-                              location: "end"
-                            }, {
-                              activator: withCtx(({ props }) => [
-                                createBaseVNode("div", mergeProps({ class: "d-flex align-center w-100" }, { ref_for: true }, props), [
-                                  unref(settings2).direction === "rtl" ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [
-                                    createVNode(VIcon, { icon: fallbackIcon }),
-                                    !unref(sidebar).isCollapsed ? (openBlock(), createBlock(VListItemTitle, {
-                                      key: 0,
-                                      class: "ms-2"
-                                    }, {
-                                      default: withCtx(() => [
-                                        createTextVNode(toDisplayString$1(item.label[unref(settings2).locale]), 1)
-                                      ]),
-                                      _: 2
-                                    }, 1024)) : createCommentVNode("", true)
-                                  ], 64)) : (openBlock(), createElementBlock(Fragment, { key: 1 }, [
-                                    createVNode(VIcon, { icon: fallbackIcon }),
-                                    !unref(sidebar).isCollapsed ? (openBlock(), createBlock(VListItemTitle, { key: 0 }, {
-                                      default: withCtx(() => [
-                                        createTextVNode(toDisplayString$1(item.label[unref(settings2).locale]), 1)
-                                      ]),
-                                      _: 2
-                                    }, 1024)) : createCommentVNode("", true)
-                                  ], 64))
-                                ], 16)
-                              ]),
-                              _: 2
-                            }, 1032, ["text"])
-                          ]),
-                          _: 2
-                        }, 1032, ["to", "disabled"])) : createCommentVNode("", true),
-                        item.children && item.children.length ? (openBlock(), createBlock(VList, {
-                          key: 1,
-                          density: "compact",
-                          nav: "",
-                          class: normalizeClass([unref(sidebar).isCollapsed ? "ps-0" : "ms-4"])
-                        }, {
-                          default: withCtx(() => [
-                            (openBlock(true), createElementBlock(Fragment, null, renderList(item.children, (child) => {
-                              return openBlock(), createElementBlock(Fragment, {
-                                key: child.id
-                              }, [
-                                child.route ? (openBlock(), createBlock(VListItem, {
-                                  key: 0,
-                                  to: child.route,
-                                  disabled: child.disabled,
-                                  class: "sidebar-item"
-                                }, {
-                                  default: withCtx(() => [
-                                    createVNode(VTooltip, {
-                                      text: child.tooltip?.[unref(settings2).locale],
-                                      location: "end"
-                                    }, {
-                                      activator: withCtx(({ props }) => [
-                                        createBaseVNode("div", mergeProps({ class: "d-flex align-center w-100" }, { ref_for: true }, props), [
-                                          createVNode(VIcon, { icon: fallbackIcon }),
-                                          !unref(sidebar).isCollapsed ? (openBlock(), createBlock(VListItemTitle, {
-                                            key: 0,
-                                            class: "ms-2"
-                                          }, {
-                                            default: withCtx(() => [
-                                              createTextVNode(toDisplayString$1(child.label[unref(settings2).locale]), 1)
-                                            ]),
-                                            _: 2
-                                          }, 1024)) : createCommentVNode("", true)
-                                        ], 16)
-                                      ]),
-                                      _: 2
-                                    }, 1032, ["text"])
-                                  ]),
-                                  _: 2
-                                }, 1032, ["to", "disabled"])) : createCommentVNode("", true)
-                              ], 64);
-                            }), 128)),
-                            createVNode(VDivider, { class: "my-2" })
-                          ]),
-                          _: 2
-                        }, 1032, ["class"])) : createCommentVNode("", true)
-                      ], 64);
-                    }), 128))
-                  ]),
-                  _: 2
-                }, 1024)
-              ]);
-            }), 128))
-          ]),
-          _: 1
-        }, 8, ["modelValue", "rail", "location"]);
-      };
-    }
-  });
-  const Sidebar = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-0f95e87e"]]);
-  const makeVAppProps = propsFactory({
-    ...makeComponentProps(),
-    ...omit$1(makeLayoutProps(), ["fullHeight"]),
-    ...makeThemeProps()
-  }, "VApp");
-  const VApp = genericComponent()({
-    name: "VApp",
-    props: makeVAppProps(),
-    setup(props, _ref) {
-      let {
-        slots
-      } = _ref;
-      const theme = provideTheme(props);
-      const {
-        layoutClasses,
-        getLayoutItem,
-        items,
-        layoutRef
-      } = createLayout({
-        ...props,
-        fullHeight: true
-      });
-      const {
-        rtlClasses
-      } = useRtl();
-      useRender(() => createBaseVNode("div", {
-        "ref": layoutRef,
-        "class": normalizeClass(["v-application", theme.themeClasses.value, layoutClasses.value, rtlClasses.value, props.class]),
-        "style": normalizeStyle([props.style])
-      }, [createBaseVNode("div", {
-        "class": "v-application__wrap"
-      }, [slots.default?.()])]));
-      return {
-        getLayoutItem,
-        items,
-        theme
-      };
-    }
-  });
-  const makeVContainerProps = propsFactory({
-    fluid: {
-      type: Boolean,
-      default: false
-    },
-    ...makeComponentProps(),
-    ...makeDimensionProps(),
-    ...makeTagProps()
-  }, "VContainer");
-  const VContainer = genericComponent()({
-    name: "VContainer",
-    props: makeVContainerProps(),
-    setup(props, _ref) {
-      let {
-        slots
-      } = _ref;
-      const {
-        rtlClasses
-      } = useRtl();
-      const {
-        dimensionStyles
-      } = useDimension(props);
-      useRender(() => createVNode(props.tag, {
-        "class": normalizeClass(["v-container", {
-          "v-container--fluid": props.fluid
-        }, rtlClasses.value, props.class]),
-        "style": normalizeStyle([dimensionStyles.value, props.style])
-      }, slots));
-      return {};
-    }
-  });
-  const breakpointProps = (() => {
-    return breakpoints.reduce((props, val) => {
-      props[val] = {
-        type: [Boolean, String, Number],
-        default: false
-      };
-      return props;
-    }, {});
-  })();
-  const offsetProps = (() => {
-    return breakpoints.reduce((props, val) => {
-      const offsetKey = "offset" + capitalize$1(val);
-      props[offsetKey] = {
-        type: [String, Number],
-        default: null
-      };
-      return props;
-    }, {});
-  })();
-  const orderProps = (() => {
-    return breakpoints.reduce((props, val) => {
-      const orderKey = "order" + capitalize$1(val);
-      props[orderKey] = {
-        type: [String, Number],
-        default: null
-      };
-      return props;
-    }, {});
-  })();
-  const propMap$1 = {
-    col: Object.keys(breakpointProps),
-    offset: Object.keys(offsetProps),
-    order: Object.keys(orderProps)
-  };
-  function breakpointClass$1(type2, prop, val) {
-    let className = type2;
-    if (val == null || val === false) {
-      return void 0;
-    }
-    if (prop) {
-      const breakpoint = prop.replace(type2, "");
-      className += `-${breakpoint}`;
-    }
-    if (type2 === "col") {
-      className = "v-" + className;
-    }
-    if (type2 === "col" && (val === "" || val === true)) {
-      return className.toLowerCase();
-    }
-    className += `-${val}`;
-    return className.toLowerCase();
-  }
-  const ALIGN_SELF_VALUES = ["auto", "start", "end", "center", "baseline", "stretch"];
-  const makeVColProps = propsFactory({
-    cols: {
-      type: [Boolean, String, Number],
-      default: false
-    },
-    ...breakpointProps,
-    offset: {
-      type: [String, Number],
-      default: null
-    },
-    ...offsetProps,
-    order: {
-      type: [String, Number],
-      default: null
-    },
-    ...orderProps,
-    alignSelf: {
-      type: String,
-      default: null,
-      validator: (str) => ALIGN_SELF_VALUES.includes(str)
-    },
-    ...makeComponentProps(),
-    ...makeTagProps()
-  }, "VCol");
-  const VCol = genericComponent()({
-    name: "VCol",
-    props: makeVColProps(),
-    setup(props, _ref) {
-      let {
-        slots
-      } = _ref;
-      const classes = computed(() => {
-        const classList = [];
-        let type2;
-        for (type2 in propMap$1) {
-          propMap$1[type2].forEach((prop) => {
-            const value = props[prop];
-            const className = breakpointClass$1(type2, prop, value);
-            if (className) classList.push(className);
-          });
-        }
-        const hasColClasses = classList.some((className) => className.startsWith("v-col-"));
-        classList.push({
-          // Default to .v-col if no other col-{bp}-* classes generated nor `cols` specified.
-          "v-col": !hasColClasses || !props.cols,
-          [`v-col-${props.cols}`]: props.cols,
-          [`offset-${props.offset}`]: props.offset,
-          [`order-${props.order}`]: props.order,
-          [`align-self-${props.alignSelf}`]: props.alignSelf
-        });
-        return classList;
-      });
-      return () => h(props.tag, {
-        class: [classes.value, props.class],
-        style: props.style
-      }, slots.default?.());
-    }
-  });
-  const ALIGNMENT = ["start", "end", "center"];
-  const SPACE = ["space-between", "space-around", "space-evenly"];
-  function makeRowProps(prefix, def2) {
-    return breakpoints.reduce((props, val) => {
-      const prefixKey = prefix + capitalize$1(val);
-      props[prefixKey] = def2();
-      return props;
-    }, {});
-  }
-  const ALIGN_VALUES = [...ALIGNMENT, "baseline", "stretch"];
-  const alignValidator = (str) => ALIGN_VALUES.includes(str);
-  const alignProps = makeRowProps("align", () => ({
-    type: String,
-    default: null,
-    validator: alignValidator
-  }));
-  const JUSTIFY_VALUES = [...ALIGNMENT, ...SPACE];
-  const justifyValidator = (str) => JUSTIFY_VALUES.includes(str);
-  const justifyProps = makeRowProps("justify", () => ({
-    type: String,
-    default: null,
-    validator: justifyValidator
-  }));
-  const ALIGN_CONTENT_VALUES = [...ALIGNMENT, ...SPACE, "stretch"];
-  const alignContentValidator = (str) => ALIGN_CONTENT_VALUES.includes(str);
-  const alignContentProps = makeRowProps("alignContent", () => ({
-    type: String,
-    default: null,
-    validator: alignContentValidator
-  }));
-  const propMap = {
-    align: Object.keys(alignProps),
-    justify: Object.keys(justifyProps),
-    alignContent: Object.keys(alignContentProps)
-  };
-  const classMap = {
-    align: "align",
-    justify: "justify",
-    alignContent: "align-content"
-  };
-  function breakpointClass(type2, prop, val) {
-    let className = classMap[type2];
-    if (val == null) {
-      return void 0;
-    }
-    if (prop) {
-      const breakpoint = prop.replace(type2, "");
-      className += `-${breakpoint}`;
-    }
-    className += `-${val}`;
-    return className.toLowerCase();
-  }
-  const makeVRowProps = propsFactory({
-    dense: Boolean,
-    noGutters: Boolean,
-    align: {
-      type: String,
-      default: null,
-      validator: alignValidator
-    },
-    ...alignProps,
-    justify: {
-      type: String,
-      default: null,
-      validator: justifyValidator
-    },
-    ...justifyProps,
-    alignContent: {
-      type: String,
-      default: null,
-      validator: alignContentValidator
-    },
-    ...alignContentProps,
-    ...makeComponentProps(),
-    ...makeTagProps()
-  }, "VRow");
-  const VRow = genericComponent()({
-    name: "VRow",
-    props: makeVRowProps(),
-    setup(props, _ref) {
-      let {
-        slots
-      } = _ref;
-      const classes = computed(() => {
-        const classList = [];
-        let type2;
-        for (type2 in propMap) {
-          propMap[type2].forEach((prop) => {
-            const value = props[prop];
-            const className = breakpointClass(type2, prop, value);
-            if (className) classList.push(className);
-          });
-        }
-        classList.push({
-          "v-row--no-gutters": props.noGutters,
-          "v-row--dense": props.dense,
-          [`align-${props.align}`]: props.align,
-          [`justify-${props.justify}`]: props.justify,
-          [`align-content-${props.alignContent}`]: props.alignContent
-        });
-        return classList;
-      });
-      return () => h(props.tag, {
-        class: ["v-row", classes.value, props.class],
-        style: props.style
-      }, slots.default?.());
-    }
-  });
-  const VSpacer = createSimpleFunctional("v-spacer", "div", "VSpacer");
-  const makeVMainProps = propsFactory({
-    scrollable: Boolean,
-    ...makeComponentProps(),
-    ...makeDimensionProps(),
-    ...makeTagProps({
-      tag: "main"
-    })
-  }, "VMain");
-  const VMain = genericComponent()({
-    name: "VMain",
-    props: makeVMainProps(),
-    setup(props, _ref) {
-      let {
-        slots
-      } = _ref;
-      const {
-        dimensionStyles
-      } = useDimension(props);
-      const {
-        mainStyles
-      } = useLayout();
-      const {
-        ssrBootStyles
-      } = useSsrBoot();
-      useRender(() => createVNode(props.tag, {
-        "class": normalizeClass(["v-main", {
-          "v-main--scrollable": props.scrollable
-        }, props.class]),
-        "style": normalizeStyle([mainStyles.value, ssrBootStyles.value, dimensionStyles.value, props.style])
-      }, {
-        default: () => [props.scrollable ? createBaseVNode("div", {
-          "class": "v-main__scroller"
-        }, [slots.default?.()]) : slots.default?.()]
-      }));
-      return {};
-    }
-  });
-  const _sfc_main$4 = /* @__PURE__ */ defineComponent$1({
-    __name: "DefaultLayout",
-    setup(__props) {
-      return (_ctx, _cache) => {
-        const _component_router_view = resolveComponent("router-view");
-        return openBlock(), createBlock(VApp, null, {
-          default: withCtx(() => [
-            createVNode(Sidebar),
-            createVNode(VMain, null, {
-              default: withCtx(() => [
-                createVNode(VContainer, { fluid: "" }, {
-                  default: withCtx(() => [
-                    createVNode(_component_router_view)
-                  ]),
-                  _: 1
-                })
-              ]),
-              _: 1
-            })
-          ]),
-          _: 1
-        });
-      };
-    }
-  });
-  const routes = [
-    {
-      path: "/",
-      component: _sfc_main$4,
-      children: [
-        {
-          path: "",
-          name: "home",
-          component: () => Promise.resolve().then(() => HomeView$1),
-          meta: { icon: "mdi-view-dashboard" }
-        },
-        {
-          path: "about",
-          name: "about",
-          component: () => Promise.resolve().then(() => AboutView$1),
-          meta: { icon: "mdi-information" }
-        },
-        {
-          path: "settings",
-          name: "settings",
-          component: () => Promise.resolve().then(() => SettingsView$1),
-          meta: { icon: "mdi-cog", requiresAuth: true }
-        }
-      ]
-    },
-    {
-      path: "/:pathMatch(.*)*",
-      name: "not-found",
-      component: () => Promise.resolve().then(() => NotFound$1)
-    }
-  ];
-  const router = createRouter({
-    history: createWebHistory("/"),
-    routes
-  });
-  const hello$1 = "Hello World";
-  const welcome$1 = "Welcome to my app";
-  const name$1 = "Name";
-  const select$1 = "Select an option";
-  const en = {
-    hello: hello$1,
-    welcome: welcome$1,
-    name: name$1,
-    select: select$1
-  };
-  const hello = "سلام دنیا";
-  const welcome = "خوش اومدی به اپ من";
-  const name = "نام";
-  const select = "یک گزینه انتخاب کنید";
-  const fa = {
-    hello,
-    welcome,
-    name,
-    select
-  };
-  const makeVToolbarTitleProps = propsFactory({
-    text: String,
-    ...makeComponentProps(),
-    ...makeTagProps()
-  }, "VToolbarTitle");
-  const VToolbarTitle = genericComponent()({
-    name: "VToolbarTitle",
-    props: makeVToolbarTitleProps(),
-    setup(props, _ref) {
-      let {
-        slots
-      } = _ref;
-      useRender(() => {
-        const hasText = !!(slots.default || slots.text || props.text);
-        return createVNode(props.tag, {
-          "class": normalizeClass(["v-toolbar-title", props.class]),
-          "style": normalizeStyle(props.style)
-        }, {
-          default: () => [hasText && createBaseVNode("div", {
-            "class": "v-toolbar-title__placeholder"
-          }, [slots.text ? slots.text() : props.text, slots.default?.()])]
-        });
-      });
-      return {};
-    }
-  });
-  const allowedDensities = [null, "prominent", "default", "comfortable", "compact"];
-  const makeVToolbarProps = propsFactory({
-    absolute: Boolean,
-    collapse: Boolean,
-    color: String,
-    density: {
-      type: String,
-      default: "default",
-      validator: (v) => allowedDensities.includes(v)
-    },
-    extended: {
-      type: Boolean,
-      default: null
-    },
-    extensionHeight: {
-      type: [Number, String],
-      default: 48
-    },
-    flat: Boolean,
-    floating: Boolean,
-    height: {
-      type: [Number, String],
-      default: 64
-    },
-    image: String,
-    title: String,
-    ...makeBorderProps(),
-    ...makeComponentProps(),
-    ...makeElevationProps(),
-    ...makeRoundedProps(),
-    ...makeTagProps({
-      tag: "header"
-    }),
-    ...makeThemeProps()
-  }, "VToolbar");
-  const VToolbar = genericComponent()({
-    name: "VToolbar",
-    props: makeVToolbarProps(),
-    setup(props, _ref) {
-      let {
-        slots
-      } = _ref;
-      const {
-        backgroundColorClasses,
-        backgroundColorStyles
-      } = useBackgroundColor(() => props.color);
-      const {
-        borderClasses
-      } = useBorder(props);
-      const {
-        elevationClasses
-      } = useElevation(props);
-      const {
-        roundedClasses
-      } = useRounded(props);
-      const {
-        themeClasses
-      } = provideTheme(props);
-      const {
-        rtlClasses
-      } = useRtl();
-      const isExtended = shallowRef(props.extended === null ? !!slots.extension?.() : props.extended);
-      const contentHeight = computed(() => parseInt(Number(props.height) + (props.density === "prominent" ? Number(props.height) : 0) - (props.density === "comfortable" ? 8 : 0) - (props.density === "compact" ? 16 : 0), 10));
-      const extensionHeight = computed(() => isExtended.value ? parseInt(Number(props.extensionHeight) + (props.density === "prominent" ? Number(props.extensionHeight) : 0) - (props.density === "comfortable" ? 4 : 0) - (props.density === "compact" ? 8 : 0), 10) : 0);
-      provideDefaults({
-        VBtn: {
-          variant: "text"
-        }
-      });
-      useRender(() => {
-        const hasTitle = !!(props.title || slots.title);
-        const hasImage = !!(slots.image || props.image);
-        const extension = slots.extension?.();
-        isExtended.value = props.extended === null ? !!extension : props.extended;
-        return createVNode(props.tag, {
-          "class": normalizeClass(["v-toolbar", {
-            "v-toolbar--absolute": props.absolute,
-            "v-toolbar--collapse": props.collapse,
-            "v-toolbar--flat": props.flat,
-            "v-toolbar--floating": props.floating,
-            [`v-toolbar--density-${props.density}`]: true
-          }, backgroundColorClasses.value, borderClasses.value, elevationClasses.value, roundedClasses.value, themeClasses.value, rtlClasses.value, props.class]),
-          "style": normalizeStyle([backgroundColorStyles.value, props.style])
-        }, {
-          default: () => [hasImage && createBaseVNode("div", {
-            "key": "image",
-            "class": "v-toolbar__image"
-          }, [!slots.image ? createVNode(VImg, {
-            "key": "image-img",
-            "cover": true,
-            "src": props.image
-          }, null) : createVNode(VDefaultsProvider, {
-            "key": "image-defaults",
-            "disabled": !props.image,
-            "defaults": {
-              VImg: {
-                cover: true,
-                src: props.image
-              }
-            }
-          }, slots.image)]), createVNode(VDefaultsProvider, {
-            "defaults": {
-              VTabs: {
-                height: convertToUnit(contentHeight.value)
-              }
-            }
-          }, {
-            default: () => [createBaseVNode("div", {
-              "class": "v-toolbar__content",
-              "style": {
-                height: convertToUnit(contentHeight.value)
-              }
-            }, [slots.prepend && createBaseVNode("div", {
-              "class": "v-toolbar__prepend"
-            }, [slots.prepend?.()]), hasTitle && createVNode(VToolbarTitle, {
-              "key": "title",
-              "text": props.title
-            }, {
-              text: slots.title
-            }), slots.default?.(), slots.append && createBaseVNode("div", {
-              "class": "v-toolbar__append"
-            }, [slots.append?.()])])]
-          }), createVNode(VDefaultsProvider, {
-            "defaults": {
-              VTabs: {
-                height: convertToUnit(extensionHeight.value)
-              }
-            }
-          }, {
-            default: () => [createVNode(VExpandTransition, null, {
-              default: () => [isExtended.value && createBaseVNode("div", {
-                "class": "v-toolbar__extension",
-                "style": {
-                  height: convertToUnit(extensionHeight.value)
-                }
-              }, [extension])]
-            })]
-          })]
-        });
-      });
-      return {
-        contentHeight,
-        extensionHeight
-      };
-    }
-  });
-  const makeScrollProps = propsFactory({
-    scrollTarget: {
-      type: String
-    },
-    scrollThreshold: {
-      type: [String, Number],
-      default: 300
-    }
-  }, "scroll");
-  function useScroll(props) {
-    let args = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
-    const {
-      canScroll
-    } = args;
-    let previousScroll = 0;
-    let previousScrollHeight = 0;
-    const target2 = ref(null);
-    const currentScroll = shallowRef(0);
-    const savedScroll = shallowRef(0);
-    const currentThreshold = shallowRef(0);
-    const isScrollActive = shallowRef(false);
-    const isScrollingUp = shallowRef(false);
-    const scrollThreshold = computed(() => {
-      return Number(props.scrollThreshold);
-    });
-    const scrollRatio = computed(() => {
-      return clamp((scrollThreshold.value - currentScroll.value) / scrollThreshold.value || 0);
-    });
-    const onScroll = () => {
-      const targetEl = target2.value;
-      if (!targetEl || canScroll && !canScroll.value) return;
-      previousScroll = currentScroll.value;
-      currentScroll.value = "window" in targetEl ? targetEl.pageYOffset : targetEl.scrollTop;
-      const currentScrollHeight = targetEl instanceof Window ? document.documentElement.scrollHeight : targetEl.scrollHeight;
-      if (previousScrollHeight !== currentScrollHeight) {
-        previousScrollHeight = currentScrollHeight;
-        return;
-      }
-      isScrollingUp.value = currentScroll.value < previousScroll;
-      currentThreshold.value = Math.abs(currentScroll.value - scrollThreshold.value);
-    };
-    watch(isScrollingUp, () => {
-      savedScroll.value = savedScroll.value || currentScroll.value;
-    });
-    watch(isScrollActive, () => {
-      savedScroll.value = 0;
-    });
-    onMounted(() => {
-      watch(() => props.scrollTarget, (scrollTarget) => {
-        const newTarget = scrollTarget ? document.querySelector(scrollTarget) : window;
-        if (!newTarget) {
-          consoleWarn(`Unable to locate element with identifier ${scrollTarget}`);
-          return;
-        }
-        if (newTarget === target2.value) return;
-        target2.value?.removeEventListener("scroll", onScroll);
-        target2.value = newTarget;
-        target2.value.addEventListener("scroll", onScroll, {
-          passive: true
-        });
-      }, {
-        immediate: true
-      });
-    });
-    onBeforeUnmount(() => {
-      target2.value?.removeEventListener("scroll", onScroll);
-    });
-    canScroll && watch(canScroll, onScroll, {
-      immediate: true
-    });
-    return {
-      scrollThreshold,
-      currentScroll,
-      currentThreshold,
-      isScrollActive,
-      scrollRatio,
-      // required only for testing
-      // probably can be removed
-      // later (2 chars chlng)
-      isScrollingUp,
-      savedScroll
-    };
-  }
-  const makeVAppBarProps = propsFactory({
-    scrollBehavior: String,
-    modelValue: {
-      type: Boolean,
-      default: true
-    },
-    location: {
-      type: String,
-      default: "top",
-      validator: (value) => ["top", "bottom"].includes(value)
-    },
-    ...makeVToolbarProps(),
-    ...makeLayoutItemProps(),
-    ...makeScrollProps(),
-    height: {
-      type: [Number, String],
-      default: 64
-    }
-  }, "VAppBar");
-  const VAppBar = genericComponent()({
-    name: "VAppBar",
-    props: makeVAppBarProps(),
-    emits: {
-      "update:modelValue": (value) => true
-    },
-    setup(props, _ref) {
-      let {
-        slots
-      } = _ref;
-      const vToolbarRef = ref();
-      const isActive = useProxiedModel(props, "modelValue");
-      const scrollBehavior = computed(() => {
-        const behavior = new Set(props.scrollBehavior?.split(" ") ?? []);
-        return {
-          hide: behavior.has("hide"),
-          fullyHide: behavior.has("fully-hide"),
-          inverted: behavior.has("inverted"),
-          collapse: behavior.has("collapse"),
-          elevate: behavior.has("elevate"),
-          fadeImage: behavior.has("fade-image")
-          // shrink: behavior.has('shrink'),
-        };
-      });
-      const canScroll = computed(() => {
-        const behavior = scrollBehavior.value;
-        return behavior.hide || behavior.fullyHide || behavior.inverted || behavior.collapse || behavior.elevate || behavior.fadeImage || // behavior.shrink ||
-        !isActive.value;
-      });
-      const {
-        currentScroll,
-        scrollThreshold,
-        isScrollingUp,
-        scrollRatio
-      } = useScroll(props, {
-        canScroll
-      });
-      const canHide = toRef(() => scrollBehavior.value.hide || scrollBehavior.value.fullyHide);
-      const isCollapsed = computed(() => props.collapse || scrollBehavior.value.collapse && (scrollBehavior.value.inverted ? scrollRatio.value > 0 : scrollRatio.value === 0));
-      const isFlat = computed(() => props.flat || scrollBehavior.value.fullyHide && !isActive.value || scrollBehavior.value.elevate && (scrollBehavior.value.inverted ? currentScroll.value > 0 : currentScroll.value === 0));
-      const opacity = computed(() => scrollBehavior.value.fadeImage ? scrollBehavior.value.inverted ? 1 - scrollRatio.value : scrollRatio.value : void 0);
-      const height = computed(() => {
-        if (scrollBehavior.value.hide && scrollBehavior.value.inverted) return 0;
-        const height2 = vToolbarRef.value?.contentHeight ?? 0;
-        const extensionHeight = vToolbarRef.value?.extensionHeight ?? 0;
-        if (!canHide.value) return height2 + extensionHeight;
-        return currentScroll.value < scrollThreshold.value || scrollBehavior.value.fullyHide ? height2 + extensionHeight : height2;
-      });
-      useToggleScope(() => !!props.scrollBehavior, () => {
-        watchEffect(() => {
-          if (canHide.value) {
-            if (scrollBehavior.value.inverted) {
-              isActive.value = currentScroll.value > scrollThreshold.value;
-            } else {
-              isActive.value = isScrollingUp.value || currentScroll.value < scrollThreshold.value;
-            }
-          } else {
-            isActive.value = true;
-          }
-        });
-      });
-      const {
-        ssrBootStyles
-      } = useSsrBoot();
-      const {
-        layoutItemStyles
-      } = useLayoutItem({
-        id: props.name,
-        order: computed(() => parseInt(props.order, 10)),
-        position: toRef(() => props.location),
-        layoutSize: height,
-        elementSize: shallowRef(void 0),
-        active: isActive,
-        absolute: toRef(() => props.absolute)
-      });
-      useRender(() => {
-        const toolbarProps = VToolbar.filterProps(props);
-        return createVNode(VToolbar, mergeProps({
-          "ref": vToolbarRef,
-          "class": ["v-app-bar", {
-            "v-app-bar--bottom": props.location === "bottom"
-          }, props.class],
-          "style": [{
-            ...layoutItemStyles.value,
-            "--v-toolbar-image-opacity": opacity.value,
-            height: void 0,
-            ...ssrBootStyles.value
-          }, props.style]
-        }, toolbarProps, {
-          "collapse": isCollapsed.value,
-          "flat": isFlat.value
-        }), slots);
-      });
-      return {};
-    }
-  });
-  const makeVAppBarNavIconProps = propsFactory({
-    ...makeVBtnProps({
-      icon: "$menu",
-      variant: "text"
-    })
-  }, "VAppBarNavIcon");
-  const VAppBarNavIcon = genericComponent()({
-    name: "VAppBarNavIcon",
-    props: makeVAppBarNavIconProps(),
-    setup(props, _ref) {
-      let {
-        slots
-      } = _ref;
-      useRender(() => createVNode(VBtn, mergeProps(props, {
-        "class": ["v-app-bar-nav-icon"]
-      }), slots));
-      return {};
-    }
-  });
-  const VAppBarTitle = genericComponent()({
-    name: "VAppBarTitle",
-    props: makeVToolbarTitleProps(),
-    setup(props, _ref) {
-      let {
-        slots
-      } = _ref;
-      useRender(() => createVNode(VToolbarTitle, mergeProps(props, {
-        "class": "v-app-bar-title"
-      }), slots));
-      return {};
-    }
-  });
-  const VAlertTitle = createSimpleFunctional("v-alert-title");
-  const makeIconSizeProps = propsFactory({
-    iconSize: [Number, String],
-    iconSizes: {
-      type: Array,
-      default: () => [["x-small", 10], ["small", 16], ["default", 24], ["large", 28], ["x-large", 32]]
-    }
-  }, "iconSize");
-  function useIconSizes(props, fallback) {
-    const iconSize = computed(() => {
-      const iconSizeMap = new Map(props.iconSizes);
-      const _iconSize = props.iconSize ?? fallback() ?? "default";
-      return iconSizeMap.has(_iconSize) ? iconSizeMap.get(_iconSize) : _iconSize;
-    });
-    return {
-      iconSize
-    };
-  }
-  const allowedTypes = ["success", "info", "warning", "error"];
-  const makeVAlertProps = propsFactory({
-    border: {
-      type: [Boolean, String],
-      validator: (val) => {
-        return typeof val === "boolean" || ["top", "end", "bottom", "start"].includes(val);
-      }
-    },
-    borderColor: String,
-    closable: Boolean,
-    closeIcon: {
-      type: IconValue,
-      default: "$close"
-    },
-    closeLabel: {
-      type: String,
-      default: "$vuetify.close"
-    },
-    icon: {
-      type: [Boolean, String, Function, Object],
-      default: null
-    },
-    modelValue: {
-      type: Boolean,
-      default: true
-    },
-    prominent: Boolean,
-    title: String,
-    text: String,
-    type: {
-      type: String,
-      validator: (val) => allowedTypes.includes(val)
-    },
-    ...makeComponentProps(),
-    ...makeDensityProps(),
-    ...makeDimensionProps(),
-    ...makeElevationProps(),
-    ...makeIconSizeProps(),
-    ...makeLocationProps(),
-    ...makePositionProps(),
-    ...makeRoundedProps(),
-    ...makeTagProps(),
-    ...makeThemeProps(),
-    ...makeVariantProps({
-      variant: "flat"
-    })
-  }, "VAlert");
-  const VAlert = genericComponent()({
-    name: "VAlert",
-    props: makeVAlertProps(),
-    emits: {
-      "click:close": (e) => true,
-      "update:modelValue": (value) => true
-    },
-    setup(props, _ref) {
-      let {
-        emit: emit2,
-        slots
-      } = _ref;
-      const isActive = useProxiedModel(props, "modelValue");
-      const icon = toRef(() => {
-        if (props.icon === false) return void 0;
-        if (!props.type) return props.icon;
-        return props.icon ?? `$${props.type}`;
-      });
-      const {
-        iconSize
-      } = useIconSizes(props, () => props.prominent ? 44 : void 0);
-      const {
-        themeClasses
-      } = provideTheme(props);
-      const {
-        colorClasses,
-        colorStyles,
-        variantClasses
-      } = useVariant(() => ({
-        color: props.color ?? props.type,
-        variant: props.variant
-      }));
-      const {
-        densityClasses
-      } = useDensity(props);
-      const {
-        dimensionStyles
-      } = useDimension(props);
-      const {
-        elevationClasses
-      } = useElevation(props);
-      const {
-        locationStyles
-      } = useLocation(props);
-      const {
-        positionClasses
-      } = usePosition(props);
-      const {
-        roundedClasses
-      } = useRounded(props);
-      const {
-        textColorClasses,
-        textColorStyles
-      } = useTextColor(() => props.borderColor);
-      const {
-        t
-      } = useLocale();
-      const closeProps = toRef(() => ({
-        "aria-label": t(props.closeLabel),
-        onClick(e) {
-          isActive.value = false;
-          emit2("click:close", e);
-        }
-      }));
-      return () => {
-        const hasPrepend = !!(slots.prepend || icon.value);
-        const hasTitle = !!(slots.title || props.title);
-        const hasClose = !!(slots.close || props.closable);
-        const iconProps = {
-          density: props.density,
-          icon: icon.value,
-          size: props.iconSize || props.prominent ? iconSize.value : void 0
-        };
-        return isActive.value && createVNode(props.tag, {
-          "class": normalizeClass(["v-alert", props.border && {
-            "v-alert--border": !!props.border,
-            [`v-alert--border-${props.border === true ? "start" : props.border}`]: true
-          }, {
-            "v-alert--prominent": props.prominent
-          }, themeClasses.value, colorClasses.value, densityClasses.value, elevationClasses.value, positionClasses.value, roundedClasses.value, variantClasses.value, props.class]),
-          "style": normalizeStyle([colorStyles.value, dimensionStyles.value, locationStyles.value, props.style]),
-          "role": "alert"
-        }, {
-          default: () => [genOverlays(false, "v-alert"), props.border && createBaseVNode("div", {
-            "key": "border",
-            "class": normalizeClass(["v-alert__border", textColorClasses.value]),
-            "style": normalizeStyle(textColorStyles.value)
-          }, null), hasPrepend && createBaseVNode("div", {
-            "key": "prepend",
-            "class": "v-alert__prepend"
-          }, [!slots.prepend ? createVNode(VIcon, mergeProps({
-            "key": "prepend-icon"
-          }, iconProps), null) : createVNode(VDefaultsProvider, {
-            "key": "prepend-defaults",
-            "disabled": !icon.value,
-            "defaults": {
-              VIcon: {
-                ...iconProps
-              }
-            }
-          }, slots.prepend)]), createBaseVNode("div", {
-            "class": "v-alert__content"
-          }, [hasTitle && createVNode(VAlertTitle, {
-            "key": "title"
-          }, {
-            default: () => [slots.title?.() ?? props.title]
-          }), slots.text?.() ?? props.text, slots.default?.()]), slots.append && createBaseVNode("div", {
-            "key": "append",
-            "class": "v-alert__append"
-          }, [slots.append()]), hasClose && createBaseVNode("div", {
-            "key": "close",
-            "class": "v-alert__close"
-          }, [!slots.close ? createVNode(VBtn, mergeProps({
-            "key": "close-btn",
-            "icon": props.closeIcon,
-            "size": "x-small",
-            "variant": "text"
-          }, closeProps.value), null) : createVNode(VDefaultsProvider, {
-            "key": "close-defaults",
-            "defaults": {
-              VBtn: {
-                icon: props.closeIcon,
-                size: "x-small",
-                variant: "text"
-              }
-            }
-          }, {
-            default: () => [slots.close?.({
-              props: closeProps.value
-            })]
-          })])]
-        });
-      };
-    }
-  });
-  const makeVLabelProps = propsFactory({
-    text: String,
-    onClick: EventProp(),
-    ...makeComponentProps(),
-    ...makeThemeProps()
-  }, "VLabel");
-  const VLabel = genericComponent()({
-    name: "VLabel",
-    props: makeVLabelProps(),
-    setup(props, _ref) {
-      let {
-        slots
-      } = _ref;
-      useRender(() => createBaseVNode("label", {
-        "class": normalizeClass(["v-label", {
-          "v-label--clickable": !!props.onClick
-        }, props.class]),
-        "style": normalizeStyle(props.style),
-        "onClick": props.onClick
-      }, [props.text, slots.default?.()]));
-      return {};
-    }
-  });
-  const VSelectionControlGroupSymbol = Symbol.for("vuetify:selection-control-group");
-  const makeSelectionControlGroupProps = propsFactory({
-    color: String,
-    disabled: {
-      type: Boolean,
-      default: null
-    },
-    defaultsTarget: String,
-    error: Boolean,
-    id: String,
-    inline: Boolean,
-    falseIcon: IconValue,
-    trueIcon: IconValue,
-    ripple: {
-      type: [Boolean, Object],
-      default: true
-    },
-    multiple: {
-      type: Boolean,
-      default: null
-    },
-    name: String,
-    readonly: {
-      type: Boolean,
-      default: null
-    },
-    modelValue: null,
-    type: String,
-    valueComparator: {
-      type: Function,
-      default: deepEqual
-    },
-    ...makeComponentProps(),
-    ...makeDensityProps(),
-    ...makeThemeProps()
-  }, "SelectionControlGroup");
-  const makeVSelectionControlGroupProps = propsFactory({
-    ...makeSelectionControlGroupProps({
-      defaultsTarget: "VSelectionControl"
-    })
-  }, "VSelectionControlGroup");
-  const VSelectionControlGroup = genericComponent()({
-    name: "VSelectionControlGroup",
-    props: makeVSelectionControlGroupProps(),
-    emits: {
-      "update:modelValue": (value) => true
-    },
-    setup(props, _ref) {
-      let {
-        slots
-      } = _ref;
-      const modelValue = useProxiedModel(props, "modelValue");
-      const uid2 = useId();
-      const id = toRef(() => props.id || `v-selection-control-group-${uid2}`);
-      const name2 = toRef(() => props.name || id.value);
-      const updateHandlers = /* @__PURE__ */ new Set();
-      provide(VSelectionControlGroupSymbol, {
-        modelValue,
-        forceUpdate: () => {
-          updateHandlers.forEach((fn) => fn());
-        },
-        onForceUpdate: (cb) => {
-          updateHandlers.add(cb);
-          onScopeDispose(() => {
-            updateHandlers.delete(cb);
-          });
-        }
-      });
-      provideDefaults({
-        [props.defaultsTarget]: {
-          color: toRef(() => props.color),
-          disabled: toRef(() => props.disabled),
-          density: toRef(() => props.density),
-          error: toRef(() => props.error),
-          inline: toRef(() => props.inline),
-          modelValue,
-          multiple: toRef(() => !!props.multiple || props.multiple == null && Array.isArray(modelValue.value)),
-          name: name2,
-          falseIcon: toRef(() => props.falseIcon),
-          trueIcon: toRef(() => props.trueIcon),
-          readonly: toRef(() => props.readonly),
-          ripple: toRef(() => props.ripple),
-          type: toRef(() => props.type),
-          valueComparator: toRef(() => props.valueComparator)
-        }
-      });
-      useRender(() => createBaseVNode("div", {
-        "class": normalizeClass(["v-selection-control-group", {
-          "v-selection-control-group--inline": props.inline
-        }, props.class]),
-        "style": normalizeStyle(props.style),
-        "role": props.type === "radio" ? "radiogroup" : void 0
-      }, [slots.default?.()]));
-      return {};
-    }
-  });
-  const makeVSelectionControlProps = propsFactory({
-    label: String,
-    baseColor: String,
-    trueValue: null,
-    falseValue: null,
-    value: null,
-    ...makeComponentProps(),
-    ...makeSelectionControlGroupProps()
-  }, "VSelectionControl");
-  function useSelectionControl(props) {
-    const group = inject$1(VSelectionControlGroupSymbol, void 0);
-    const {
-      densityClasses
-    } = useDensity(props);
-    const modelValue = useProxiedModel(props, "modelValue");
-    const trueValue = computed(() => props.trueValue !== void 0 ? props.trueValue : props.value !== void 0 ? props.value : true);
-    const falseValue = computed(() => props.falseValue !== void 0 ? props.falseValue : false);
-    const isMultiple = computed(() => !!props.multiple || props.multiple == null && Array.isArray(modelValue.value));
-    const model = computed({
-      get() {
-        const val = group ? group.modelValue.value : modelValue.value;
-        return isMultiple.value ? wrapInArray(val).some((v) => props.valueComparator(v, trueValue.value)) : props.valueComparator(val, trueValue.value);
-      },
-      set(val) {
-        if (props.readonly) return;
-        const currentValue = val ? trueValue.value : falseValue.value;
-        let newVal = currentValue;
-        if (isMultiple.value) {
-          newVal = val ? [...wrapInArray(modelValue.value), currentValue] : wrapInArray(modelValue.value).filter((item) => !props.valueComparator(item, trueValue.value));
-        }
-        if (group) {
-          group.modelValue.value = newVal;
-        } else {
-          modelValue.value = newVal;
-        }
-      }
-    });
-    const {
-      textColorClasses,
-      textColorStyles
-    } = useTextColor(() => {
-      if (props.error || props.disabled) return void 0;
-      return model.value ? props.color : props.baseColor;
-    });
-    const {
-      backgroundColorClasses,
-      backgroundColorStyles
-    } = useBackgroundColor(() => {
-      return model.value && !props.error && !props.disabled ? props.color : props.baseColor;
-    });
-    const icon = computed(() => model.value ? props.trueIcon : props.falseIcon);
-    return {
-      group,
-      densityClasses,
-      trueValue,
-      falseValue,
-      model,
-      textColorClasses,
-      textColorStyles,
-      backgroundColorClasses,
-      backgroundColorStyles,
-      icon
-    };
-  }
-  const VSelectionControl = genericComponent()({
-    name: "VSelectionControl",
-    directives: {
-      vRipple: Ripple
-    },
-    inheritAttrs: false,
-    props: makeVSelectionControlProps(),
-    emits: {
-      "update:modelValue": (value) => true
-    },
-    setup(props, _ref) {
-      let {
-        attrs,
-        slots
-      } = _ref;
-      const {
-        group,
-        densityClasses,
-        icon,
-        model,
-        textColorClasses,
-        textColorStyles,
-        backgroundColorClasses,
-        backgroundColorStyles,
-        trueValue
-      } = useSelectionControl(props);
-      const uid2 = useId();
-      const isFocused = shallowRef(false);
-      const isFocusVisible = shallowRef(false);
-      const input = ref();
-      const id = toRef(() => props.id || `input-${uid2}`);
-      const isInteractive = toRef(() => !props.disabled && !props.readonly);
-      group?.onForceUpdate(() => {
-        if (input.value) {
-          input.value.checked = model.value;
-        }
-      });
-      function onFocus(e) {
-        if (!isInteractive.value) return;
-        isFocused.value = true;
-        if (matchesSelector(e.target, ":focus-visible") !== false) {
-          isFocusVisible.value = true;
-        }
-      }
-      function onBlur() {
-        isFocused.value = false;
-        isFocusVisible.value = false;
-      }
-      function onClickLabel(e) {
-        e.stopPropagation();
-      }
-      function onInput(e) {
-        if (!isInteractive.value) {
-          if (input.value) {
-            input.value.checked = model.value;
-          }
-          return;
-        }
-        if (props.readonly && group) {
-          nextTick(() => group.forceUpdate());
-        }
-        model.value = e.target.checked;
-      }
-      useRender(() => {
-        const label2 = slots.label ? slots.label({
-          label: props.label,
-          props: {
-            for: id.value
-          }
-        }) : props.label;
-        const [rootAttrs, inputAttrs] = filterInputAttrs(attrs);
-        const inputNode = createBaseVNode("input", mergeProps({
-          "ref": input,
-          "checked": model.value,
-          "disabled": !!props.disabled,
-          "id": id.value,
-          "onBlur": onBlur,
-          "onFocus": onFocus,
-          "onInput": onInput,
-          "aria-disabled": !!props.disabled,
-          "aria-label": props.label,
-          "type": props.type,
-          "value": trueValue.value,
-          "name": props.name,
-          "aria-checked": props.type === "checkbox" ? model.value : void 0
-        }, inputAttrs), null);
-        return createBaseVNode("div", mergeProps({
-          "class": ["v-selection-control", {
-            "v-selection-control--dirty": model.value,
-            "v-selection-control--disabled": props.disabled,
-            "v-selection-control--error": props.error,
-            "v-selection-control--focused": isFocused.value,
-            "v-selection-control--focus-visible": isFocusVisible.value,
-            "v-selection-control--inline": props.inline
-          }, densityClasses.value, props.class]
-        }, rootAttrs, {
-          "style": props.style
-        }), [createBaseVNode("div", {
-          "class": normalizeClass(["v-selection-control__wrapper", textColorClasses.value]),
-          "style": normalizeStyle(textColorStyles.value)
-        }, [slots.default?.({
-          backgroundColorClasses,
-          backgroundColorStyles
-        }), withDirectives(createBaseVNode("div", {
-          "class": normalizeClass(["v-selection-control__input"])
-        }, [slots.input?.({
-          model,
-          textColorClasses,
-          textColorStyles,
-          backgroundColorClasses,
-          backgroundColorStyles,
-          inputNode,
-          icon: icon.value,
-          props: {
-            onFocus,
-            onBlur,
-            id: id.value
-          }
-        }) ?? createBaseVNode(Fragment, null, [icon.value && createVNode(VIcon, {
-          "key": "icon",
-          "icon": icon.value
-        }, null), inputNode])]), [[Ripple, !props.disabled && !props.readonly && props.ripple, null, {
-          center: true,
-          circle: true
-        }]])]), label2 && createVNode(VLabel, {
-          "for": id.value,
-          "onClick": onClickLabel
-        }, {
-          default: () => [label2]
-        })]);
-      });
-      return {
-        isFocused,
-        input
-      };
-    }
-  });
-  const makeVCheckboxBtnProps = propsFactory({
-    indeterminate: Boolean,
-    indeterminateIcon: {
-      type: IconValue,
-      default: "$checkboxIndeterminate"
-    },
-    ...makeVSelectionControlProps({
-      falseIcon: "$checkboxOff",
-      trueIcon: "$checkboxOn"
-    })
-  }, "VCheckboxBtn");
-  const VCheckboxBtn = genericComponent()({
-    name: "VCheckboxBtn",
-    props: makeVCheckboxBtnProps(),
-    emits: {
-      "update:modelValue": (value) => true,
-      "update:indeterminate": (value) => true
-    },
-    setup(props, _ref) {
-      let {
-        slots
-      } = _ref;
-      const indeterminate = useProxiedModel(props, "indeterminate");
-      const model = useProxiedModel(props, "modelValue");
-      function onChange(v) {
-        if (indeterminate.value) {
-          indeterminate.value = false;
-        }
-      }
-      const falseIcon = toRef(() => {
-        return indeterminate.value ? props.indeterminateIcon : props.falseIcon;
-      });
-      const trueIcon = toRef(() => {
-        return indeterminate.value ? props.indeterminateIcon : props.trueIcon;
-      });
-      useRender(() => {
-        const controlProps = omit$1(VSelectionControl.filterProps(props), ["modelValue"]);
-        return createVNode(VSelectionControl, mergeProps(controlProps, {
-          "modelValue": model.value,
-          "onUpdate:modelValue": [($event) => model.value = $event, onChange],
-          "class": ["v-checkbox-btn", props.class],
-          "style": props.style,
-          "type": "checkbox",
-          "falseIcon": falseIcon.value,
-          "trueIcon": trueIcon.value,
-          "aria-checked": indeterminate.value ? "mixed" : void 0
-        }), slots);
-      });
-      return {};
-    }
-  });
-  function useInputIcon(props) {
-    const {
-      t
-    } = useLocale();
-    function InputIcon(_ref) {
-      let {
-        name: name2,
-        color,
-        ...attrs
-      } = _ref;
-      const localeKey = {
-        prepend: "prependAction",
-        prependInner: "prependAction",
-        append: "appendAction",
-        appendInner: "appendAction",
-        clear: "clear"
-      }[name2];
-      const listener = props[`onClick:${name2}`];
-      function onKeydown(e) {
-        if (e.key !== "Enter" && e.key !== " ") return;
-        e.preventDefault();
-        e.stopPropagation();
-        callEvent(listener, new PointerEvent("click", e));
-      }
-      const label2 = listener && localeKey ? t(`$vuetify.input.${localeKey}`, props.label ?? "") : void 0;
-      return createVNode(VIcon, mergeProps({
-        "icon": props[`${name2}Icon`],
-        "aria-label": label2,
-        "onClick": listener,
-        "onKeydown": onKeydown,
-        "color": color
-      }, attrs), null);
-    }
-    return {
-      InputIcon
-    };
-  }
-  const makeVMessagesProps = propsFactory({
-    active: Boolean,
-    color: String,
-    messages: {
-      type: [Array, String],
-      default: () => []
-    },
-    ...makeComponentProps(),
-    ...makeTransitionProps({
-      transition: {
-        component: VSlideYTransition,
-        leaveAbsolute: true,
-        group: true
-      }
-    })
-  }, "VMessages");
-  const VMessages = genericComponent()({
-    name: "VMessages",
-    props: makeVMessagesProps(),
-    setup(props, _ref) {
-      let {
-        slots
-      } = _ref;
-      const messages = computed(() => wrapInArray(props.messages));
-      const {
-        textColorClasses,
-        textColorStyles
-      } = useTextColor(() => props.color);
-      useRender(() => createVNode(MaybeTransition, {
-        "transition": props.transition,
-        "tag": "div",
-        "class": normalizeClass(["v-messages", textColorClasses.value, props.class]),
-        "style": normalizeStyle([textColorStyles.value, props.style])
-      }, {
-        default: () => [props.active && messages.value.map((message, i) => createBaseVNode("div", {
-          "class": "v-messages__message",
-          "key": `${i}-${messages.value}`
-        }, [slots.message ? slots.message({
-          message
-        }) : message]))]
-      }));
-      return {};
-    }
-  });
-  const makeFocusProps = propsFactory({
-    focused: Boolean,
-    "onUpdate:focused": EventProp()
-  }, "focus");
-  function useFocus(props) {
-    let name2 = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : getCurrentInstanceName();
-    const isFocused = useProxiedModel(props, "focused");
-    const focusClasses = toRef(() => {
-      return {
-        [`${name2}--focused`]: isFocused.value
-      };
-    });
-    function focus() {
-      isFocused.value = true;
-    }
-    function blur() {
-      isFocused.value = false;
-    }
-    return {
-      focusClasses,
-      isFocused,
-      focus,
-      blur
-    };
-  }
-  const FormKey = Symbol.for("vuetify:form");
-  const makeFormProps = propsFactory({
-    disabled: Boolean,
-    fastFail: Boolean,
-    readonly: Boolean,
-    modelValue: {
-      type: Boolean,
-      default: null
-    },
-    validateOn: {
-      type: String,
-      default: "input"
-    }
-  }, "form");
-  function createForm(props) {
-    const model = useProxiedModel(props, "modelValue");
-    const isDisabled = toRef(() => props.disabled);
-    const isReadonly2 = toRef(() => props.readonly);
-    const isValidating = shallowRef(false);
-    const items = ref([]);
-    const errors = ref([]);
-    async function validate() {
-      const results = [];
-      let valid = true;
-      errors.value = [];
-      isValidating.value = true;
-      for (const item of items.value) {
-        const itemErrorMessages = await item.validate();
-        if (itemErrorMessages.length > 0) {
-          valid = false;
-          results.push({
-            id: item.id,
-            errorMessages: itemErrorMessages
-          });
-        }
-        if (!valid && props.fastFail) break;
-      }
-      errors.value = results;
-      isValidating.value = false;
-      return {
-        valid,
-        errors: errors.value
-      };
-    }
-    function reset() {
-      items.value.forEach((item) => item.reset());
-    }
-    function resetValidation() {
-      items.value.forEach((item) => item.resetValidation());
-    }
-    watch(items, () => {
-      let valid = 0;
-      let invalid = 0;
-      const results = [];
-      for (const item of items.value) {
-        if (item.isValid === false) {
-          invalid++;
-          results.push({
-            id: item.id,
-            errorMessages: item.errorMessages
-          });
-        } else if (item.isValid === true) valid++;
-      }
-      errors.value = results;
-      model.value = invalid > 0 ? false : valid === items.value.length ? true : null;
-    }, {
-      deep: true,
-      flush: "post"
-    });
-    provide(FormKey, {
-      register: (_ref) => {
-        let {
-          id,
-          vm,
-          validate: validate2,
-          reset: reset2,
-          resetValidation: resetValidation2
-        } = _ref;
-        if (items.value.some((item) => item.id === id)) {
-          consoleWarn(`Duplicate input name "${id}"`);
-        }
-        items.value.push({
-          id,
-          validate: validate2,
-          reset: reset2,
-          resetValidation: resetValidation2,
-          vm: markRaw(vm),
-          isValid: null,
-          errorMessages: []
-        });
-      },
-      unregister: (id) => {
-        items.value = items.value.filter((item) => {
-          return item.id !== id;
-        });
-      },
-      update: (id, isValid2, errorMessages2) => {
-        const found = items.value.find((item) => item.id === id);
-        if (!found) return;
-        found.isValid = isValid2;
-        found.errorMessages = errorMessages2;
-      },
-      isDisabled,
-      isReadonly: isReadonly2,
-      isValidating,
-      isValid: model,
-      items,
-      validateOn: toRef(() => props.validateOn)
-    });
-    return {
-      errors,
-      isDisabled,
-      isReadonly: isReadonly2,
-      isValidating,
-      isValid: model,
-      items,
-      validate,
-      reset,
-      resetValidation
-    };
-  }
-  function useForm(props) {
-    const form = inject$1(FormKey, null);
-    return {
-      ...form,
-      isReadonly: computed(() => !!(props?.readonly ?? form?.isReadonly.value)),
-      isDisabled: computed(() => !!(props?.disabled ?? form?.isDisabled.value))
-    };
-  }
-  const RulesSymbol = Symbol.for("vuetify:rules");
-  function useRules(fn) {
-    const rules = inject$1(RulesSymbol, null);
-    if (!fn) {
-      if (!rules) {
-        throw new Error("Could not find Vuetify rules injection");
-      }
-      return rules.aliases;
-    }
-    return rules?.resolve(fn) ?? toRef(fn);
-  }
-  const makeValidationProps = propsFactory({
-    disabled: {
-      type: Boolean,
-      default: null
-    },
-    error: Boolean,
-    errorMessages: {
-      type: [Array, String],
-      default: () => []
-    },
-    maxErrors: {
-      type: [Number, String],
-      default: 1
-    },
-    name: String,
-    label: String,
-    readonly: {
-      type: Boolean,
-      default: null
-    },
-    rules: {
-      type: Array,
-      default: () => []
-    },
-    modelValue: null,
-    validateOn: String,
-    validationValue: null,
-    ...makeFocusProps()
-  }, "validation");
-  function useValidation(props) {
-    let name2 = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : getCurrentInstanceName();
-    let id = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : useId();
-    const model = useProxiedModel(props, "modelValue");
-    const validationModel = computed(() => props.validationValue === void 0 ? model.value : props.validationValue);
-    const form = useForm(props);
-    const rules = useRules(() => props.rules);
-    const internalErrorMessages = ref([]);
-    const isPristine = shallowRef(true);
-    const isDirty2 = computed(() => !!(wrapInArray(model.value === "" ? null : model.value).length || wrapInArray(validationModel.value === "" ? null : validationModel.value).length));
-    const errorMessages2 = computed(() => {
-      return props.errorMessages?.length ? wrapInArray(props.errorMessages).concat(internalErrorMessages.value).slice(0, Math.max(0, Number(props.maxErrors))) : internalErrorMessages.value;
-    });
-    const validateOn = computed(() => {
-      let value = (props.validateOn ?? form.validateOn?.value) || "input";
-      if (value === "lazy") value = "input lazy";
-      if (value === "eager") value = "input eager";
-      const set = new Set(value?.split(" ") ?? []);
-      return {
-        input: set.has("input"),
-        blur: set.has("blur") || set.has("input") || set.has("invalid-input"),
-        invalidInput: set.has("invalid-input"),
-        lazy: set.has("lazy"),
-        eager: set.has("eager")
-      };
-    });
-    const isValid2 = computed(() => {
-      if (props.error || props.errorMessages?.length) return false;
-      if (!props.rules.length) return true;
-      if (isPristine.value) {
-        return internalErrorMessages.value.length || validateOn.value.lazy ? null : true;
-      } else {
-        return !internalErrorMessages.value.length;
-      }
-    });
-    const isValidating = shallowRef(false);
-    const validationClasses = computed(() => {
-      return {
-        [`${name2}--error`]: isValid2.value === false,
-        [`${name2}--dirty`]: isDirty2.value,
-        [`${name2}--disabled`]: form.isDisabled.value,
-        [`${name2}--readonly`]: form.isReadonly.value
-      };
-    });
-    const vm = getCurrentInstance("validation");
-    const uid2 = computed(() => props.name ?? unref(id));
-    onBeforeMount(() => {
-      form.register?.({
-        id: uid2.value,
-        vm,
-        validate,
-        reset,
-        resetValidation
-      });
-    });
-    onBeforeUnmount(() => {
-      form.unregister?.(uid2.value);
-    });
-    onMounted(async () => {
-      if (!validateOn.value.lazy) {
-        await validate(!validateOn.value.eager);
-      }
-      form.update?.(uid2.value, isValid2.value, errorMessages2.value);
-    });
-    useToggleScope(() => validateOn.value.input || validateOn.value.invalidInput && isValid2.value === false, () => {
-      watch(validationModel, () => {
-        if (validationModel.value != null) {
-          validate();
-        } else if (props.focused) {
-          const unwatch = watch(() => props.focused, (val) => {
-            if (!val) validate();
-            unwatch();
-          });
-        }
-      });
-    });
-    useToggleScope(() => validateOn.value.blur, () => {
-      watch(() => props.focused, (val) => {
-        if (!val) validate();
-      });
-    });
-    watch([isValid2, errorMessages2], () => {
-      form.update?.(uid2.value, isValid2.value, errorMessages2.value);
-    });
-    async function reset() {
-      model.value = null;
-      await nextTick();
-      await resetValidation();
-    }
-    async function resetValidation() {
-      isPristine.value = true;
-      if (!validateOn.value.lazy) {
-        await validate(!validateOn.value.eager);
-      } else {
-        internalErrorMessages.value = [];
-      }
-    }
-    async function validate() {
-      let silent = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : false;
-      const results = [];
-      isValidating.value = true;
-      for (const rule of rules.value) {
-        if (results.length >= Number(props.maxErrors ?? 1)) {
-          break;
-        }
-        const handler = typeof rule === "function" ? rule : () => rule;
-        const result = await handler(validationModel.value);
-        if (result === true) continue;
-        if (result !== false && typeof result !== "string") {
-          console.warn(`${result} is not a valid value. Rule functions must return boolean true or a string.`);
-          continue;
-        }
-        results.push(result || "");
-      }
-      internalErrorMessages.value = results;
-      isValidating.value = false;
-      isPristine.value = silent;
-      return internalErrorMessages.value;
-    }
-    return {
-      errorMessages: errorMessages2,
-      isDirty: isDirty2,
-      isDisabled: form.isDisabled,
-      isReadonly: form.isReadonly,
-      isPristine,
-      isValid: isValid2,
-      isValidating,
-      reset,
-      resetValidation,
-      validate,
-      validationClasses
-    };
-  }
-  const makeVInputProps = propsFactory({
-    id: String,
-    appendIcon: IconValue,
-    baseColor: String,
-    centerAffix: {
-      type: Boolean,
-      default: true
-    },
-    color: String,
-    glow: Boolean,
-    iconColor: [Boolean, String],
-    prependIcon: IconValue,
-    hideDetails: [Boolean, String],
-    hideSpinButtons: Boolean,
-    hint: String,
-    persistentHint: Boolean,
-    messages: {
-      type: [Array, String],
-      default: () => []
-    },
-    direction: {
-      type: String,
-      default: "horizontal",
-      validator: (v) => ["horizontal", "vertical"].includes(v)
-    },
-    "onClick:prepend": EventProp(),
-    "onClick:append": EventProp(),
-    ...makeComponentProps(),
-    ...makeDensityProps(),
-    ...pick(makeDimensionProps(), ["maxWidth", "minWidth", "width"]),
-    ...makeThemeProps(),
-    ...makeValidationProps()
-  }, "VInput");
-  const VInput = genericComponent()({
-    name: "VInput",
-    props: {
-      ...makeVInputProps()
-    },
-    emits: {
-      "update:modelValue": (value) => true
-    },
-    setup(props, _ref) {
-      let {
-        attrs,
-        slots,
-        emit: emit2
-      } = _ref;
-      const {
-        densityClasses
-      } = useDensity(props);
-      const {
-        dimensionStyles
-      } = useDimension(props);
-      const {
-        themeClasses
-      } = provideTheme(props);
-      const {
-        rtlClasses
-      } = useRtl();
-      const {
-        InputIcon
-      } = useInputIcon(props);
-      const uid2 = useId();
-      const id = computed(() => props.id || `input-${uid2}`);
-      const {
-        errorMessages: errorMessages2,
-        isDirty: isDirty2,
-        isDisabled,
-        isReadonly: isReadonly2,
-        isPristine,
-        isValid: isValid2,
-        isValidating,
-        reset,
-        resetValidation,
-        validate,
-        validationClasses
-      } = useValidation(props, "v-input", id);
-      const messages = computed(() => {
-        if (props.errorMessages?.length || !isPristine.value && errorMessages2.value.length) {
-          return errorMessages2.value;
-        } else if (props.hint && (props.persistentHint || props.focused)) {
-          return props.hint;
-        } else {
-          return props.messages;
-        }
-      });
-      const hasMessages = toRef(() => messages.value.length > 0);
-      const hasDetails = toRef(() => !props.hideDetails || props.hideDetails === "auto" && (hasMessages.value || !!slots.details));
-      const messagesId = computed(() => hasDetails.value ? `${id.value}-messages` : void 0);
-      const slotProps = computed(() => ({
-        id,
-        messagesId,
-        isDirty: isDirty2,
-        isDisabled,
-        isReadonly: isReadonly2,
-        isPristine,
-        isValid: isValid2,
-        isValidating,
-        hasDetails,
-        reset,
-        resetValidation,
-        validate
-      }));
-      const color = toRef(() => {
-        return props.error || props.disabled ? void 0 : props.focused ? props.color : props.baseColor;
-      });
-      const iconColor = toRef(() => {
-        if (!props.iconColor) return void 0;
-        return props.iconColor === true ? color.value : props.iconColor;
-      });
-      useRender(() => {
-        const hasPrepend = !!(slots.prepend || props.prependIcon);
-        const hasAppend = !!(slots.append || props.appendIcon);
-        return createBaseVNode("div", {
-          "class": normalizeClass(["v-input", `v-input--${props.direction}`, {
-            "v-input--center-affix": props.centerAffix,
-            "v-input--focused": props.focused,
-            "v-input--glow": props.glow,
-            "v-input--hide-spin-buttons": props.hideSpinButtons
-          }, densityClasses.value, themeClasses.value, rtlClasses.value, validationClasses.value, props.class]),
-          "style": normalizeStyle([dimensionStyles.value, props.style])
-        }, [hasPrepend && createBaseVNode("div", {
-          "key": "prepend",
-          "class": "v-input__prepend"
-        }, [slots.prepend?.(slotProps.value), props.prependIcon && createVNode(InputIcon, {
-          "key": "prepend-icon",
-          "name": "prepend",
-          "color": iconColor.value
-        }, null)]), slots.default && createBaseVNode("div", {
-          "class": "v-input__control"
-        }, [slots.default?.(slotProps.value)]), hasAppend && createBaseVNode("div", {
-          "key": "append",
-          "class": "v-input__append"
-        }, [props.appendIcon && createVNode(InputIcon, {
-          "key": "append-icon",
-          "name": "append",
-          "color": iconColor.value
-        }, null), slots.append?.(slotProps.value)]), hasDetails.value && createBaseVNode("div", {
-          "id": messagesId.value,
-          "class": "v-input__details",
-          "role": "alert",
-          "aria-live": "polite"
-        }, [createVNode(VMessages, {
-          "active": hasMessages.value,
-          "messages": messages.value
-        }, {
-          message: slots.message
-        }), slots.details?.(slotProps.value)])]);
-      });
-      return {
-        reset,
-        resetValidation,
-        validate,
-        isValid: isValid2,
-        errorMessages: errorMessages2
-      };
-    }
-  });
-  const makeVCheckboxProps = propsFactory({
-    ...makeVInputProps(),
-    ...omit$1(makeVCheckboxBtnProps(), ["inline"])
-  }, "VCheckbox");
-  const VCheckbox = genericComponent()({
-    name: "VCheckbox",
-    inheritAttrs: false,
-    props: makeVCheckboxProps(),
-    emits: {
-      "update:modelValue": (value) => true,
-      "update:focused": (focused) => true
-    },
-    setup(props, _ref) {
-      let {
-        attrs,
-        slots
-      } = _ref;
-      const model = useProxiedModel(props, "modelValue");
-      const {
-        isFocused,
-        focus,
-        blur
-      } = useFocus(props);
-      const inputRef = ref();
-      const uid2 = useId();
-      useRender(() => {
-        const [rootAttrs, controlAttrs] = filterInputAttrs(attrs);
-        const inputProps = VInput.filterProps(props);
-        const checkboxProps = VCheckboxBtn.filterProps(props);
-        return createVNode(VInput, mergeProps({
-          "ref": inputRef,
-          "class": ["v-checkbox", props.class]
-        }, rootAttrs, inputProps, {
-          "modelValue": model.value,
-          "onUpdate:modelValue": ($event) => model.value = $event,
-          "id": props.id || `checkbox-${uid2}`,
-          "focused": isFocused.value,
-          "style": props.style
-        }), {
-          ...slots,
-          default: (_ref2) => {
-            let {
-              id,
-              messagesId,
-              isDisabled,
-              isReadonly: isReadonly2,
-              isValid: isValid2
-            } = _ref2;
-            return createVNode(VCheckboxBtn, mergeProps(checkboxProps, {
-              "id": id.value,
-              "aria-describedby": messagesId.value,
-              "disabled": isDisabled.value,
-              "readonly": isReadonly2.value
-            }, controlAttrs, {
-              "error": isValid2.value === false,
-              "modelValue": model.value,
-              "onUpdate:modelValue": ($event) => model.value = $event,
-              "onFocus": focus,
-              "onBlur": blur
-            }), slots);
-          }
-        });
-      });
-      return forwardRefs({}, inputRef);
-    }
-  });
-  function calculateUpdatedTarget(_ref) {
-    let {
-      selectedElement,
-      containerElement,
-      isRtl,
-      isHorizontal
-    } = _ref;
-    const containerSize = getOffsetSize(isHorizontal, containerElement);
-    const scrollPosition = getScrollPosition(isHorizontal, isRtl, containerElement);
-    const childrenSize = getOffsetSize(isHorizontal, selectedElement);
-    const childrenStartPosition = getOffsetPosition(isHorizontal, selectedElement);
-    const additionalOffset = childrenSize * 0.4;
-    if (scrollPosition > childrenStartPosition) {
-      return childrenStartPosition - additionalOffset;
-    } else if (scrollPosition + containerSize < childrenStartPosition + childrenSize) {
-      return childrenStartPosition - containerSize + childrenSize + additionalOffset;
-    }
-    return scrollPosition;
-  }
-  function calculateCenteredTarget(_ref2) {
-    let {
-      selectedElement,
-      containerElement,
-      isHorizontal
-    } = _ref2;
-    const containerOffsetSize = getOffsetSize(isHorizontal, containerElement);
-    const childrenOffsetPosition = getOffsetPosition(isHorizontal, selectedElement);
-    const childrenOffsetSize = getOffsetSize(isHorizontal, selectedElement);
-    return childrenOffsetPosition - containerOffsetSize / 2 + childrenOffsetSize / 2;
-  }
-  function getScrollSize(isHorizontal, element) {
-    const key = isHorizontal ? "scrollWidth" : "scrollHeight";
-    return element?.[key] || 0;
-  }
-  function getClientSize(isHorizontal, element) {
-    const key = isHorizontal ? "clientWidth" : "clientHeight";
-    return element?.[key] || 0;
-  }
-  function getScrollPosition(isHorizontal, rtl, element) {
-    if (!element) {
-      return 0;
-    }
-    const {
-      scrollLeft,
-      offsetWidth,
-      scrollWidth
-    } = element;
-    if (isHorizontal) {
-      return rtl ? scrollWidth - offsetWidth + scrollLeft : scrollLeft;
-    }
-    return element.scrollTop;
-  }
-  function getOffsetSize(isHorizontal, element) {
-    const key = isHorizontal ? "offsetWidth" : "offsetHeight";
-    return element?.[key] || 0;
-  }
-  function getOffsetPosition(isHorizontal, element) {
-    const key = isHorizontal ? "offsetLeft" : "offsetTop";
-    return element?.[key] || 0;
-  }
-  const VSlideGroupSymbol = Symbol.for("vuetify:v-slide-group");
-  const makeVSlideGroupProps = propsFactory({
-    centerActive: Boolean,
-    contentClass: null,
-    direction: {
-      type: String,
-      default: "horizontal"
-    },
-    symbol: {
-      type: null,
-      default: VSlideGroupSymbol
-    },
-    nextIcon: {
-      type: IconValue,
-      default: "$next"
-    },
-    prevIcon: {
-      type: IconValue,
-      default: "$prev"
-    },
-    showArrows: {
-      type: [Boolean, String],
-      validator: (v) => typeof v === "boolean" || ["always", "desktop", "mobile"].includes(v)
-    },
-    ...makeComponentProps(),
-    ...makeDisplayProps({
-      mobile: null
-    }),
-    ...makeTagProps(),
-    ...makeGroupProps({
-      selectedClass: "v-slide-group-item--active"
-    })
-  }, "VSlideGroup");
-  const VSlideGroup = genericComponent()({
-    name: "VSlideGroup",
-    props: makeVSlideGroupProps(),
-    emits: {
-      "update:modelValue": (value) => true
-    },
-    setup(props, _ref) {
-      let {
-        slots
-      } = _ref;
-      const {
-        isRtl
-      } = useRtl();
-      const {
-        displayClasses,
-        mobile
-      } = useDisplay(props);
-      const group = useGroup(props, props.symbol);
-      const isOverflowing = shallowRef(false);
-      const scrollOffset = shallowRef(0);
-      const containerSize = shallowRef(0);
-      const contentSize = shallowRef(0);
-      const isHorizontal = computed(() => props.direction === "horizontal");
-      const {
-        resizeRef: containerRef,
-        contentRect: containerRect
-      } = useResizeObserver();
-      const {
-        resizeRef: contentRef,
-        contentRect
-      } = useResizeObserver();
-      const goTo = useGoTo();
-      const goToOptions = computed(() => {
-        return {
-          container: containerRef.el,
-          duration: 200,
-          easing: "easeOutQuart"
-        };
-      });
-      const firstSelectedIndex = computed(() => {
-        if (!group.selected.value.length) return -1;
-        return group.items.value.findIndex((item) => item.id === group.selected.value[0]);
-      });
-      const lastSelectedIndex = computed(() => {
-        if (!group.selected.value.length) return -1;
-        return group.items.value.findIndex((item) => item.id === group.selected.value[group.selected.value.length - 1]);
-      });
-      if (IN_BROWSER) {
-        let frame = -1;
-        watch(() => [group.selected.value, containerRect.value, contentRect.value, isHorizontal.value], () => {
-          cancelAnimationFrame(frame);
-          frame = requestAnimationFrame(() => {
-            if (containerRect.value && contentRect.value) {
-              const sizeProperty = isHorizontal.value ? "width" : "height";
-              containerSize.value = containerRect.value[sizeProperty];
-              contentSize.value = contentRect.value[sizeProperty];
-              isOverflowing.value = containerSize.value + 1 < contentSize.value;
-            }
-            if (firstSelectedIndex.value >= 0 && contentRef.el) {
-              const selectedElement = contentRef.el.children[lastSelectedIndex.value];
-              scrollToChildren(selectedElement, props.centerActive);
-            }
-          });
-        });
-      }
-      const isFocused = shallowRef(false);
-      function scrollToChildren(children2, center) {
-        let target2 = 0;
-        if (center) {
-          target2 = calculateCenteredTarget({
-            containerElement: containerRef.el,
-            isHorizontal: isHorizontal.value,
-            selectedElement: children2
-          });
-        } else {
-          target2 = calculateUpdatedTarget({
-            containerElement: containerRef.el,
-            isHorizontal: isHorizontal.value,
-            isRtl: isRtl.value,
-            selectedElement: children2
-          });
-        }
-        scrollToPosition2(target2);
-      }
-      function scrollToPosition2(newPosition) {
-        if (!IN_BROWSER || !containerRef.el) return;
-        const offsetSize = getOffsetSize(isHorizontal.value, containerRef.el);
-        const scrollPosition = getScrollPosition(isHorizontal.value, isRtl.value, containerRef.el);
-        const scrollSize = getScrollSize(isHorizontal.value, containerRef.el);
-        if (scrollSize <= offsetSize || // Prevent scrolling by only a couple of pixels, which doesn't look smooth
-        Math.abs(newPosition - scrollPosition) < 16) return;
-        if (isHorizontal.value && isRtl.value && containerRef.el) {
-          const {
-            scrollWidth,
-            offsetWidth: containerWidth
-          } = containerRef.el;
-          newPosition = scrollWidth - containerWidth - newPosition;
-        }
-        if (isHorizontal.value) {
-          goTo.horizontal(newPosition, goToOptions.value);
-        } else {
-          goTo(newPosition, goToOptions.value);
-        }
-      }
-      function onScroll(e) {
-        const {
-          scrollTop,
-          scrollLeft
-        } = e.target;
-        scrollOffset.value = isHorizontal.value ? scrollLeft : scrollTop;
-      }
-      function onFocusin(e) {
-        isFocused.value = true;
-        if (!isOverflowing.value || !contentRef.el) return;
-        for (const el of e.composedPath()) {
-          for (const item of contentRef.el.children) {
-            if (item === el) {
-              scrollToChildren(item);
-              return;
-            }
-          }
-        }
-      }
-      function onFocusout(e) {
-        isFocused.value = false;
-      }
-      let ignoreFocusEvent = false;
-      function onFocus(e) {
-        if (!ignoreFocusEvent && !isFocused.value && !(e.relatedTarget && contentRef.el?.contains(e.relatedTarget))) focus();
-        ignoreFocusEvent = false;
-      }
-      function onFocusAffixes() {
-        ignoreFocusEvent = true;
-      }
-      function onKeydown(e) {
-        if (!contentRef.el) return;
-        function toFocus(location2) {
-          e.preventDefault();
-          focus(location2);
-        }
-        if (isHorizontal.value) {
-          if (e.key === "ArrowRight") {
-            toFocus(isRtl.value ? "prev" : "next");
-          } else if (e.key === "ArrowLeft") {
-            toFocus(isRtl.value ? "next" : "prev");
-          }
-        } else {
-          if (e.key === "ArrowDown") {
-            toFocus("next");
-          } else if (e.key === "ArrowUp") {
-            toFocus("prev");
-          }
-        }
-        if (e.key === "Home") {
-          toFocus("first");
-        } else if (e.key === "End") {
-          toFocus("last");
-        }
-      }
-      function getSiblingElement(el, location2) {
-        if (!el) return void 0;
-        let sibling = el;
-        do {
-          sibling = sibling?.[location2 === "next" ? "nextElementSibling" : "previousElementSibling"];
-        } while (sibling?.hasAttribute("disabled"));
-        return sibling;
-      }
-      function focus(location2) {
-        if (!contentRef.el) return;
-        let el;
-        if (!location2) {
-          const focusable = focusableChildren(contentRef.el);
-          el = focusable[0];
-        } else if (location2 === "next") {
-          el = getSiblingElement(contentRef.el.querySelector(":focus"), location2);
-          if (!el) return focus("first");
-        } else if (location2 === "prev") {
-          el = getSiblingElement(contentRef.el.querySelector(":focus"), location2);
-          if (!el) return focus("last");
-        } else if (location2 === "first") {
-          el = contentRef.el.firstElementChild;
-          if (el?.hasAttribute("disabled")) el = getSiblingElement(el, "next");
-        } else if (location2 === "last") {
-          el = contentRef.el.lastElementChild;
-          if (el?.hasAttribute("disabled")) el = getSiblingElement(el, "prev");
-        }
-        if (el) {
-          el.focus({
-            preventScroll: true
-          });
-        }
-      }
-      function scrollTo2(location2) {
-        const direction = isHorizontal.value && isRtl.value ? -1 : 1;
-        const offsetStep = (location2 === "prev" ? -direction : direction) * containerSize.value;
-        let newPosition = scrollOffset.value + offsetStep;
-        if (isHorizontal.value && isRtl.value && containerRef.el) {
-          const {
-            scrollWidth,
-            offsetWidth: containerWidth
-          } = containerRef.el;
-          newPosition += scrollWidth - containerWidth;
-        }
-        scrollToPosition2(newPosition);
-      }
-      const slotProps = computed(() => ({
-        next: group.next,
-        prev: group.prev,
-        select: group.select,
-        isSelected: group.isSelected
-      }));
-      const hasAffixes = computed(() => {
-        switch (props.showArrows) {
-          // Always show arrows on desktop & mobile
-          case "always":
-            return true;
-          // Always show arrows on desktop
-          case "desktop":
-            return !mobile.value;
-          // Show arrows on mobile when overflowing.
-          // This matches the default 2.2 behavior
-          case true:
-            return isOverflowing.value || Math.abs(scrollOffset.value) > 0;
-          // Always show on mobile
-          case "mobile":
-            return mobile.value || isOverflowing.value || Math.abs(scrollOffset.value) > 0;
-          // https://material.io/components/tabs#scrollable-tabs
-          // Always show arrows when
-          // overflowed on desktop
-          default:
-            return !mobile.value && (isOverflowing.value || Math.abs(scrollOffset.value) > 0);
-        }
-      });
-      const hasPrev = computed(() => {
-        return Math.abs(scrollOffset.value) > 1;
-      });
-      const hasNext = computed(() => {
-        if (!containerRef.value) return false;
-        const scrollSize = getScrollSize(isHorizontal.value, containerRef.el);
-        const clientSize = getClientSize(isHorizontal.value, containerRef.el);
-        const scrollSizeMax = scrollSize - clientSize;
-        return scrollSizeMax - Math.abs(scrollOffset.value) > 1;
-      });
-      useRender(() => createVNode(props.tag, {
-        "class": normalizeClass(["v-slide-group", {
-          "v-slide-group--vertical": !isHorizontal.value,
-          "v-slide-group--has-affixes": hasAffixes.value,
-          "v-slide-group--is-overflowing": isOverflowing.value
-        }, displayClasses.value, props.class]),
-        "style": normalizeStyle(props.style),
-        "tabindex": isFocused.value || group.selected.value.length ? -1 : 0,
-        "onFocus": onFocus
-      }, {
-        default: () => [hasAffixes.value && createBaseVNode("div", {
-          "key": "prev",
-          "class": normalizeClass(["v-slide-group__prev", {
-            "v-slide-group__prev--disabled": !hasPrev.value
-          }]),
-          "onMousedown": onFocusAffixes,
-          "onClick": () => hasPrev.value && scrollTo2("prev")
-        }, [slots.prev?.(slotProps.value) ?? createVNode(VFadeTransition, null, {
-          default: () => [createVNode(VIcon, {
-            "icon": isRtl.value ? props.nextIcon : props.prevIcon
-          }, null)]
-        })]), createBaseVNode("div", {
-          "key": "container",
-          "ref": containerRef,
-          "class": normalizeClass(["v-slide-group__container", props.contentClass]),
-          "onScroll": onScroll
-        }, [createBaseVNode("div", {
-          "ref": contentRef,
-          "class": "v-slide-group__content",
-          "onFocusin": onFocusin,
-          "onFocusout": onFocusout,
-          "onKeydown": onKeydown
-        }, [slots.default?.(slotProps.value)])]), hasAffixes.value && createBaseVNode("div", {
-          "key": "next",
-          "class": normalizeClass(["v-slide-group__next", {
-            "v-slide-group__next--disabled": !hasNext.value
-          }]),
-          "onMousedown": onFocusAffixes,
-          "onClick": () => hasNext.value && scrollTo2("next")
-        }, [slots.next?.(slotProps.value) ?? createVNode(VFadeTransition, null, {
-          default: () => [createVNode(VIcon, {
-            "icon": isRtl.value ? props.prevIcon : props.nextIcon
-          }, null)]
-        })])]
-      }));
-      return {
-        selected: group.selected,
-        scrollTo: scrollTo2,
-        scrollOffset,
-        focus,
-        hasPrev,
-        hasNext
-      };
-    }
-  });
-  const VChipGroupSymbol = Symbol.for("vuetify:v-chip-group");
-  const makeVChipGroupProps = propsFactory({
-    baseColor: String,
-    column: Boolean,
-    filter: Boolean,
-    valueComparator: {
-      type: Function,
-      default: deepEqual
-    },
-    ...makeVSlideGroupProps(),
-    ...makeComponentProps(),
-    ...makeGroupProps({
-      selectedClass: "v-chip--selected"
-    }),
-    ...makeTagProps(),
-    ...makeThemeProps(),
-    ...makeVariantProps({
-      variant: "tonal"
-    })
-  }, "VChipGroup");
-  const VChipGroup = genericComponent()({
-    name: "VChipGroup",
-    props: makeVChipGroupProps(),
-    emits: {
-      "update:modelValue": (value) => true
-    },
-    setup(props, _ref) {
-      let {
-        slots
-      } = _ref;
-      const {
-        themeClasses
-      } = provideTheme(props);
-      const {
-        isSelected,
-        select: select2,
-        next,
-        prev,
-        selected
-      } = useGroup(props, VChipGroupSymbol);
-      provideDefaults({
-        VChip: {
-          baseColor: toRef(() => props.baseColor),
-          color: toRef(() => props.color),
-          disabled: toRef(() => props.disabled),
-          filter: toRef(() => props.filter),
-          variant: toRef(() => props.variant)
-        }
-      });
-      useRender(() => {
-        const slideGroupProps = VSlideGroup.filterProps(props);
-        return createVNode(VSlideGroup, mergeProps(slideGroupProps, {
-          "class": ["v-chip-group", {
-            "v-chip-group--column": props.column
-          }, themeClasses.value, props.class],
-          "style": props.style
-        }), {
-          default: () => [slots.default?.({
-            isSelected,
-            select: select2,
-            next,
-            prev,
-            selected: selected.value
-          })]
-        });
-      });
-      return {};
-    }
-  });
-  const makeVChipProps = propsFactory({
-    activeClass: String,
-    appendAvatar: String,
-    appendIcon: IconValue,
-    baseColor: String,
-    closable: Boolean,
-    closeIcon: {
-      type: IconValue,
-      default: "$delete"
-    },
-    closeLabel: {
-      type: String,
-      default: "$vuetify.close"
-    },
-    draggable: Boolean,
-    filter: Boolean,
-    filterIcon: {
-      type: IconValue,
-      default: "$complete"
-    },
-    label: Boolean,
-    link: {
-      type: Boolean,
-      default: void 0
-    },
-    pill: Boolean,
-    prependAvatar: String,
-    prependIcon: IconValue,
-    ripple: {
-      type: [Boolean, Object],
-      default: true
-    },
-    text: {
-      type: [String, Number, Boolean],
-      default: void 0
-    },
-    modelValue: {
-      type: Boolean,
-      default: true
-    },
-    onClick: EventProp(),
-    onClickOnce: EventProp(),
-    ...makeBorderProps(),
-    ...makeComponentProps(),
-    ...makeDensityProps(),
-    ...makeElevationProps(),
-    ...makeGroupItemProps(),
-    ...makeRoundedProps(),
-    ...makeRouterProps(),
-    ...makeSizeProps(),
-    ...makeTagProps({
-      tag: "span"
-    }),
-    ...makeThemeProps(),
-    ...makeVariantProps({
-      variant: "tonal"
-    })
-  }, "VChip");
-  const VChip = genericComponent()({
-    name: "VChip",
-    directives: {
-      vRipple: Ripple
-    },
-    props: makeVChipProps(),
-    emits: {
-      "click:close": (e) => true,
-      "update:modelValue": (value) => true,
-      "group:selected": (val) => true,
-      click: (e) => true
-    },
-    setup(props, _ref) {
-      let {
-        attrs,
-        emit: emit2,
-        slots
-      } = _ref;
-      const {
-        t
-      } = useLocale();
-      const {
-        borderClasses
-      } = useBorder(props);
-      const {
-        densityClasses
-      } = useDensity(props);
-      const {
-        elevationClasses
-      } = useElevation(props);
-      const {
-        roundedClasses
-      } = useRounded(props);
-      const {
-        sizeClasses
-      } = useSize(props);
-      const {
-        themeClasses
-      } = provideTheme(props);
-      const isActive = useProxiedModel(props, "modelValue");
-      const group = useGroupItem(props, VChipGroupSymbol, false);
-      const link = useLink(props, attrs);
-      const isLink = toRef(() => props.link !== false && link.isLink.value);
-      const isClickable = computed(() => !props.disabled && props.link !== false && (!!group || props.link || link.isClickable.value));
-      const closeProps = toRef(() => ({
-        "aria-label": t(props.closeLabel),
-        disabled: props.disabled,
-        onClick(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          isActive.value = false;
-          emit2("click:close", e);
-        }
-      }));
-      const {
-        colorClasses,
-        colorStyles,
-        variantClasses
-      } = useVariant(() => {
-        const showColor = !group || group.isSelected.value;
-        return {
-          color: showColor ? props.color ?? props.baseColor : props.baseColor,
-          variant: props.variant
-        };
-      });
-      function onClick(e) {
-        emit2("click", e);
-        if (!isClickable.value) return;
-        link.navigate?.(e);
-        group?.toggle();
-      }
-      function onKeyDown(e) {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          onClick(e);
-        }
-      }
-      return () => {
-        const Tag = link.isLink.value ? "a" : props.tag;
-        const hasAppendMedia = !!(props.appendIcon || props.appendAvatar);
-        const hasAppend = !!(hasAppendMedia || slots.append);
-        const hasClose = !!(slots.close || props.closable);
-        const hasFilter = !!(slots.filter || props.filter) && group;
-        const hasPrependMedia = !!(props.prependIcon || props.prependAvatar);
-        const hasPrepend = !!(hasPrependMedia || slots.prepend);
-        return isActive.value && withDirectives(createVNode(Tag, mergeProps({
-          "class": ["v-chip", {
-            "v-chip--disabled": props.disabled,
-            "v-chip--label": props.label,
-            "v-chip--link": isClickable.value,
-            "v-chip--filter": hasFilter,
-            "v-chip--pill": props.pill,
-            [`${props.activeClass}`]: props.activeClass && link.isActive?.value
-          }, themeClasses.value, borderClasses.value, colorClasses.value, densityClasses.value, elevationClasses.value, roundedClasses.value, sizeClasses.value, variantClasses.value, group?.selectedClass.value, props.class],
-          "style": [colorStyles.value, props.style],
-          "disabled": props.disabled || void 0,
-          "draggable": props.draggable,
-          "tabindex": isClickable.value ? 0 : void 0,
-          "onClick": onClick,
-          "onKeydown": isClickable.value && !isLink.value && onKeyDown
-        }, link.linkProps), {
-          default: () => [genOverlays(isClickable.value, "v-chip"), hasFilter && createVNode(VExpandXTransition, {
-            "key": "filter"
-          }, {
-            default: () => [withDirectives(createBaseVNode("div", {
-              "class": "v-chip__filter"
-            }, [!slots.filter ? createVNode(VIcon, {
-              "key": "filter-icon",
-              "icon": props.filterIcon
-            }, null) : createVNode(VDefaultsProvider, {
-              "key": "filter-defaults",
-              "disabled": !props.filterIcon,
-              "defaults": {
-                VIcon: {
-                  icon: props.filterIcon
-                }
-              }
-            }, slots.filter)]), [[vShow, group.isSelected.value]])]
-          }), hasPrepend && createBaseVNode("div", {
-            "key": "prepend",
-            "class": "v-chip__prepend"
-          }, [!slots.prepend ? createBaseVNode(Fragment, null, [props.prependIcon && createVNode(VIcon, {
-            "key": "prepend-icon",
-            "icon": props.prependIcon,
-            "start": true
-          }, null), props.prependAvatar && createVNode(VAvatar, {
-            "key": "prepend-avatar",
-            "image": props.prependAvatar,
-            "start": true
-          }, null)]) : createVNode(VDefaultsProvider, {
-            "key": "prepend-defaults",
-            "disabled": !hasPrependMedia,
-            "defaults": {
-              VAvatar: {
-                image: props.prependAvatar,
-                start: true
-              },
-              VIcon: {
-                icon: props.prependIcon,
-                start: true
-              }
-            }
-          }, slots.prepend)]), createBaseVNode("div", {
-            "class": "v-chip__content",
-            "data-no-activator": ""
-          }, [slots.default?.({
-            isSelected: group?.isSelected.value,
-            selectedClass: group?.selectedClass.value,
-            select: group?.select,
-            toggle: group?.toggle,
-            value: group?.value.value,
-            disabled: props.disabled
-          }) ?? toDisplayString$1(props.text)]), hasAppend && createBaseVNode("div", {
-            "key": "append",
-            "class": "v-chip__append"
-          }, [!slots.append ? createBaseVNode(Fragment, null, [props.appendIcon && createVNode(VIcon, {
-            "key": "append-icon",
-            "end": true,
-            "icon": props.appendIcon
-          }, null), props.appendAvatar && createVNode(VAvatar, {
-            "key": "append-avatar",
-            "end": true,
-            "image": props.appendAvatar
-          }, null)]) : createVNode(VDefaultsProvider, {
-            "key": "append-defaults",
-            "disabled": !hasAppendMedia,
-            "defaults": {
-              VAvatar: {
-                end: true,
-                image: props.appendAvatar
-              },
-              VIcon: {
-                end: true,
-                icon: props.appendIcon
-              }
-            }
-          }, slots.append)]), hasClose && createBaseVNode("button", mergeProps({
-            "key": "close",
-            "class": "v-chip__close",
-            "type": "button",
-            "data-testid": "close-chip"
-          }, closeProps.value), [!slots.close ? createVNode(VIcon, {
-            "key": "close-icon",
-            "icon": props.closeIcon,
-            "size": "x-small"
-          }, null) : createVNode(VDefaultsProvider, {
-            "key": "close-defaults",
-            "defaults": {
-              VIcon: {
-                icon: props.closeIcon,
-                size: "x-small"
-              }
-            }
-          }, slots.close)])]
-        }), [[Ripple, isClickable.value && props.ripple, null]]);
       };
     }
   });
@@ -51645,6 +51557,88 @@ ${JSON.stringify(newTargetLocation, null, 2)}
         "style": normalizeStyle(props.style)
       }, [slots.default?.()]));
       return {};
+    }
+  });
+  const makeVTooltipProps = propsFactory({
+    id: String,
+    interactive: Boolean,
+    text: String,
+    ...omit$1(makeVOverlayProps({
+      closeOnBack: false,
+      location: "end",
+      locationStrategy: "connected",
+      eager: true,
+      minWidth: 0,
+      offset: 10,
+      openOnClick: false,
+      openOnHover: true,
+      origin: "auto",
+      scrim: false,
+      scrollStrategy: "reposition",
+      transition: null
+    }), ["absolute", "persistent"])
+  }, "VTooltip");
+  const VTooltip = genericComponent()({
+    name: "VTooltip",
+    props: makeVTooltipProps(),
+    emits: {
+      "update:modelValue": (value) => true
+    },
+    setup(props, _ref) {
+      let {
+        slots
+      } = _ref;
+      const isActive = useProxiedModel(props, "modelValue");
+      const {
+        scopeId
+      } = useScopeId();
+      const uid2 = useId();
+      const id = toRef(() => props.id || `v-tooltip-${uid2}`);
+      const overlay = ref();
+      const location2 = computed(() => {
+        return props.location.split(" ").length > 1 ? props.location : props.location + " center";
+      });
+      const origin2 = computed(() => {
+        return props.origin === "auto" || props.origin === "overlap" || props.origin.split(" ").length > 1 || props.location.split(" ").length > 1 ? props.origin : props.origin + " center";
+      });
+      const transition = toRef(() => {
+        if (props.transition != null) return props.transition;
+        return isActive.value ? "scale-transition" : "fade-transition";
+      });
+      const activatorProps = computed(() => mergeProps({
+        "aria-describedby": id.value
+      }, props.activatorProps));
+      useRender(() => {
+        const overlayProps = VOverlay.filterProps(props);
+        return createVNode(VOverlay, mergeProps({
+          "ref": overlay,
+          "class": ["v-tooltip", {
+            "v-tooltip--interactive": props.interactive
+          }, props.class],
+          "style": props.style,
+          "id": id.value
+        }, overlayProps, {
+          "modelValue": isActive.value,
+          "onUpdate:modelValue": ($event) => isActive.value = $event,
+          "transition": transition.value,
+          "absolute": true,
+          "location": location2.value,
+          "origin": origin2.value,
+          "persistent": true,
+          "role": "tooltip",
+          "activatorProps": activatorProps.value,
+          "_disableGlobalStack": true
+        }, scopeId), {
+          activator: slots.activator,
+          default: function() {
+            for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+              args[_key] = arguments[_key];
+            }
+            return slots.default?.(...args) ?? props.text;
+          }
+        });
+      });
+      return forwardRefs({}, overlay);
     }
   });
   const makeVTreeviewGroupProps = propsFactory({
